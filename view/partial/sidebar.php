@@ -9,8 +9,8 @@
     <title>Home</title>
     <link href="../css/styles.css" rel="stylesheet">
 </head>
-<body class="text-white">
-<div class="d-flex flex-column sidebar-container bg-dark p-3 min-vh-100">
+<body>
+<div class="d-flex flex-column sidebar-container p-3 min-vh-100" data-bs-theme="dark">
     <a href="" class="d-none d-md-flex flex-column align-items-center mb-3 text-white text-decoration-none">
         <img src="../img/logo.jpg" class="rounded-circle" style="max-width: 13%">
         <span class="fs-4">Preguntados</span>
@@ -19,7 +19,7 @@
 
     <div class="d-none d-md-flex align-items-center">
         <img src="../img/fotoPerfil.jpg" class="rounded-circle" style="max-width: 15%; max-height: 15%">
-        <span class="ms-2 mt-1 fs-5 fw-bold">usuario1</span>
+        <span class="ms-2 mt-1 fs-5 fw-bold text-white">usuario1</span>
     </div>
     <hr class="d-none d-md-block text-white">
 
