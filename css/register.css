@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+main {
+    background-image: url(../imagenes/texture-lobby.png);
+    background-size: cover;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#contenedor-registro {
+    width: 30vw;
+    /* Ajustamos la altura para que entren los nuevos campos */
+    height: 85vh;
+    background-color: #FDF6E3;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15),
+    0px 6px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+#registro-sup {
+    padding: 1em;
+    width: 100%;
+    /* Reducimos un poco la proporción de la parte superior */
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#registro-img {
+    height: 70%;
+    border-radius: 12px;
+    margin-bottom: 1em;
+}
+
+#registro-descripcion {
+    font-weight: bold;
+    font-size: 2.2em;
+}
+
+#registro-inf {
+    padding: 1em;
+    width: 100%;
+    /* Aumentamos la proporción del formulario */
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#contenedor-form-registro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em; /* Un poco menos de espacio para que quepa todo bien */
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.input-registro { /* Renombramos .email a una clase más genérica */
+    border: 0;
+    border-radius: 12px;
+    background-color: #8773be3d;
+    padding: 1em;
+    outline: none;
+}
+
+.btn {
+    border-radius: 12px;
+    border: none;
+    background-color: #8773be;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 1em; /* Añadimos padding para que se vea más grande */
+}
+
+.btn:hover {
+    background-color: #7358bb;
+}
+
+.mt-3 {
+    text-align: center;
+    display: block;
+    margin-top: 1em;
+}
+
+.error-mensaje {
+    color: #D8000C; /* Un color rojo oscuro para el texto */
+    background-color: #FFD2D2; /* Un fondo rojo claro para resaltar */
+    border: 1px solid #D8000C;
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 15px; /* Margen para separarlo del formulario */
+    text-align: center; /* Centrar el texto del mensaje */
+    font-weight: bold; /* Hacer la letra un poco más gruesa */
+}

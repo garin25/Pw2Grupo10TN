@@ -48,4 +48,12 @@ class MyConexion
         return null;
     }
 
+    public function registrarUsuario($sql, $nombreCompleto, $user, $email, $passwordHash){
+        $stmt = $this->conexion->prepare($sql);
+
+        $stmt->bind_param("ssss", $nombreCompleto, $user, $email, $passwordHash);
+
+        $stmt->execute();
+        $stmt->close();
+    }
 }
