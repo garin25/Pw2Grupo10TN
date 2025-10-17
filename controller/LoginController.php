@@ -18,31 +18,100 @@ class LoginController
 
     public function loginForm()
     {
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
         $data = ["page" => "Iniciar Sesión"];
         $this->renderer->render("login", $data);
     }
 
-    public function login()
+    public function verificarEmail()
     {
-        /*$resultado = $this->model->getUserWith($_POST["usuario"], $_POST["password"]);
-
-        if (sizeof($resultado) > 0) {
-            $_SESSION["usuario"] = $_POST["usuario"];
+        if (isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
+        }
+
+        header('Content-Type: application/json');
+
+        $json_crudo = file_get_contents('php://input');
+
+        $datos = json_decode($json_crudo, true);
+
+        if (!isset($datos['email']) || $datos['email'] == "") {
+            $respuesta = ['ok' => false, 'error' => 'Ingrese su email.'];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $email = $datos['email'];
+        $usuarioId = $this->model->obtenerIdUsuarioPorEmail($email);
+
+        if ($usuarioId !== null) {
+            $respuesta = [
+                "ok" => true,
+                "usuario" => $usuarioId
+            ];
         } else {
-            $this->renderer->render("login", ["error" => "Usuario o clave incorrecta"]);
-        }*/
+            $respuesta = [
+                "ok" => false,
+                "error" => "Email no encontrado."
+            ];
+        }
+
+        echo json_encode($respuesta);
+    }
+
+    public function verificarPass()
+    {
+
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+        header('Content-Type: application/json');
+
+        $json_crudo = file_get_contents('php://input');
+
+        $datos = json_decode($json_crudo, true);
+
+        if (!isset($datos['pass']) || $datos['pass'] == "") {
+            $respuesta = ['ok' => false, 'error' => 'Ingrese su contraseña.'];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $usuarioId = $datos['usuarioId'];
+        $pass = $datos['pass'];
+        $usuario = $this->model->iniciarSesion($usuarioId, $pass);
+
+        if ($usuario !== null) {
+            $_SESSION['usuarioId'] = $usuario['usuarioId'];
+            $_SESSION['user'] = $usuario['user'];
+            $respuesta = [
+                "ok" => true,
+                "usuario" => $usuario
+            ];
+        } else {
+            $respuesta = [
+                "ok" => false,
+                "error" => "Contraseña incorrecta."
+            ];
+        }
+
+        echo json_encode($respuesta);
     }
 
     public function logout()
     {
         session_destroy();
-        $this->redirectToIndex();
+        header("Location: /");
+        exit;
     }
 
     public function redirectToIndex()
     {
-        header("Location: /");
+        header("Location: /lobby");
         exit;
     }
 

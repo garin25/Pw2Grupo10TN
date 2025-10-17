@@ -10,10 +10,15 @@ class LoginModel
         $this->conexion = $conexion;
     }
 
-    /*public function getUserWith($user, $password)
+    public function obtenerIdUsuarioPorEmail($email)
     {
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$password'";
-        $result = $this->conexion->query($sql);
-        return $result ?? [];
-    }*/
+        $sql = "SELECT usuarioId, user FROM usuario WHERE email = ?";
+        return $this->conexion->obtenerIdUsuario($sql, $email);
+
+    }
+
+    public function iniciarSesion($idUsuario, $pass){
+        $sql = "SELECT usuarioId, user FROM usuario WHERE usuarioId = ? AND password = ?";
+        return $this->conexion->verificarInicioSesion($sql, $idUsuario, $pass);
+    }
 }
