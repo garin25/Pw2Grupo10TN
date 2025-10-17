@@ -46,7 +46,7 @@ class ConfigFactory
 
         $this->objetos["JuegoController"] = new JuegoController(new JuegoModel($this->conexion), $this->renderer);
 
-        $this->objetos["JuegoController"] = new MiPerfilController(new MiPerfilModel($this->conexion), $this->renderer);
+        $this->objetos["MiPerfilController"] = new MiPerfilController(new MiPerfilModel($this->conexion), $this->renderer);
 
 
     }
