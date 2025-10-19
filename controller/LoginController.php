@@ -83,11 +83,12 @@ class LoginController
 
         $usuarioId = $datos['usuarioId'];
         $pass = $datos['pass'];
-        $usuario = $this->model->iniciarSesion($usuarioId, $pass);
+        $passLimpia = trim($pass);
+        $usuario = $this->model->iniciarSesion($usuarioId, $passLimpia);
 
         if ($usuario !== null) {
             $_SESSION['usuarioId'] = $usuario['usuarioId'];
-            $_SESSION['user'] = $usuario['user'];
+            $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
             $respuesta = [
                 "ok" => true,
                 "usuario" => $usuario

@@ -34,9 +34,23 @@ class MyConexion
         return null;
     }
 
-    public function verificarInicioSesion($sql, $usuarioId, $pass){
+  /* public function verificarInicioSesion($sql, $usuarioId, $pass){
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("is", $usuarioId, $pass);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows === 1) {
+            $fila = $resultado->fetch_assoc();
+            return $fila;
+        }
+
+        return null;
+    }*/
+    // se llamaria obtenerUsuarioPorId en realidad
+    public function verificarInicioSesion($sql, $usuarioId){
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param("i", $usuarioId);
         $stmt->execute();
         $resultado = $stmt->get_result();
 

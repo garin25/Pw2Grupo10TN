@@ -1,60 +1,41 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2025 a las 21:55:28
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS preguntados;
+USE preguntados;
+
+CREATE TABLE roles (
+                       id_rol INT PRIMARY KEY AUTO_INCREMENT,
+                       nombre_rol VARCHAR(50) NOT NULL UNIQUE
+);
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE usuario (
+                         usuarioId INT PRIMARY KEY AUTO_INCREMENT,
+                         nombre_completo VARCHAR(255) NOT NULL,
+                         anio_nacimiento INT NOT NULL,
+                         sexo ENUM('Masculino', 'Femenino', 'Prefiero no cargarlo') NOT NULL,
+                         pais VARCHAR(100) NOT NULL,
+                         ciudad VARCHAR(100) NOT NULL,
+                         email VARCHAR(255) NOT NULL UNIQUE,
+                         password VARCHAR(255) NOT NULL,
+                         nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+                         foto_perfil VARCHAR(255) NULL,
+                         cuenta_verificada BOOLEAN DEFAULT FALSE,
+                         puntaje_total INT DEFAULT 0,
+                         id_rol INT NOT NULL,
+                         fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+);
 
---
--- Base de datos: `preguntados`
---
+INSERT INTO roles (nombre_rol) VALUES ('Jugador'), ('Editor'), ('Administrador');
 
--- --------------------------------------------------------
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, puntaje_total, id_rol)
+VALUES
+    ('Ana Martinez', 1998, 'Femenino', 'Argentina', 'La Plata', 'ana.martinez@email.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Ana', 'imagenes/fotoPerfil.jpg', TRUE, 1250, 1);
 
---
--- Estructura de tabla para la tabla `usuario`
---
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, id_rol)
+VALUES
+    ('Carlos Rodriguez', 1985, 'Masculino', 'Argentina', 'San Justo', 'carlos.editor@juego.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Carlos', 'imagenes/fotoPerfil.jpg', TRUE, 2);
 
-CREATE TABLE `usuario` (
-  `usuarioId` int(11) NOT NULL,
-  `user` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`usuarioId`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `usuarioId` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, id_rol)
+VALUES
+    ('Sofia Lopez', 1990, 'Prefiero no cargarlo', 'Argentina', 'Ramos Mejía', 'sofia.admin@juego.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Sofia', 'imagenes/fotoPerfil.jpg', TRUE, 3);

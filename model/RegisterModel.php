@@ -12,7 +12,6 @@ class RegisterModel
 
     public function crearUsuario($nombreCompleto, $email, $passwordHash){
         $sql = "INSERT INTO usuario (nombreCompleto, user, email, password) VALUES (?, ?, ?, ?)";
-
         $this->conexion->registrarUsuario($sql, $nombreCompleto, $nombreCompleto, $email, $passwordHash);
     }
 
