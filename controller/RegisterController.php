@@ -20,33 +20,6 @@ class RegisterController
     {
         $this->renderer->render("registrarse");
     }
-
-    /*public function procesarRegistro(){
-
-        $nombreCompleto = $_POST['nombreCompleto'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-        $nombre_usuario = $_POST['nombre_usuario'] ?? '';
-        $sexo = $_POST['sexo'] ?? '';
-        $año = $_POST['año'] ?? '';
-        $pais = $_POST['pais'] ?? '';
-        $ciudad = $_POST['ciudad'] ?? '';
-
-        if($nombreCompleto == "" || $email == "" || $password == ""||$nombre_usuario==""||
-        $sexo==""||$año==""||$pais==""||$ciudad==""){
-            $data['error'] = "Todos los campos son obligatorios.";
-            $this->renderer->render("registrarse", $data);
-            return;
-        }
-
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$año,$pais,$ciudad);
-
-        header('Location: /login');
-        exit();
-
-    }*/
     public function procesarRegistro(){
         // Recolectamos los datos y eliminamos espacios en blanco
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
@@ -54,7 +27,6 @@ class RegisterController
         $password = $_POST['password'] ?? ''; // No hacemos trim a la contraseña
         $nombre_usuario = trim($_POST['nombre_usuario'] ?? '');
         $sexo = $_POST['sexo'] ?? '';
-        // SOLUCIÓN AL BUG: Convertimos el año a un entero desde el principio
         $año = (int)($_POST['año'] ?? 0);
         $pais = trim($_POST['pais'] ?? '');
         $ciudad = trim($_POST['ciudad'] ?? '');
@@ -74,26 +46,15 @@ class RegisterController
 
         // Si hubo algún error, volvemos a renderizar el formulario con el mensaje
         if (!empty($data['error'])) {
-
-            echo "<h1>Depuración: La validación ha fallado.</h1>";
-            echo "<p>El script se detuvo antes de intentar registrar al usuario.</p>";
-            echo "<p>El error detectado es:</p>";
-            echo "<pre style='background-color: #f8d7da; padding: 15px;'>";
-            var_dump($data); // Muestra el contenido del array de error
-            echo "</pre>";
-            die();
-            
             $this->renderer->render("registrarse", $data);
             return;
         }
 
-        // Si todo está bien, procedemos a crear el usuario
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
         $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $año, $pais, $ciudad);
 
-        // Opcional: Redirigir con un mensaje de éxito
-       // header('Location: /login?exito=1');
+        header('Location: /');
+
         exit();
     }
 

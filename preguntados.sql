@@ -30,12 +30,12 @@ INSERT INTO roles (nombre_rol) VALUES ('Jugador'), ('Editor'), ('Administrador')
 
 INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, puntaje_total, id_rol)
 VALUES
-    ('Ana Martinez', 1998, 'Femenino', 'Argentina', 'La Plata', 'ana.martinez@email.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Ana', 'imagenes/fotoPerfil.jpg', TRUE, 1250, 1);
+    ('Ana Martinez', 1998, 'Femenino', 'Argentina', 'La Plata', 'ana.martinez@email.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Ana', 'imagenes/fotoPerfil.jpg', TRUE, 1250, 1);
 
 INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, id_rol)
 VALUES
-    ('Carlos Rodriguez', 1985, 'Masculino', 'Argentina', 'San Justo', 'carlos.editor@juego.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Carlos', 'imagenes/fotoPerfil.jpg', TRUE, 2);
+    ('Carlos Rodriguez', 1985, 'Masculino', 'Argentina', 'San Justo', 'carlos.editor@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Carlos', 'imagenes/fotoPerfil.jpg', TRUE, 2);
 
 INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, foto_perfil, cuenta_verificada, id_rol)
 VALUES
-    ('Sofia Lopez', 1990, 'Prefiero no cargarlo', 'Argentina', 'Ramos Mejía', 'sofia.admin@juego.com', '$2y$10$p1hN4iPHVZyVHaIVJTYeleQCnSmcFk8PHbhCDHnsF2fTlhkycObtW', 'Sofia', 'imagenes/fotoPerfil.jpg', TRUE, 3);
+    ('Sofia Lopez', 1990, 'Prefiero no cargarlo', 'Argentina', 'Ramos Mejía', 'sofia.admin@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Sofia', 'imagenes/fotoPerfil.jpg', TRUE, 3);
