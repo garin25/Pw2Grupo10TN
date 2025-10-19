@@ -23,8 +23,12 @@ function addClickSubmit() {
                     const ok = data.ok;
 
                     if (ok == true) {
-                        const usuarioId = data.usuario['usuarioId'];
-                        const user = data.usuario['user'];
+                        // 1. Accede a las variables directamente desde 'data' (no data.usuario)
+                        const usuarioId = data.usuarioId;
+
+                        // 2. Lee el campo que PHP realmente envía: 'nombre_usuario'
+                        const user = data.nombre_usuario;
+
                         cargarPassword(usuarioId, user);
                     }
                     if (ok == false) {

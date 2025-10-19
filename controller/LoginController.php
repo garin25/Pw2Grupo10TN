@@ -45,12 +45,13 @@ class LoginController
         }
 
         $email = $datos['email'];
-        $usuarioId = $this->model->obtenerIdUsuarioPorEmail($email);
+        $usuarioDatos = $this->model->obtenerIdUsuarioPorEmail($email);
 
-        if ($usuarioId !== null) {
+        if ($usuarioDatos !== null) {
             $respuesta = [
                 "ok" => true,
-                "usuario" => $usuarioId
+                "usuarioId" => $usuarioDatos['usuarioId'],        // <--- Clarifica la clave
+                "nombre_usuario" => $usuarioDatos['nombre_usuario'] // <--- Añade el nombre
             ];
         } else {
             $respuesta = [
