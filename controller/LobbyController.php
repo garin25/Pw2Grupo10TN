@@ -18,7 +18,8 @@ class LobbyController
 
     public function lobby()
     {
-        $data = ["page" => "Lobby"];
+        $data = ["page" => "Lobby",  "logout" => "/login/logout"];
+
         $this->renderer->render("lobby", $data);
     }
 

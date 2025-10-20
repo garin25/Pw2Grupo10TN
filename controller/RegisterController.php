@@ -18,7 +18,9 @@ class RegisterController
 
     public function registrar()
     {
-        $this->renderer->render("registrarse");
+        $data = [
+            "page" => "Registrarse", "login" => "/login"];
+        $this->renderer->render("registrarse", $data);
     }
     public function procesarRegistro(){
         // Recolectamos los datos y eliminamos espacios en blanco
