@@ -1,5 +1,26 @@
+<h2>Activando tu cuenta......</h2>
 
-<h1>¡Gracias por registrarte!</h1>
-<p>Para completar tu registro, por favor hacé clic en el siguiente enlace:</p>
-<a href='/register/resultadoActivacion' style='padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none;'>Activar mi cuenta</a>
-<p>Para activar tu cuenta, copiá y pegá este enlace en tu navegador: </p>
+
+<form id="form-activacion" method="post" action="/register/activar">
+    <label for="token">Tu token de activación:</label>
+
+    {{! El atributo "value" se rellena con el token de la URL }}
+    <input type="text" name="token" id="token" value="{{token}}" required>
+
+    <button type="submit">Activar Cuenta</button>
+</form>
+
+<script>
+    // Este script se ejecuta en cuanto la página termina de cargar
+    window.onload = function() {
+        const tokenInput = document.getElementById('token');
+
+        if (tokenInput.value.trim() !== '') {
+            // Si tiene un valor (porque vino en la URL)...
+            console.log('Token encontrado, enviando formulario automáticamente...');
+
+            // enviamos el form automaticamente
+            document.getElementById('form-activacion').submit();
+        }
+    };
+</script>

@@ -24,13 +24,29 @@ class RegisterController
     }
     public function activacion()
     {
-        $data = ["page" => "activacion"];
+        $token = trim($_GET['token'] ?? '');
+
+        $data = [
+            "page" => "activacion",
+            "token" => $token
+        ];
         $this->renderer->render("activacion", $data);
     }
 
     public function resultadoActivacion()
     {
-        $data = ["page" => "resultadoActivacion"];
+        $exito = $_GET['exito'] ?? 0;
+
+        $data = [
+            "page" => "Resultado de Activación"
+        ];
+
+        // Pasamos una bandera de éxito o de fallo según el parámetro
+        if ($exito == 1) {
+            $data['activacionExitosa'] = true;
+        } else {
+            $data['activacionFallida'] = true;
+        }
         $this->renderer->render("resultadoActivacion", $data);
     }
 
@@ -65,17 +81,24 @@ class RegisterController
         }
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $año, $pais, $ciudad);
+        // Genera un token criptográficamente seguro de 64 caracteres
+        $token = bin2hex(random_bytes(32));
+        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $año, $pais, $ciudad,$token);
 
-        header('Location: /');
+        header("Location: /register/activacion?token=" . $token);
 
         exit();
     }
     public function activar(){
         $token = trim($_POST['token'] ?? '');
-        $this->model->activar($token);
+       $exitoso = $this->model->activar($token);
 
-        header("Location: /register/activacion");
+        if ($exitoso) {
+            header("Location: /register/resultadoActivacion?exito=1");
+        } else {
+            header("Location: /register/resultadoActivacion?exito=0");
+        }
+        exit();
     }
 
     public function redirectToIndex()
