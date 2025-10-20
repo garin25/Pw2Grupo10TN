@@ -1,6 +1,6 @@
 
 const volver = document.getElementById("volver");
-
+const loginDescripcion = document.getElementById("login-descripcion");
 function addClickSubmit() {
     const submit = document.getElementById("submit");
     submit.addEventListener("click", () => {
@@ -60,7 +60,6 @@ addClickSubmit();
 
 function cargarPassword(usuarioId, user) {
     const contenedorInf = document.getElementById("login-inf");
-    const loginDescripcion = document.getElementById("login-descripcion");
     volver.classList.toggle("oculto")
     loginDescripcion.innerText = "Bienvenido " + user;
     contenedorInf.innerHTML = "";
@@ -126,7 +125,8 @@ function addClickSubmitForm(usuarioId) {
 
 function cargarEmail() {
     const contenedorInf = document.getElementById("login-inf");
-    volver.classList.toggle("oculto")
+    volver.classList.toggle("oculto");
+    loginDescripcion.innerText = "Iniciar sesión";
     contenedorInf.innerHTML = "";
     contenedorInf.innerHTML = `<div id="contenedor-form">
                     <label id="label-email" class="label" for="email">Ingrese su email:</label>
