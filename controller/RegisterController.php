@@ -22,6 +22,18 @@ class RegisterController
             "page" => "Registrarse", "login" => "/login"];
         $this->renderer->render("registrarse", $data);
     }
+    public function activacion()
+    {
+        $data = ["page" => "activacion"];
+        $this->renderer->render("activacion", $data);
+    }
+
+    public function resultadoActivacion()
+    {
+        $data = ["page" => "resultadoActivacion"];
+        $this->renderer->render("resultadoActivacion", $data);
+    }
+
     public function procesarRegistro(){
         // Recolectamos los datos y eliminamos espacios en blanco
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
@@ -58,6 +70,12 @@ class RegisterController
         header('Location: /');
 
         exit();
+    }
+    public function activar(){
+        $token = trim($_POST['token'] ?? '');
+        $this->model->activar($token);
+
+        header("Location: /register/activacion");
     }
 
     public function redirectToIndex()
