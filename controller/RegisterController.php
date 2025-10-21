@@ -24,11 +24,9 @@ class RegisterController
     }
     public function activacion()
     {
-        $token = trim($_GET['token'] ?? '');
 
         $data = [
-            "page" => "activacion",
-            "token" => $token
+            "page" => "activacion"
         ];
         $this->renderer->render("activacion", $data);
     }
