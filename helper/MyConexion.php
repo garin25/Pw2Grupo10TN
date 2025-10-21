@@ -11,6 +11,11 @@ class MyConexion
         if ($this->conexion->error) { die("Error en la conexión: " . $this->conexion->error); }
     }
 
+    public function getConexion()
+    {
+        return $this->conexion;
+    }
+
     public function query($sql)
     {
         $result = $this->conexion->query($sql);
@@ -19,33 +24,7 @@ class MyConexion
         }
         return null;
     }
-    public function obtenerIdUsuario($sql, $email)
-    {
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
 
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
-
-        return null;
-    }
-    public function obtenerUsuarioPorId($sql, $usuarioId){
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bind_param("i", $usuarioId);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
-
-        return null;
-    }
 
     public function registrarUsuario($sql, $nombreCompleto, $año, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, $id_rol,$token) {
             $stmt = $this->conexion->prepare($sql);
