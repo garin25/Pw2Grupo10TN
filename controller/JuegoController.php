@@ -18,7 +18,8 @@ class JuegoController
 
     public function juego()
     {
-        $data = ["page" => "Preguntas"];
+        $usuario = $this->model->buscarDatosUsuario($_SESSION["usuarioId"]);
+        $data = ["page" => "Preguntas", "usuario" => $usuario];
         $this->renderer->render("juego", $data);
     }
 

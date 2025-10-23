@@ -10,10 +10,14 @@ class RankingModel
         $this->conexion = $conexion;
     }
 
-    /*public function getUserWith($user, $password)
-    {
-        $sql = "SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$password'";
-        $result = $this->conexion->query($sql);
-        return $result ?? [];
-    }*/
+    public function buscarDatosUsuario($usuarioId){
+
+        $sql = "SELECT * FROM usuario WHERE usuarioid = ?";
+        $tipos = "s";
+        $params = array($usuarioId);
+
+        return $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
+
+    }
+
 }

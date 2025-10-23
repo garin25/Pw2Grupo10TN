@@ -52,7 +52,7 @@ main {
 }
 
 #login-img {
-    height: 60%;
+    height: 50%;
     border-radius: 12px;
     margin-bottom: 1em;
 }
@@ -90,7 +90,7 @@ main {
     outline: none;
 }
 
-.btn {
+.boton {
     border-radius: 12px;
     border: none;
     background-color: #8773be;
@@ -99,7 +99,7 @@ main {
     cursor: pointer;
 }
 
-.btn:hover {
+.boton:hover {
     background-color: #7358bb;
 }
 
@@ -125,7 +125,7 @@ main {
     text-decoration: underline;
 }
 
-@media(max-width: 768px){
+@media (max-width: 1300px){
     #login-img {
         height: 50%;
     }
@@ -134,6 +134,63 @@ main {
     }
     #contenedor-login {
         width: 40vw;
+    }
+
+
+}
+
+@media (max-width: 1100px){
+    #login-img {
+        height: 50%;
+    }
+    #login-descripcion {
+        font-size: 1.8em;
+    }
+    #contenedor-login {
+        width: 50vw;
+    }
+
+
+}
+
+@media (max-width: 900px){
+    #login-img {
+        height: 50%;
+    }
+    #login-descripcion {
+        font-size: 1.8em;
+    }
+    #contenedor-login {
+        width: 60vw;
+    }
+
+
+}
+
+@media (max-width: 700px){
+    #login-img {
+        height: 50%;
+    }
+    #login-descripcion {
+        font-size: 1.8em;
+    }
+    #contenedor-login {
+        width: 70vw;
+    }
+
+
+}
+
+
+@media (max-width: 500px){
+    #login-img {
+        height: 50%;
+    }
+    #login-descripcion {
+        font-size: 1.8em;
+    }
+    #contenedor-login {
+        width: 90vw;
     }
 
 

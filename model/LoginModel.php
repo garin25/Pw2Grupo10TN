@@ -12,16 +12,25 @@ class LoginModel
     public function obtenerIdUsuarioPorEmail($email)
     {
         $sql = "SELECT usuarioId, nombre_usuario FROM usuario WHERE email = ?";
-        return $this->obtenerIdUsuario($sql, $email);
+        $tipos = "s";
+        $params = array($email);
+        $result = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if($result != null){
+            return $result[0];
+        }
+
+        return null;
 
     }
 
     public function iniciarSesion($idUsuario, $pass){
         $sql = "SELECT usuarioId, nombre_usuario, password FROM usuario WHERE usuarioId = ?";
+        $tipos = "i";
+        $params = array($idUsuario);
+        $usuario = $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
 
-        $usuario = $this->obtenerUsuarioPorId($sql, $idUsuario);
-
-        if ($usuario===null) {
+        if ($usuario === null) {
             return null;
         }
 
@@ -32,34 +41,6 @@ class LoginModel
         } else {
             return null;
         }
-    }
-
-    public function obtenerIdUsuario($sql, $email)
-    {
-        $stmt = $this->conexion->getConexion()->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
-
-        return null;
-    }
-    public function obtenerUsuarioPorId($sql, $usuarioId){
-        $stmt = $this->conexion->getConexion()->prepare($sql);
-        $stmt->bind_param("i", $usuarioId);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
-
-        return null;
     }
 
 }

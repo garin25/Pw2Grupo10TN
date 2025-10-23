@@ -55,14 +55,14 @@ class RegisterController
         $password = $_POST['password'] ?? ''; // No hacemos trim a la contraseña
         $nombre_usuario = trim($_POST['nombre_usuario'] ?? '');
         $sexo = $_POST['sexo'] ?? '';
-        $año = (int)($_POST['año'] ?? 0);
+        $anio = (int)($_POST['año'] ?? 0);
         $pais = trim($_POST['pais'] ?? '');
         $ciudad = trim($_POST['ciudad'] ?? '');
 
         $data = []; // Array para acumular errores
 
         // --- Validación de datos ---
-        if (empty($nombreCompleto) || empty($email) || empty($password) || empty($nombre_usuario) || empty($sexo) || empty($año) || empty($pais) || empty($ciudad)) {
+        if (empty($nombreCompleto) || empty($email) || empty($password) || empty($nombre_usuario) || empty($sexo) || empty($anio) || empty($pais) || empty($ciudad)) {
             $data['error'] = "Todos los campos son obligatorios.";
         } elseif (strlen($password) < 8) {
             $data['error'] = "La contraseña debe tener al menos 8 caracteres.";
@@ -81,7 +81,7 @@ class RegisterController
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         // Genera un token criptográficamente seguro de 64 caracteres
         $token = bin2hex(random_bytes(32));
-        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $año, $pais, $ciudad,$token);
+        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad,$token);
 
         header("Location: /register/activacion?token=" . $token);
 

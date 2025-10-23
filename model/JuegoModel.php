@@ -10,4 +10,14 @@ class JuegoModel
         $this->conexion = $conexion;
     }
 
+    public function buscarDatosUsuario($usuarioId){
+
+        $sql = "SELECT * FROM usuario WHERE usuarioid = ?";
+        $tipos = "s";
+        $params = array($usuarioId);
+
+        return $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
+
+    }
+
 }
