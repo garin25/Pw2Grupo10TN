@@ -114,3 +114,14 @@ main {
 .reg:hover {
     text-decoration: underline;
 }
+
+.reg {
+    cursor: pointer;
+    color: black;
+    display: block;
+    width: fit-content;
+}
+
+.reg:hover {
+    text-decoration: underline;
+}

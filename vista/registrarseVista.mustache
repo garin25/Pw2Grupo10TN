@@ -1,13 +1,17 @@
 <link rel="stylesheet" href="/css/register.css">
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<main>
-    <section id="contenedor-registro">
+<main class="w-full min-h-screen">
+    <section id="contenedor-registro" class="w-full max-w-md mx-auto my-8 md:max-w-2xl lg:max-w-4xl  min-h-0  h-full
+        ">
         <div id="registro-sup">
-            <img id="registro-img" src="/imagenes/logo.jpg" alt="Logo del juego">
+            <div class="w-1/5">
+                <img id="registro-img" src="/imagenes/logo.jpg" alt="Logo del juego" class="w-full h-full object-cover">
+            </div>
             <h2 id="registro-descripcion">Crear una cuenta</h2>
         </div>
         <div id="registro-inf">
-            <form action="/register/procesarRegistro" method="POST" id="contenedor-form-registro" class="grid grid-cols-2 gap-4 ">
+            <form action="/register/procesarRegistro" method="POST" id="contenedor-form-registro"
+                  class="grid grid-cols-1 gap-4 md:grid-cols-2 p-1">
 
                 <div class="col-span-1 flex flex-col">
                     <label class="label" for="nombre">Nombre completo:</label>
@@ -16,7 +20,7 @@
 
                 <div class="col-span-1 flex flex-col">
                     <label class="label" for="nombre_usuario">Usuario:</label>
-                    <input id="nombre_usuario" class="input-registro" placeholder="Juan Pérez" name="nombre_usuario" type="text" required>
+                    <input id="nombre_usuario" class="input-registro" placeholder="JuanPerez" name="nombre_usuario" type="text" required>
                 </div>
 
                 <div class="col-span-1 flex flex-col">
@@ -40,7 +44,7 @@
 
                 <div class="col-span-1 flex flex-col">
                     <label class="label" for="ciudad">Ciudad:</label>
-                    <input id="ciudad" class="input-registro" placeholder="Argentina" name="ciudad" type="text" required>
+                    <input id="ciudad" class="input-registro" placeholder="Buenos Aires" name="ciudad" type="text" required>
                 </div>
 
                 <div class="col-span-1 flex flex-col">
@@ -55,7 +59,7 @@
 
             </form>
 
-            <button type="submit" form="contenedor-form-registro" id="btn-registrar" class="btn mx-auto w-1/2 mt-6">Registrarse</button>
+            <button type="submit" form="contenedor-form-registro" id="btn-registrar" class="btn mx-auto w-full md:w-1/2 mt-6">Registrarse</button>
 
             <a href="{{login}}" class="mt-3">¿Ya tienes una cuenta? Inicia sesión</a>
         </div>
@@ -63,3 +67,5 @@
 </main>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.all.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.min.css" rel="stylesheet">
+</body>
+</html>
