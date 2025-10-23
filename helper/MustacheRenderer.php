@@ -19,11 +19,13 @@ class MustacheRenderer{
 
     public function generateHtml($contentFile, $data = array()) {
         $contentAsString = "";
-        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache") {
+        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache" &&
+            $contentFile != "vista/activacionVista.mustache" && $contentFile != "vista/resultadoActivacionVista.mustache") {
             $contentAsString = file_get_contents($this->viewsFolder . '/header.mustache');
         }
         $contentAsString .= file_get_contents( $contentFile );
-        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache") {
+        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache" &&
+            $contentFile != "vista/activacionVista.mustache" && $contentFile != "vista/resultadoActivacionVista.mustache") {
             $contentAsString .= file_get_contents($this->viewsFolder . '/footer.mustache');
         }
         return $this->mustache->render($contentAsString, $data);
