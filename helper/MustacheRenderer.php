@@ -18,9 +18,14 @@ class MustacheRenderer{
     }
 
     public function generateHtml($contentFile, $data = array()) {
-        $contentAsString = file_get_contents(  $this->viewsFolder .'/header.mustache');
+        $contentAsString = "";
+        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache") {
+            $contentAsString = file_get_contents($this->viewsFolder . '/header.mustache');
+        }
         $contentAsString .= file_get_contents( $contentFile );
-        $contentAsString .= file_get_contents($this->viewsFolder . '/footer.mustache');
+        if($contentFile != "vista/loginVista.mustache" && $contentFile != "vista/registrarseVista.mustache") {
+            $contentAsString .= file_get_contents($this->viewsFolder . '/footer.mustache');
+        }
         return $this->mustache->render($contentAsString, $data);
     }
 }
