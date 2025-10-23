@@ -1,6 +1,6 @@
-<main class="w-full md:w-3/4 p-4 md:p-8 flex-grow">
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
 
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-6 flex-shrink-0">
         <h3 class="text-2xl font-bold text-gray-800">Ranking</h3>
 
         <label for="toggle-friends" class="flex items-center cursor-pointer">
@@ -15,7 +15,7 @@
 
     <div class="overflow-x-auto shadow-md rounded-lg">
         <table class="w-full text-sm text-left text-gray-600">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
             <tr>
                 <th scope="col" class="px-6 py-3">Posición</th>
                 <th scope="col" class="px-6 py-3">Usuario</th>
@@ -33,26 +33,75 @@
                 </td>
                 <td class="px-6 py-4">10</td>
             </tr>
-
-            <tr class="bg-white border-b hover:bg-gray-50">
+            <tr class="border-b bg-green-50 hover:bg-green-100">
                 <th scope="row" class="px-6 py-4 font-bold text-gray-900">2</th>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
-                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Ana">
-                        <span>Ana</span>
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Carlos</span>
                     </div>
                 </td>
                 <td class="px-6 py-4">20</td>
             </tr>
-            <tr class="bg-gray-50 border-b hover:bg-gray-100">
+            <tr class="border-b bg-green-50 hover:bg-green-100">
                 <th scope="row" class="px-6 py-4 font-bold text-gray-900">3</th>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
-                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Luis">
-                        <span>Luis</span>
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Tomás</span>
                     </div>
                 </td>
                 <td class="px-6 py-4">30</td>
+            </tr>
+            <tr class="border-b bg-green-50 hover:bg-green-100">
+                <th scope="row" class="px-6 py-4 font-bold text-gray-900">4</th>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Lautaro</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4">40</td>
+            </tr>
+            <tr class="border-b bg-green-50 hover:bg-green-100">
+                <th scope="row" class="px-6 py-4 font-bold text-gray-900">5</th>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Martin</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4">50</td>
+            </tr>
+            <tr class="border-b bg-green-50 hover:bg-green-100">
+                <th scope="row" class="px-6 py-4 font-bold text-gray-900">6</th>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Facundo</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4">60</td>
+            </tr>
+            <tr class="border-b bg-green-50 hover:bg-green-100">
+                <th scope="row" class="px-6 py-4 font-bold text-gray-900">7</th>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Santiago</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4">70</td>
+            </tr>
+            <tr class="border-b bg-green-50 hover:bg-green-100">
+                <th scope="row" class="px-6 py-4 font-bold text-gray-900">8</th>
+                <td class="px-6 py-4">
+                    <div class="flex items-center">
+                        <img class="w-10 h-10 rounded-full object-cover mr-3" src="../imagenes/fotoPerfil.jpg" alt="Foto de Juan">
+                        <span>Nicolas</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4">80</td>
             </tr>
             </tbody>
         </table>

@@ -71,3 +71,12 @@ main {
 .btn:hover {
     background-color: #7358bb;
 }
+
+@media(max-width: 768px){
+    #preguntas-img {
+        height: 60%;
+    }
+    #preguntas-descripcion {
+        font-size: 0.9em;
+    }
+}

@@ -26,7 +26,7 @@ main {
     border-radius: 12px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15),
         0px 6px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
+   position: relative;
 }
 
 #volver {
@@ -52,7 +52,7 @@ main {
 }
 
 #login-img {
-    height: 70%;
+    height: 60%;
     border-radius: 12px;
     margin-bottom: 1em;
 }
@@ -75,7 +75,6 @@ main {
 #contenedor-form {
     display: flex;
     flex-direction: column;
-    gap: 1em;
 }
 
 .label {
@@ -124,4 +123,18 @@ main {
 
 .reg:hover {
     text-decoration: underline;
+}
+
+@media(max-width: 768px){
+    #login-img {
+        height: 50%;
+    }
+    #login-descripcion {
+        font-size: 1.8em;
+    }
+    #contenedor-login {
+        width: 40vw;
+    }
+
+
 }
