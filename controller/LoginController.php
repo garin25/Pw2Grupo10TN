@@ -22,7 +22,7 @@ class LoginController
             $this->redirectToIndex();
         }
 
-        $data = ["page" => "Iniciar Sesión", "registro" => "/register/registrar/"];
+        $data = ["page" => "Iniciar Sesión", "registro" => "/register"];
         $this->renderer->render("login", $data);
     }
 

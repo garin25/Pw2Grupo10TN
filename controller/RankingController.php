@@ -18,7 +18,9 @@ class RankingController
 
     public function ranking()
     {
-        $data = ["page" => "Ranking"];
+
+        $usuario = $this->model->buscarDatosUsuario($_SESSION["usuarioId"]);
+        $data = ["page" => "Ranking", "usuario" => $usuario];
         $this->renderer->render("ranking", $data);
     }
 
