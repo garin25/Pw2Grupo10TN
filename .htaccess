@@ -12,6 +12,7 @@ Options -Indexes
     RewriteRule ^(js)($|/) - [L,NC]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(perfil)/(.*)$ index.php?controller=perfil&method=user&usuario=$2 [L,QSA]
     RewriteRule ^(.*)/(.*)/(.*)$ index.php?controller=$1&method=$2&$3 [L,QSA]
     RewriteRule ^(.*)/(.*)$ index.php?controller=$1&method=$2 [L,QSA]
     RewriteRule ^(.*)$ index.php?controller=$1&method=base [L,QSA]
