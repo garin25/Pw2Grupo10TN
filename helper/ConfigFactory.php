@@ -14,7 +14,7 @@ include_once("model/RankingModel.php");
 include_once("model/LobbyModel.php");
 include_once("model/JuegoModel.php");
 include_once("model/MiPerfilModel.php");
-include_once('vendor/mustache/src/Mustache/Autoloader.php');
+include_once('vendor/mustache/Mustache/src/Autoloader.php');
 include_once ("helper/MustacheRenderer.php");
 
 class ConfigFactory
