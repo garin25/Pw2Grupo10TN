@@ -18,10 +18,8 @@ class RegisterController
 
     public function registrar()
     {
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (isset($usuarioId)) {
-            $this->redirectToIndex();
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToLobby();
         }
 
         $data = [
@@ -30,10 +28,8 @@ class RegisterController
     }
     public function activacion()
     {
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (isset($usuarioId)) {
-            $this->redirectToIndex();
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToLobby();
         }
 
         $data = [
@@ -44,10 +40,8 @@ class RegisterController
 
     public function resultadoActivacion()
     {
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (isset($usuarioId)) {
-            $this->redirectToIndex();
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToLobby();
         }
 
         $exito = $_GET['exito'] ?? 0;
@@ -66,11 +60,10 @@ class RegisterController
     }
 
     public function procesarRegistro(){
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (isset($usuarioId)) {
-            $this->redirectToIndex();
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToLobby();
         }
+
         // Recolectamos los datos y eliminamos espacios en blanco
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
         $email = trim($_POST['email'] ?? '');
@@ -110,10 +103,8 @@ class RegisterController
         exit();
     }
     public function activar(){
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (isset($usuarioId)) {
-            $this->redirectToIndex();
+        if (isset($_SESSION['usuarioId'])){
+            $this->redirectToLobby();
         }
 
         $token = trim($_POST['token'] ?? '');
