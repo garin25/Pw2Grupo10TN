@@ -26,7 +26,7 @@ class MiPerfilController
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Mi perfil", "usuario" => $usuario];
-        $this->renderer->render("miperfil", $data);
+        $this->renderer->render("miPerfil", $data);
     }
 
     public function redirectToIndex()
