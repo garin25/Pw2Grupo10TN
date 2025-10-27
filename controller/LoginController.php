@@ -19,7 +19,7 @@ class LoginController
     public function loginForm()
     {
         if (isset($_SESSION['usuarioId'])){
-            $this->redirectToIndex();
+            $this->redirectToLobby();
         }
 
         $data = ["page" => "Iniciar Sesión", "registro" => "/register"];
@@ -29,7 +29,7 @@ class LoginController
     public function verificarEmail()
     {
         if (isset($_SESSION['usuarioId'])){
-            $this->redirectToIndex();
+            $this->redirectToLobby();
         }
 
         header('Content-Type: application/json');
@@ -67,7 +67,7 @@ class LoginController
     {
 
         if (isset($_SESSION['usuarioId'])){
-            $this->redirectToIndex();
+            $this->redirectToLobby();
         }
 
         header('Content-Type: application/json');
@@ -111,7 +111,7 @@ class LoginController
         exit;
     }
 
-    public function redirectToIndex()
+    public function redirectToLobby()
     {
         header("Location: /lobby");
         exit;

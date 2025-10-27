@@ -18,12 +18,18 @@ class PerfilController
 
     public function user()
     {
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (!isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
+
         $usuarioNombre = $_GET['usuario'];
-        $usuario = $this->model->buscarDatosUsuarioPorId($_SESSION['usuarioId']);
+        $usuario = $this->model->buscarDatosUsuarioPorId($usuarioId);
         $usuarioConsultado = $this->model->buscarDatosUsuario($usuarioNombre);
 
         if($usuarioConsultado != null){
-            $data = ["page" => $usuarioNombre, "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado];
+            $data = ["page" => "Perfil de " . $usuarioNombre, "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado];
             $this->renderer->render("perfil", $data);
         } else {
             $this->redirectToIndex();

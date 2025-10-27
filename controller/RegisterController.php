@@ -18,12 +18,23 @@ class RegisterController
 
     public function registrar()
     {
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
+
         $data = [
             "page" => "Registrarse", "login" => "/login"];
         $this->renderer->render("registrarse", $data);
     }
     public function activacion()
     {
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
 
         $data = [
             "page" => "activacion"
@@ -33,6 +44,12 @@ class RegisterController
 
     public function resultadoActivacion()
     {
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
+
         $exito = $_GET['exito'] ?? 0;
 
         $data = [
@@ -49,6 +66,11 @@ class RegisterController
     }
 
     public function procesarRegistro(){
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
         // Recolectamos los datos y eliminamos espacios en blanco
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
         $email = trim($_POST['email'] ?? '');
@@ -88,6 +110,12 @@ class RegisterController
         exit();
     }
     public function activar(){
+        $usuarioId = $_SESSION['usuarioId'];
+
+        if (isset($usuarioId)) {
+            $this->redirectToIndex();
+        }
+
         $token = trim($_POST['token'] ?? '');
        $exitoso = $this->model->activar($token);
 
