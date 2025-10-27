@@ -25,7 +25,7 @@ class JuegoController
         }
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-        $data = ["page" => "Preguntas", "usuario" => $usuario];
+        $data = ["page" => "Preguntas",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("juego", $data);
     }
 

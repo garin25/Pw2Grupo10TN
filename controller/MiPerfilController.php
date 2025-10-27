@@ -25,7 +25,7 @@ class MiPerfilController
         }
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-        $data = ["page" => "Mi perfil", "usuario" => $usuario];
+        $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("miPerfil", $data);
     }
 

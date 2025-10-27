@@ -29,7 +29,7 @@ class PerfilController
         $usuarioConsultado = $this->model->buscarDatosUsuario($usuarioNombre);
 
         if($usuarioConsultado != null){
-            $data = ["page" => "Perfil de " . $usuarioNombre, "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado];
+            $data = ["page" => "Perfil de " . $usuarioNombre,  "logout" => "/login/logout", "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado];
             $this->renderer->render("perfil", $data);
         } else {
             $this->redirectToIndex();
