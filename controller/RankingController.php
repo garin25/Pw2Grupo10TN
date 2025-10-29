@@ -18,13 +18,12 @@ class RankingController
 
     public function ranking()
     {
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (!isset($usuarioId)) {
+        if (!isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
         }
+        $usuarioId = $_SESSION['usuarioId'];
 
-        $usuario = $this->model->buscarDatosUsuario($_SESSION["usuarioId"]);
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Ranking",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("ranking", $data);
     }

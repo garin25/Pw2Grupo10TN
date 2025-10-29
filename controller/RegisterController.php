@@ -118,7 +118,7 @@ class RegisterController
         exit();
     }
 
-    public function redirectToIndex()
+    public function redirectToLobby()
     {
         header("Location: /");
         exit;

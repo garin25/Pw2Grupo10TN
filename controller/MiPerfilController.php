@@ -18,11 +18,11 @@ class MiPerfilController
 
     public function miPerfil()
     {
-        $usuarioId = $_SESSION["usuarioId"];
-
-        if (!isset($usuarioId)) {
+        if (!isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
         }
+        $usuarioId = $_SESSION["usuarioId"];
+
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario];

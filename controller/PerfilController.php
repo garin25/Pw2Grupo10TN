@@ -18,11 +18,10 @@ class PerfilController
 
     public function user()
     {
-        $usuarioId = $_SESSION['usuarioId'];
-
-        if (!isset($usuarioId)) {
+        if (!isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
         }
+        $usuarioId = $_SESSION['usuarioId'];
 
         $usuarioNombre = $_GET['usuario'];
         $usuario = $this->model->buscarDatosUsuarioPorId($usuarioId);

@@ -17,11 +17,11 @@ class LobbyController
 
     public function lobby()
     {
-        $usuarioId = $_SESSION["usuarioId"];
-
-        if(!isset($usuarioId)){
+        if (!isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
         }
+        $usuarioId = $_SESSION["usuarioId"];
+
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Lobby",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("lobby", $data);
