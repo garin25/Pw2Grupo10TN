@@ -69,9 +69,11 @@ class JuegoModel
 
     public function finalizarPartida($puntosPartida, $usuarioId){
 
-        $sql = "INSERT partida (usuarioId, puntos, fecha) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO partida (usuarioId, puntos, fecha) VALUES (?, ?, ?)";
         $tipos = "sis";
         $params = array($usuarioId, $puntosPartida, date("Y-m-d H:i:s", time()));
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
     }
 
 }
