@@ -28,13 +28,13 @@ class JuegoModel
 
         $resultado = []; // Inicializar variable
 
-        if ($dificultad == "Dificil"){
+        if ($dificultad == "Facil"){
             // FIX: Corregido el SQL para usar el cálculo en el WHERE en lugar del alias 'dificultad'
             $sql = "SELECT *, (p.respondidasMal / p.cantidadEnviada) as dificultad FROM pregunta p 
                 JOIN respuesta r ON r.preguntaId = p.preguntaId
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) < ?
+                    AND (p.respondidasMal / p.cantidadEnviada) > ?
                     AND (p.preguntaId != ? OR ? IS NULL)
                 ORDER BY RAND()
                 LIMIT 1";
@@ -60,13 +60,13 @@ class JuegoModel
             $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
         }
 
-        if ($dificultad == "Facil"){
+        if ($dificultad == "Dificil"){
             // FIX: Corregido el SQL para usar el cálculo en el WHERE
             $sql = "SELECT *, (p.respondidasMal / p.cantidadEnviada) as dificultad FROM pregunta p 
                 JOIN respuesta r ON r.preguntaId = p.preguntaId
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) > ?
+                    AND (p.respondidasMal / p.cantidadEnviada) < ?
                     AND (p.preguntaId != ? OR ? IS NULL)
                 ORDER BY RAND()
                 LIMIT 1";
