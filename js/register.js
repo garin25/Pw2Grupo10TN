@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const mapPopup = document.getElementById('map-popup');
     const closeMapButton = document.getElementById('close-map');
 
+    const latitudInput = document.getElementById('latitud');
+    const longitudInput = document.getElementById('longitud');
+
     let map = null;
     let marker = null;
 
@@ -22,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 map.on('click', function(e) {
                     const lat = e.latlng.lat;
                     const lon = e.latlng.lng;
+
+                    latitudInput.value = lat;
+                    longitudInput.value = lon;
 
                     if (marker) {
                         marker.setLatLng(e.latlng);
