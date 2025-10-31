@@ -28,13 +28,12 @@ class JuegoModel
 
         $resultado = []; // Inicializar variable
 
-        if ($dificultad == "Dificil"){
+        if ($dificultad == "Facil"){
             // FIX: Corregido el SQL para usar el cálculo en el WHERE en lugar del alias 'dificultad'
-            $sql = "SELECT *, (p.respondidasMal / p.cantidadEnviada) as dificultad FROM pregunta p 
-                JOIN respuesta r ON r.preguntaId = p.preguntaId
+            $sql = "SELECT * FROM pregunta p 
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) < ?
+                    AND (p.respondidasMal / p.cantidadEnviada) > ?
                     AND (p.preguntaId != ? OR ? IS NULL)
                 ORDER BY RAND()
                 LIMIT 1";
@@ -46,8 +45,7 @@ class JuegoModel
 
         if ($dificultad == "Medio"){
             // FIX: Corregido el SQL para usar el cálculo en el WHERE
-            $sql = "SELECT *, (p.respondidasMal / p.cantidadEnviada) as dificultad FROM pregunta p 
-                JOIN respuesta r ON r.preguntaId = p.preguntaId
+            $sql = "SELECT * FROM pregunta p 
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
                     AND (p.respondidasMal / p.cantidadEnviada) BETWEEN ? AND ? 
@@ -60,13 +58,12 @@ class JuegoModel
             $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
         }
 
-        if ($dificultad == "Facil"){
+        if ($dificultad == "Dificil"){
             // FIX: Corregido el SQL para usar el cálculo en el WHERE
-            $sql = "SELECT *, (p.respondidasMal / p.cantidadEnviada) as dificultad FROM pregunta p 
-                JOIN respuesta r ON r.preguntaId = p.preguntaId
+            $sql = "SELECT * FROM pregunta p 
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) > ?
+                    AND (p.respondidasMal / p.cantidadEnviada) < ?
                     AND (p.preguntaId != ? OR ? IS NULL)
                 ORDER BY RAND()
                 LIMIT 1";
@@ -87,7 +84,9 @@ class JuegoModel
     public  function buscarRespuestas($id)
     {
         $sqlRespuestas = "SELECT * FROM respuesta WHERE preguntaId = ?";
-        return $this->conexion->ejecutarConsulta($sqlRespuestas, "i", [$id]);
+        $tipos = "i";
+        $params = array($id);
+        return $this->conexion->ejecutarConsulta($sqlRespuestas, $tipos, $params);
     }
 
     // FIX: Cambiado el nombre a 'partidaFinalizada' para coincidir con el controlador

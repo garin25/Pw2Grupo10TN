@@ -55,10 +55,10 @@ class JuegoController
 
         if(isset($_SESSION['preguntaId'])){
            // $pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], $_SESSION['preguntaId']);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'], "Medio", $_SESSION['preguntaId']);
+            $pregunta = $this->model->buscarPregunta($datos['categoria'], "Facil", $_SESSION['preguntaId']);
         } else {
             //$pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], null);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'],"Medio", null);
+            $pregunta = $this->model->buscarPregunta($datos['categoria'],"Facil", null);
         }
 
         if(!$pregunta){
@@ -70,8 +70,8 @@ class JuegoController
 
 
         for($i = 0; $i < count($respuestas); $i++){
-            if($respuestas[$i]["esCorrecta"]===true){
-                $_SESSION['respuestaTexto'] = $respuestas[$i]["respuestaTexto"];
+            if($respuestas[$i]["esCorrecta"]===1){
+                $_SESSION['id_respuesta'] = $respuestas[$i]["id_respuesta"];
             }
         }
         $_SESSION['preguntaId'] = $pregunta['preguntaId'];
@@ -107,18 +107,18 @@ class JuegoController
 
         $usuarioId = $_SESSION['usuarioId'];
         $preguntaId = $_SESSION['preguntaId'];
-        $respuestaTexto = $_SESSION['respuestaTexto'];
+        $idRespuesta = $_SESSION['id_respuesta'];
         $puntosPartida = $_SESSION['puntosPartida'];
 
         if ($preguntaId !== $datos['preguntaId']) {
             $respuesta = ['ok' => false, 'error' => 'Pregunta no coincide'];
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
-        } else if($respuestaTexto !== $datos['respuestaTexto']) {
-            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta'];
-            $this->model->partidaFinalizada($puntosPartida, $usuarioId);
-        } else {
+        } else if($idRespuesta == $datos['respuestaId']) {
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
             $_SESSION['puntosPartida'] += 10;
+        } else {
+            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta'];
+            $this->model->partidaFinalizada($puntosPartida, $usuarioId);
         }
 
         echo json_encode($respuesta);

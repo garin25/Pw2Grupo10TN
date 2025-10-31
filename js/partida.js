@@ -139,23 +139,25 @@ function respuestaIncorrecta(){
                         // fijarse como se recibe el json capaz es data.id y asi
                         const pregunta = data.pregunta;
                         preguntaId = pregunta.preguntaId;
-                        const respuestas = data.pregunta.respuestas;
+                        const respuestas = data.respuestas;
 
                         respuestas.forEach(respuesta => {
                             if (respuesta.esCorrecta) {
                                 rtaCorrecta = respuesta;
-                                idrespuestaCorrecta = respuesta.respuestaId;
+                                idrespuestaCorrecta = respuesta.id_respuesta;
                             }
                         })
                         const descPregunta = document.getElementById("preguntas-descripcion");
-                        descPregunta.textContent = pregunta.descripcion;
+                        descPregunta.textContent = pregunta.enunciado;
                         for (let i = 0; i < botonesRespuestas.length; i++) {
+                            botonesRespuestas[i].id = respuestas[i].id_respuesta;
                             if (respuestas[i].esCorrecta) {
                                 btnRtaCorrecta = botonesRespuestas[i].id;
                             }
                             botonesRespuestas[i].textContent = respuestas[i].respuestaTexto;
                             botonesRespuestas[i].onclick = () => {
-                                contestarPregunta(botonesRespuestas[i].textContent);
+                                console.log(botonesRespuestas[i].id);
+                                contestarPregunta(botonesRespuestas[i].id);
                             };
                         }
                     }
@@ -185,14 +187,14 @@ function respuestaIncorrecta(){
     }
 
 // Hay que agregarle un evento click a cada boton de respuesta , no se como pasarle el id
-    function contestarPregunta(respuestaTexto) {
+    function contestarPregunta(respuestaId) {
         // hay que pasarle preguntaId tambien
 
         const url = '/juego/verificarRespuesta';
         const xhttp = new XMLHttpRequest();
         // Revisar como pasar los datos:
         const datosParaEnviar = {
-            "respuestaTexto": respuestaTexto,
+            "respuestaId": respuestaId,
             "preguntaId": preguntaId
         };
 
