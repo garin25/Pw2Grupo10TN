@@ -117,7 +117,9 @@ class JuegoController
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
             $_SESSION['puntosPartida'] += 10;
         } else {
-            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta'];
+            //$respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta'];
+            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida']];
+            $_SESSION['puntosPartida'] = 0;//Limpio por si vuelve a jugar
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
         }
 

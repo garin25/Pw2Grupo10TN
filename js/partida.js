@@ -12,6 +12,7 @@ let rtaCorrecta = null; // guardamos la rta correcta para no tener que ir devuel
 let btnRtaCorrecta = null; // id= a,b,c o d
 let preguntaId = null;
 let idrespuestaCorrecta;
+let puntaje = null;
 
 contenedorRuleta.classList.add('visible');
 contenedorPreguntas.classList.add('oculto');
@@ -30,7 +31,7 @@ function girarRuleta() {
     btnGirar.disabled = true;
 
     const sectorGanadorIndex = Math.floor(Math.random() * numSectores);
-    const categoriaGanadora = getCategoria(sectorGanadorIndex+1);
+    const categoriaGanadora = getCategoria(sectorGanadorIndex);
     const anguloObjetivo = sectorGanadorIndex * gradosPorSector + gradosPorSector / 2;
     const girosCompletos = 5;
     const anguloTotalDeGiro = (girosCompletos * 360) + anguloObjetivo;
@@ -97,6 +98,7 @@ function cambiarAContenedorPregunta() {
 function cambiarAPartidaPerdida() {
     contenedorPreguntas.classList.remove('visible');
     contenedorPreguntas.classList.add('oculto');
+    contenedorPerder.querySelector("#puntaje").textContent += puntaje;
     contenedorPerder.classList.remove('oculto');
     contenedorPerder.classList.add('visible');
 }
@@ -230,6 +232,9 @@ function respuestaIncorrecta(){
                             respuestaCorrecta();
                         } else {
                             //terminar partida , mensaje de fracaso , boton volver al home
+                            if(data.puntaje){
+                                puntaje = data.puntaje
+                            }
                             respuestaIncorrecta();
                         }
                     }
