@@ -24,10 +24,9 @@ class JuegoModel
         return null; // Si no se encuentra el usuario, devuelve null
     }
 
-    public function buscarPregunta($categoria, $dificultad, $preguntaId){
+    public function buscarPregunta($categoria, $dificultad, $idsVistos = []){
 
         // Usamos IF() de MySQL para evitar 100% la división por cero.
-        // Si la pregunta es nueva (0/0), su ratio será 0 (Fácil).
         $ratioSeguro = "IF(p.cantidadEnviada = 0, 0, (p.respondidasMal / p.cantidadEnviada))";
 
         $condicionDificultad = "";
@@ -41,44 +40,59 @@ class JuegoModel
             $condicionDificultad = "AND ($ratioSeguro > 0.66)";
         }
 
-        // 2. INTENTO 1: Buscar la pregunta con la dificultad específica
-        $sql = "SELECT * FROM pregunta p 
-                JOIN categoria c ON c.categoriaId = p.categoriaId
-                WHERE c.nombre = ? 
-                $condicionDificultad
-                AND (p.preguntaId != ? OR ? IS NULL)
-                ORDER BY RAND()
-                LIMIT 1";
+        // --- NUEVA LÓGICA PARA EXCLUIR EL ARRAY ---
+        $params = [$categoria];
+        $tipos = "s";
+        $clausulaExclusion = "";
 
-        $tipos = "sii";
-        $params = array($categoria, $preguntaId, $preguntaId);
+        // Si el array $idsVistos no está vacío, creamos la cláusula NOT IN
+        if (!empty($idsVistos)) {
+            // 1. Crea un string de placeholders: "?,?,?"
+            $placeholders = implode(',', array_fill(0, count($idsVistos), '?'));
+
+            // 2. Añadimos la cláusula SQL
+            $clausulaExclusion = " AND p.preguntaId NOT IN ($placeholders)";
+
+            // 3. Añadimos los IDs al array de parámetros
+            foreach ($idsVistos as $id) {
+                $params[] = $id;
+                $tipos .= "i"; // 'i' por cada ID entero
+            }
+        }
+        // --- FIN DE LA NUEVA LÓGICA ---
+
+
+        // 2. INTENTO 1: Buscar con dificultad específica y exclusión
+        $sql = "SELECT * FROM pregunta p 
+            JOIN categoria c ON c.categoriaId = p.categoriaId
+            WHERE c.nombre = ? 
+            $condicionDificultad
+            $clausulaExclusion
+            ORDER BY RAND()
+            LIMIT 1";
+
+        // Nota: $tipos y $params ya están listos
         $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
-        // 3. ----- ESTA ES LA COMPROBACIÓN CORREGIDA -----
-        // Comprobamos si $resultado es un array Y si no está vacío
         if (is_array($resultado) && count($resultado) > 0) {
             return $resultado[0];
         }
-        // ----------------------------------------------
 
-        // 4. INTENTO 2 (FALLBACK): Si no encontramos nada,
-        //    buscamos CUALQUIER pregunta de esa categoría que no esté repetida.
-
+        // 4. INTENTO 2 (FALLBACK): Buscar CUALQUIER pregunta no vista
         $sqlFallback = "SELECT * FROM pregunta p 
-                        JOIN categoria c ON c.categoriaId = p.categoriaId
-                        WHERE c.nombre = ? 
-                        AND (p.preguntaId != ? OR ? IS NULL)
-                        ORDER BY RAND()
-                        LIMIT 1";
+                    JOIN categoria c ON c.categoriaId = p.categoriaId
+                    WHERE c.nombre = ? 
+                    $clausulaExclusion
+                    ORDER BY RAND()
+                    LIMIT 1";
 
         $resultadoFallback = $this->conexion->ejecutarConsulta($sqlFallback, $tipos, $params);
 
-        // También usamos la comprobación segura aquí
         if (is_array($resultadoFallback) && count($resultadoFallback) > 0) {
             return $resultadoFallback[0];
         }
 
-        // 5. Si ya no hay más preguntas en esa categoría, devolvemos null
+        // 5. Si ya no hay más preguntas, devolvemos null
         return null;
     }
 

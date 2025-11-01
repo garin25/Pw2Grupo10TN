@@ -26,6 +26,8 @@ class JuegoController
         if (!isset($_SESSION['puntosPartida'])) {
             $_SESSION['puntosPartida'] = 0;
         }
+        //Inicializo las preguntas vistas
+        $_SESSION['preguntasVistas'] = [];
 
         unset($_SESSION['preguntaId']);
         unset($_SESSION['respuestaTexto']);
@@ -53,12 +55,17 @@ class JuegoController
             return;
         }
 
-        if(isset($_SESSION['preguntaId'])){
-           // $pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], $_SESSION['preguntaId']);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'], "Dificil", $_SESSION['preguntaId']);
-        } else {
-            //$pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], null);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'],"Dificil", null);
+
+
+
+        // Recuperamos el array de IDs a evitar
+        $ids_a_evitar = isset($_SESSION['preguntasVistas']) ? $_SESSION['preguntasVistas'] : [];
+        $pregunta = $this->model->buscarPregunta($datos['categoria'],  $_SESSION['dificultad'], $ids_a_evitar);
+
+// Añadimos el ID nuevo al array de la sesión
+        if ($pregunta != null) {
+            // Añadimos el nuevo ID a la lista
+            $_SESSION['preguntasVistas'][] = $pregunta['preguntaId'];
         }
 
         if(!$pregunta){
@@ -117,9 +124,9 @@ class JuegoController
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
             $_SESSION['puntosPartida'] += 10;
         } else {
-            //$respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta'];
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida']];
             $_SESSION['puntosPartida'] = 0;//Limpio por si vuelve a jugar
+            $_SESSION['preguntasVistas'] = [];
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
         }
 

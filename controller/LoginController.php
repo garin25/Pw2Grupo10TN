@@ -87,6 +87,11 @@ class LoginController
         $passLimpia = trim($pass);
         $usuario = $this->model->iniciarSesion($usuarioId, $passLimpia);
 
+        //Si se loguea le calculo el nivel al usuario
+        $nivelUsuario = $this->model->calcularNivelUsuario($usuarioId); // Devuelve 0.0 para nuevos usuarios
+        $dificultadString = $this->pasarNivelAString($nivelUsuario);
+        $_SESSION['dificultad'] = $dificultadString;
+
         if ($usuario !== null) {
             $_SESSION['usuarioId'] = $usuario['usuarioId'];
             $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
@@ -103,6 +108,19 @@ class LoginController
 
         echo json_encode($respuesta);
     }
+
+    public function pasarNivelAString($nivelUsuario){
+        if ($nivelUsuario < 0.33) {
+            return "Facil";
+        } else if ($nivelUsuario > 0.66) {
+            // Es malo (cercano a 1) O es nuevo (default = 1.0) -> Dificil
+            return "Dificil";
+        } else {
+            // Es promedio (entre 0.33 y 0.66) -> Medio
+            return "Medio";
+        }
+    }
+
 
     public function logout()
     {

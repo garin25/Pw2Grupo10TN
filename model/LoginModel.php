@@ -42,5 +42,26 @@ class LoginModel
             return null;
         }
     }
+    public function calcularNivelUsuario($usuarioId)
+    {
+        // (Total de respuestas - Total de correctas) = Total de incorrectas
+        // (Total de incorrectas / Total de respuestas) = Ratio de error (tu nivel)
+        $sql = "SELECT
+                    IF(COUNT(preguntaId) = 0, 
+                       0.0,  -- POR DEFECTO ES 0 (FACIL)
+                       (COUNT(preguntaId) - SUM(fue_correcta)) / COUNT(preguntaId)
+                    ) AS nivelUsuario
+                FROM
+                    historial_respuestas
+                WHERE
+                    usuarioId = ?";
+
+        $tipos = "i";
+        $params = array($usuarioId);
+
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        return $resultado[0]['nivelUsuario'];
+    }
 
 }
