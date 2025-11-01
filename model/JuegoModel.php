@@ -26,59 +26,60 @@ class JuegoModel
 
     public function buscarPregunta($categoria, $dificultad, $preguntaId){
 
-        $resultado = []; // Inicializar variable
+        // Usamos IF() de MySQL para evitar 100% la división por cero.
+        // Si la pregunta es nueva (0/0), su ratio será 0 (Fácil).
+        $ratioSeguro = "IF(p.cantidadEnviada = 0, 0, (p.respondidasMal / p.cantidadEnviada))";
 
-        if ($dificultad == "Facil"){
-            // FIX: Corregido el SQL para usar el cálculo en el WHERE en lugar del alias 'dificultad'
-            $sql = "SELECT * FROM pregunta p 
-                JOIN categoria c ON c.categoriaId = p.categoriaId
-                WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) > ?
-                    AND (p.preguntaId != ? OR ? IS NULL)
-                ORDER BY RAND()
-                LIMIT 1";
-            // FIX: Corregidos tipos (sdii) y params (4) para que coincidan con los '?'
-            $tipos = "sdii";
-            $params = array($categoria, 0.66, $preguntaId, $preguntaId);
-            $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+        $condicionDificultad = "";
+
+        // 1. Definimos el filtro SQL
+        if ($dificultad == "Facil") {
+            $condicionDificultad = "AND ($ratioSeguro < 0.33)";
+        } elseif ($dificultad == "Medio") {
+            $condicionDificultad = "AND ($ratioSeguro BETWEEN 0.33 AND 0.66)";
+        } elseif ($dificultad == "Dificil") {
+            $condicionDificultad = "AND ($ratioSeguro > 0.66)";
         }
 
-        if ($dificultad == "Medio"){
-            // FIX: Corregido el SQL para usar el cálculo en el WHERE
-            $sql = "SELECT * FROM pregunta p 
+        // 2. INTENTO 1: Buscar la pregunta con la dificultad específica
+        $sql = "SELECT * FROM pregunta p 
                 JOIN categoria c ON c.categoriaId = p.categoriaId
                 WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) BETWEEN ? AND ? 
-                    AND (p.preguntaId != ? OR ? IS NULL)
+                $condicionDificultad
+                AND (p.preguntaId != ? OR ? IS NULL)
                 ORDER BY RAND()
                 LIMIT 1";
-            // FIX: Corregidos tipos (sddii), params (5) y el 0,66 por 0.66
-            $tipos = "sddii";
-            $params = array($categoria, 0.33, 0.66, $preguntaId, $preguntaId);
-            $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
-        }
 
-        if ($dificultad == "Dificil"){
-            // FIX: Corregido el SQL para usar el cálculo en el WHERE
-            $sql = "SELECT * FROM pregunta p 
-                JOIN categoria c ON c.categoriaId = p.categoriaId
-                WHERE c.nombre = ? 
-                    AND (p.respondidasMal / p.cantidadEnviada) < ?
-                    AND (p.preguntaId != ? OR ? IS NULL)
-                ORDER BY RAND()
-                LIMIT 1";
-            // FIX: Corregidos tipos (sdii) y params (4)
-            $tipos = "sdii";
-            $params = array($categoria, 0.33, $preguntaId, $preguntaId);
-            $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
-        }
+        $tipos = "sii";
+        $params = array($categoria, $preguntaId, $preguntaId);
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
-        // FIX: Validar que la consulta devuelva un resultado antes de acceder a [0]
-        if (count($resultado) > 0) {
+        // 3. ----- ESTA ES LA COMPROBACIÓN CORREGIDA -----
+        // Comprobamos si $resultado es un array Y si no está vacío
+        if (is_array($resultado) && count($resultado) > 0) {
             return $resultado[0];
         }
+        // ----------------------------------------------
 
-        return null; // Si no se encontró pregunta, devuelve null
+        // 4. INTENTO 2 (FALLBACK): Si no encontramos nada,
+        //    buscamos CUALQUIER pregunta de esa categoría que no esté repetida.
+
+        $sqlFallback = "SELECT * FROM pregunta p 
+                        JOIN categoria c ON c.categoriaId = p.categoriaId
+                        WHERE c.nombre = ? 
+                        AND (p.preguntaId != ? OR ? IS NULL)
+                        ORDER BY RAND()
+                        LIMIT 1";
+
+        $resultadoFallback = $this->conexion->ejecutarConsulta($sqlFallback, $tipos, $params);
+
+        // También usamos la comprobación segura aquí
+        if (is_array($resultadoFallback) && count($resultadoFallback) > 0) {
+            return $resultadoFallback[0];
+        }
+
+        // 5. Si ya no hay más preguntas en esa categoría, devolvemos null
+        return null;
     }
 
     public  function buscarRespuestas($id)

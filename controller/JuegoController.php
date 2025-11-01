@@ -55,10 +55,10 @@ class JuegoController
 
         if(isset($_SESSION['preguntaId'])){
            // $pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], $_SESSION['preguntaId']);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'], "Facil", $_SESSION['preguntaId']);
+            $pregunta = $this->model->buscarPregunta($datos['categoria'], "Dificil", $_SESSION['preguntaId']);
         } else {
             //$pregunta = $this->model->buscarPregunta($datos['categoria'], $datos['dificultad'], null);
-            $pregunta = $this->model->buscarPregunta($datos['categoria'],"Facil", null);
+            $pregunta = $this->model->buscarPregunta($datos['categoria'],"Dificil", null);
         }
 
         if(!$pregunta){
