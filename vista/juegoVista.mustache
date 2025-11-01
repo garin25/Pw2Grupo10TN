@@ -1,41 +1,51 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <link rel="stylesheet" href="../css/juego.css">
-    <main class="w-full md:w-3/4 p-8" >
-        <section id="contenedor-ruleta">
-            <div class="ruleta-container">
-                <div class="ruleta">
-                    <div class="sectores-texto">
-                        <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 30deg;">
+<main class="w-full md:w-3/4 p-8" style="background-image: url(../imagenes/texture-lobby.jpg); background-size: cover;">
+    <section id="contenedor-ruleta">
+        <div class="ruleta-container">
+            <div class="ruleta">
+                <div class="sectores-texto">
+                    <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 30deg;">
 
-                        <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 90deg;">
+                    <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 90deg;">
 
-                        <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 150deg;">
+                    <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 150deg;">
 
-                        <img class="imagen-sector" src="/imagenes/logo.jpg"  style="--rotation: 210deg;">
+                    <img class="imagen-sector" src="/imagenes/logo.jpg"  style="--rotation: 210deg;">
 
-                        <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 270deg;">
+                    <img class="imagen-sector" src="/imagenes/logo.jpg" style="--rotation: 270deg;">
 
-                        <img class="imagen-sector" src="/imagenes/logo.jpg"  style="--rotation: 330deg;">
-                    </div>
+                    <img class="imagen-sector" src="/imagenes/logo.jpg"  style="--rotation: 330deg;">
                 </div>
-                <div class="puntero"></div>
             </div>
-            <button id="btn-girar" class="btn">Girar Ruleta</button>
-        </section>
-        <section id="contenedor-preguntas">
-            <div id="preguntas-sup">
-                <img id="preguntas-img" src="../imagenes/logo.jpg" alt="">
-                <h2 id="preguntas-descripcion">Lorem, ipsum dolor sit amet consectetur adipisicing elit?</h2>
-            </div>
-            <div id="preguntas-inf">
-                <button id="a" class="btn">Opción A</button>
-                <button id="b" class="btn">Opción B</button>
-                <button id="c" class="btn">Opción C</button>
-                <button id="d" class="btn">Opción D</button>
-            </div>
-        </section>
-    </main>
+            <div class="puntero"></div>
+        </div>
+        <button id="btn-girar" class="btn">Girar Ruleta</button>
+    </section>
+    <section id="contenedor-preguntas">
+        <div id="preguntas-sup">
+            <img id="preguntas-img" src="../imagenes/logo.jpg" alt="">
+            <h2 id="preguntas-descripcion">Lorem, ipsum dolor sit amet consectetur adipisicing elit?</h2>
+        </div>
+        <div id="preguntas-inf">
+            <button id="a" class="btn">Opción A</button>
+            <button id="b" class="btn">Opción B</button>
+            <button id="c" class="btn">Opción C</button>
+            <button id="d" class="btn">Opción D</button>
+        </div>
+    </section>
+    <section id="contenedor-partidaPerdida">
+        <div class="partidaFinalizada">
+            <img id="preguntas-img" src="../imagenes/logo.jpg" alt="" >
+            <p>Partida Finalizada</p>
+        </div>
+        <p id="puntaje">Puntaje Obtenido:</p>
+        <div id="botones">
+            <button id="volver" class="btn">Reintentar</button>
+            <button id="inicio" class="btn">Ir a inicio</button>
+        </div>
+    </section>
+</main>
 
 <script src="/js/partida.js"></script>
-

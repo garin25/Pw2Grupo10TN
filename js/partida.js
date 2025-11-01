@@ -3,6 +3,10 @@ const btnGirar = document.getElementById('btn-girar');
 const contenedorRuleta = document.getElementById('contenedor-ruleta');
 const contenedorPreguntas = document.getElementById('contenedor-preguntas');
 const botonesRespuestas = document.querySelectorAll('#preguntas-inf .btn');
+const contenedorPerder = document.getElementById('contenedor-partidaPerdida');
+const botonVolver = document.getElementById('volver');
+const botonInicio = document.getElementById('inicio');
+
 
 let rtaCorrecta = null; // guardamos la rta correcta para no tener que ir devuelta hasta la bbdd
 let btnRtaCorrecta = null; // id= a,b,c o d
@@ -11,6 +15,8 @@ let idrespuestaCorrecta;
 
 contenedorRuleta.classList.add('visible');
 contenedorPreguntas.classList.add('oculto');
+contenedorPerder.classList.add('oculto');
+
 
 const numSectores = 6;
 const gradosPorSector = 360 / numSectores;
@@ -39,20 +45,15 @@ function girarRuleta() {
         btnGirar.disabled = false;
 
         Swal.fire({
-            title: `¡Categoría ${sectorGanadorIndex + 1}!`,
+            title: `¡Categoría ${categoriaGanadora}!`,
             text: "¡Prepárate para responder la pregunta!",
             imageUrl: "../imagenes/logo.jpg",
             imageHeight: 100,
             confirmButtonText: "¡Vamos!",
             draggable: true
         }).then(() => {
-            contenedorRuleta.classList.remove('visible');
-            contenedorRuleta.classList.add('oculto');
+            cambiarAContenedorPregunta()
             traerPregunta(categoriaGanadora);
-            contenedorPreguntas.classList.remove('oculto');
-            contenedorPreguntas.classList.add('visible');
-
-
         });
 
     }, 5000);
@@ -61,22 +62,22 @@ btnGirar.addEventListener('click', girarRuleta);
 
 function getCategoria(sectorGanadorIndex) {
     switch (sectorGanadorIndex){
-        case 1:
+        case 0:
             return 'Deporte'
         break;
-        case 2:
+        case 1:
             return 'Historia'
             break;
-        case 3:
+        case 2:
             return 'Ciencias Naturales'
             break;
-        case 4:
+        case 3:
             return 'Geografía'
             break;
-        case 5:
+        case 4:
             return 'Programación'
             break;
-        case 6:
+        case 5:
             return 'Matemática'
             break;
     }
@@ -87,6 +88,19 @@ function cambiarAContenedorRuleta() {
     contenedorRuleta.classList.remove('oculto');
     contenedorRuleta.classList.add('visible');
 }
+function cambiarAContenedorPregunta() {
+    contenedorRuleta.classList.remove('visible');
+    contenedorRuleta.classList.add('oculto');
+    contenedorPreguntas.classList.remove('oculto');
+    contenedorPreguntas.classList.add('visible');
+}
+function cambiarAPartidaPerdida() {
+    contenedorPreguntas.classList.remove('visible');
+    contenedorPreguntas.classList.add('oculto');
+    contenedorPerder.classList.remove('oculto');
+    contenedorPerder.classList.add('visible');
+}
+
 
 function respuestaCorrecta() {
     Swal.fire({
@@ -111,7 +125,7 @@ function respuestaIncorrecta(){
         showConfirmButton: false
     }).then(() => {
         // crear estadisticas partida y boton volver al home
-        cambiarAContenedorRuleta();
+        cambiarAPartidaPerdida()
     });
 }
 
@@ -244,3 +258,14 @@ function respuestaIncorrecta(){
 
 
     }
+
+function reintentarJuego() {
+    window.location.reload();
+}
+
+function volverAlLobby() {
+    window.location.href = '/lobby/lobby';
+}
+
+botonVolver.addEventListener('click', reintentarJuego);
+botonInicio.addEventListener('click', volverAlLobby);
