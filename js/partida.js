@@ -96,6 +96,7 @@ function cambiarAContenedorPregunta() {
     contenedorPreguntas.classList.add('visible');
 }
 function cambiarAPartidaPerdida() {
+    console.log(puntaje);
     contenedorPreguntas.classList.remove('visible');
     contenedorPreguntas.classList.add('oculto');
     contenedorPerder.querySelector("#puntaje").textContent += puntaje;
@@ -324,6 +325,9 @@ function timerVista(tiempo){
 
 function finalizarPartida() {
     clearInterval(temporizador);
+    for (let i = 0; i < botonesRespuestas.length; i++) {
+        botonesRespuestas[i].disabled = true;
+    }
     timer.classList.add('oculto');
     const url = '/juego/finalizarPartida';
     const xhttp = new XMLHttpRequest();
@@ -335,14 +339,15 @@ function finalizarPartida() {
             try {
 
                 const data = JSON.parse(respuestaJSON);
-                console.log(data);
+                //console.log(data);
                 const ok = data.ok;
-
                 if (ok === true) {
-                    if(data.puntaje){
-                        puntaje = data.puntaje
-                    }
+
+                    puntaje = data.puntaje;
+
                     tiempoAcabado();
+
+
                 }
 
 
@@ -360,6 +365,7 @@ function finalizarPartida() {
 
 
 //Logica volver pregunta si actualizo
+
 document.addEventListener('DOMContentLoaded', () => {
     const url = '/juego/devolverPregunta';
     const xhttp = new XMLHttpRequest();

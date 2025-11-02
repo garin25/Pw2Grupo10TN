@@ -126,7 +126,7 @@ class JuegoController
         $puntosPartida = $_SESSION['puntosPartida'];
 
         if(isset($_SESSION['tiempo']) && (time() - $_SESSION['tiempo']) > 15){
-            $respuesta = ['ok' => false, 'error' => 'Se acabo el tiempo', 'puntaje' => $_SESSION['puntosPartida']];
+            $respuesta = ['ok' => false, 'error' => 'Se acabo el tiempo','puntaje' => $_SESSION['puntosPartida']];
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
             $this->resetSesion();
             echo json_encode($respuesta);
@@ -157,7 +157,7 @@ class JuegoController
             $this->redirectToIndex();
         }
 
-        $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado','puntaje' => $_SESSION['puntosPartida']];
+        $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado', 'puntaje' => $_SESSION['puntosPartida']];
         $this->model->partidaFinalizada($_SESSION['puntosPartida'], $_SESSION['usuarioId']);
         $this->resetSesion();
         echo json_encode($respuesta);
