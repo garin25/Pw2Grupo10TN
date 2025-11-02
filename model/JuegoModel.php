@@ -114,4 +114,12 @@ class JuegoModel
 
     }
 
+    public function devolverPregunta($preguntaId){
+        $sql = "SELECT * FROM pregunta 
+            WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+        return $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
+    }
+
 }

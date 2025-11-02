@@ -6,7 +6,7 @@ const botonesRespuestas = document.querySelectorAll('#preguntas-inf .btn');
 const contenedorPerder = document.getElementById('contenedor-partidaPerdida');
 const botonVolver = document.getElementById('volver');
 const botonInicio = document.getElementById('inicio');
-
+const timer = document.getElementById('timer');
 
 let rtaCorrecta = null; // guardamos la rta correcta para no tener que ir devuelta hasta la bbdd
 let btnRtaCorrecta = null; // id= a,b,c o d
@@ -51,7 +51,7 @@ function girarRuleta() {
             imageUrl: "../imagenes/logo.jpg",
             imageHeight: 100,
             confirmButtonText: "¡Vamos!",
-            draggable: true
+            draggable: false
         }).then(() => {
             cambiarAContenedorPregunta()
             traerPregunta(categoriaGanadora);
@@ -96,6 +96,7 @@ function cambiarAContenedorPregunta() {
     contenedorPreguntas.classList.add('visible');
 }
 function cambiarAPartidaPerdida() {
+    console.log(puntaje);
     contenedorPreguntas.classList.remove('visible');
     contenedorPreguntas.classList.add('oculto');
     contenedorPerder.querySelector("#puntaje").textContent += puntaje;
@@ -109,7 +110,7 @@ function respuestaCorrecta() {
         title: "¡Respuesta correcta!",
         text: "¡Sigue así!",
         icon: "success",
-        draggable: true,
+        draggable: false,
         timer: 2000,
         showConfirmButton: false
     }).then(() => {
@@ -122,7 +123,21 @@ function respuestaIncorrecta(){
         title: "Respuesta incorrecta",
         text: "¡Game over!",
         icon: "error",
-        draggable: true,
+        draggable: false,
+        timer: 1500,
+        showConfirmButton: false
+    }).then(() => {
+        // crear estadisticas partida y boton volver al home
+        cambiarAPartidaPerdida()
+    });
+}
+
+function tiempoAcabado(){
+    Swal.fire({
+        title: "Tiempo acabado",
+        text: "¡Game over!",
+        icon: "error",
+        draggable: false,
         timer: 1500,
         showConfirmButton: false
     }).then(() => {
@@ -152,17 +167,20 @@ function respuestaIncorrecta(){
                     const ok = data.ok;
 
                     if (ok === true) {
+                        vistaDeCarga()
                         // fijarse como se recibe el json capaz es data.id y asi
                         const pregunta = data.pregunta;
                         preguntaId = pregunta.preguntaId;
                         const respuestas = data.respuestas;
-
+                        const tiempo = data.tiempo;
+                        console.log(data.time)
                         respuestas.forEach(respuesta => {
                             if (respuesta.esCorrecta) {
                                 rtaCorrecta = respuesta;
                                 idrespuestaCorrecta = respuesta.id_respuesta;
                             }
                         })
+
                         const descPregunta = document.getElementById("preguntas-descripcion");
                         descPregunta.textContent = pregunta.enunciado;
                         for (let i = 0; i < botonesRespuestas.length; i++) {
@@ -172,10 +190,14 @@ function respuestaIncorrecta(){
                             }
                             botonesRespuestas[i].textContent = respuestas[i].respuestaTexto;
                             botonesRespuestas[i].onclick = () => {
-                                console.log(botonesRespuestas[i].id);
+                                //console.log(botonesRespuestas[i].id);
+                                timer.classList.add('oculto');
+                                clearInterval(temporizador);
                                 contestarPregunta(botonesRespuestas[i].id);
                             };
                         }
+
+                        timerVista(tiempo);
                     }
                     if (ok === false) {
                         Swal.fire({
@@ -232,9 +254,7 @@ function respuestaIncorrecta(){
                             respuestaCorrecta();
                         } else {
                             //terminar partida , mensaje de fracaso , boton volver al home
-                            if(data.puntaje){
-                                puntaje = data.puntaje
-                            }
+                            puntaje = data.puntaje
                             respuestaIncorrecta();
                         }
                     }
@@ -274,3 +294,149 @@ function volverAlLobby() {
 
 botonVolver.addEventListener('click', reintentarJuego);
 botonInicio.addEventListener('click', volverAlLobby);
+
+
+// Logica timer
+
+let temporizador;
+function timerVista(tiempo){
+    const segundos = document.getElementById('segundos');
+
+    let tiempoTimer = tiempo;
+
+    temporizador = setInterval(() => {
+
+        const seg = tiempo % 60;
+
+        segundos.innerHTML = String(seg).padStart(2, '0');
+        timer.classList.remove('oculto')
+
+
+        tiempo --;
+
+        if (tiempo < 0) {
+            finalizarPartida();
+        }
+
+    }, 1000);
+
+}
+
+function finalizarPartida() {
+    clearInterval(temporizador);
+    for (let i = 0; i < botonesRespuestas.length; i++) {
+        botonesRespuestas[i].disabled = true;
+    }
+    timer.classList.add('oculto');
+    const url = '/juego/finalizarPartida';
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+
+            const respuestaJSON = this.responseText;
+
+            try {
+
+                const data = JSON.parse(respuestaJSON);
+                //console.log(data);
+                const ok = data.ok;
+                if (ok === true) {
+
+                    puntaje = data.puntaje;
+
+                    tiempoAcabado();
+
+
+                }
+
+
+            } catch (error) {
+                console.error("Error al parsear la respuesta JSON:", error);
+            }
+
+        }
+
+    };
+
+    xhttp.open("GET", url, true);
+    xhttp.send();
+}
+
+
+//Logica volver pregunta si actualizo
+
+document.addEventListener('DOMContentLoaded', () => {
+    const url = '/juego/devolverPregunta';
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+
+            const respuestaJSON = this.responseText;
+
+            try {
+
+                const data = JSON.parse(respuestaJSON);
+                console.log(data);
+                const ok = data.ok;
+
+                if (ok === true) {
+                    vistaDeCarga();
+                    cambiarAContenedorPregunta()
+                    // fijarse como se recibe el json capaz es data.id y asi
+                    const pregunta = data.pregunta;
+                    preguntaId = pregunta.preguntaId;
+                    const respuestas = data.respuestas;
+                    const tiempo = data.tiempo;
+                    console.log(data.time)
+                    respuestas.forEach(respuesta => {
+                        if (respuesta.esCorrecta) {
+                            rtaCorrecta = respuesta;
+                            idrespuestaCorrecta = respuesta.id_respuesta;
+                        }
+                    })
+                    const descPregunta = document.getElementById("preguntas-descripcion");
+                    descPregunta.textContent = pregunta.enunciado;
+                    for (let i = 0; i < botonesRespuestas.length; i++) {
+                        botonesRespuestas[i].id = respuestas[i].id_respuesta;
+                        if (respuestas[i].esCorrecta) {
+                            btnRtaCorrecta = botonesRespuestas[i].id;
+                        }
+                        botonesRespuestas[i].textContent = respuestas[i].respuestaTexto;
+                        botonesRespuestas[i].onclick = () => {
+                            //console.log(botonesRespuestas[i].id);
+                            timer.classList.add('oculto');
+                            clearInterval(temporizador);
+                            contestarPregunta(botonesRespuestas[i].id);
+                        };
+                    }
+
+                    timerVista(tiempo);
+                }
+
+
+            } catch (error) {
+                console.error("Error al parsear la respuesta JSON:", error);
+            }
+
+        }
+
+    };
+
+    xhttp.open("GET", url, true);
+    xhttp.send();
+})
+
+function vistaDeCarga() {
+
+    Swal.fire({
+        title: 'Cargando pregunta...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false, // Evita que se cierre haciendo clic fuera
+        showConfirmButton: false, // No muestra el botón 'Aceptar'
+        timer: 1000,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+

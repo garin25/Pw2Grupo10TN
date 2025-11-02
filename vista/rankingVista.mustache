@@ -23,7 +23,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="border-b bg-green-50 hover:bg-green-100">
+            {{#ranking}}
+                <tr class="border-b bg-green-50 hover:bg-green-100">
+                    <th scope="row" class="px-6 py-4 font-bold text-gray-900">1</th>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <a  href="/perfil/{{nombre_usuario}}"><img class="w-10 h-10 rounded-full object-cover mr-3" src="/{{foto_perfil}}" alt="Foto de Juan"></a>
+                            <a  href="/perfil/{{nombre_usuario}}"><span style="font-weight: bold">{{nombre_usuario}}</span></a>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">{{puntos}}</td>
+                </tr>
+            {{/ranking}}
+            <!--<tr class="border-b bg-green-50 hover:bg-green-100">
                 <th scope="row" class="px-6 py-4 font-bold text-gray-900">1</th>
                 <td class="px-6 py-4">
                     <div class="flex items-center">
@@ -102,7 +114,7 @@
                     </div>
                 </td>
                 <td class="px-6 py-4">80</td>
-            </tr>
+            </tr>-->
             </tbody>
         </table>
     </div>

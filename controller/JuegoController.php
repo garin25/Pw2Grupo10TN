@@ -26,11 +26,11 @@ class JuegoController
         if (!isset($_SESSION['puntosPartida'])) {
             $_SESSION['puntosPartida'] = 0;
         }
-        //Inicializo las preguntas vistas
-        $_SESSION['preguntasVistas'] = [];
 
-        unset($_SESSION['preguntaId']);
-        unset($_SESSION['respuestaTexto']);
+        //Inicializo las preguntas vistas
+        if(!isset($_SESSION['preguntasVistas'])) {
+            $_SESSION['preguntasVistas'] = [];
+        }
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Preguntas",  "logout" => "/login/logout", "usuario" => $usuario];
@@ -82,7 +82,13 @@ class JuegoController
             }
         }
         $_SESSION['preguntaId'] = $pregunta['preguntaId'];
-        $respuesta = ['ok' => true, 'pregunta' => $pregunta,'respuestas' => $respuestas];
+
+        if(!isset($_SESSION['tiempo']) || $_SESSION['tiempo'] == 0){
+            $tiempo = 15;
+            $_SESSION['tiempo'] = time();
+        }
+
+        $respuesta = ['ok' => true, 'pregunta' => $pregunta,'respuestas' => $respuestas, 'tiempo' => $tiempo];
         echo json_encode($respuesta);
 
 
@@ -102,12 +108,14 @@ class JuegoController
 
         if(!isset($datos['preguntaId']) || $datos['preguntaId'] == ""){
             $respuesta = ['ok' => false, 'error' => 'Datos no enviados'];
+            $this->resetSesion();
             echo json_encode($respuesta);
             return;
         }
 
         if(!isset($_SESSION['preguntaId'])){
             $respuesta = ['ok' => false, 'error' => 'Pregunta no encontrada'];
+            $this->resetSesion();
             echo json_encode($respuesta);
             return;
         }
@@ -117,21 +125,83 @@ class JuegoController
         $idRespuesta = $_SESSION['id_respuesta'];
         $puntosPartida = $_SESSION['puntosPartida'];
 
+        if(isset($_SESSION['tiempo']) && (time() - $_SESSION['tiempo']) > 15){
+            $respuesta = ['ok' => false, 'error' => 'Se acabo el tiempo','puntaje' => $_SESSION['puntosPartida']];
+            $this->model->partidaFinalizada($puntosPartida, $usuarioId);
+            $this->resetSesion();
+            echo json_encode($respuesta);
+            return;
+        }
+
         if ($preguntaId !== $datos['preguntaId']) {
             $respuesta = ['ok' => false, 'error' => 'Pregunta no coincide'];
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
+            $this->resetSesion();
         } else if($idRespuesta == $datos['respuestaId']) {
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
             $_SESSION['puntosPartida'] += 10;
+            $_SESSION['tiempo'] = 0;
         } else {
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida']];
-            $_SESSION['puntosPartida'] = 0;//Limpio por si vuelve a jugar
             $_SESSION['preguntasVistas'] = [];
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
+            $this->resetSesion();
+        }
+        echo json_encode($respuesta);
+
+    }
+
+    public function finalizarPartida(){
+
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+        $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado', 'puntaje' => $_SESSION['puntosPartida']];
+        $this->model->partidaFinalizada($_SESSION['puntosPartida'], $_SESSION['usuarioId']);
+        $this->resetSesion();
+        echo json_encode($respuesta);
+    }
+
+    public function resetSesion(){
+
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+        unset($_SESSION['preguntaId']);
+        unset($_SESSION['id_respuesta']);
+        unset($_SESSION['preguntasVistas']);
+        unset($_SESSION['puntosPartida']);
+        unset($_SESSION['tiempo']);
+    }
+
+    public function devolverPregunta(){
+
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+        if(isset($_SESSION['preguntasVistas']) && isset($_SESSION['puntosPartida']) && isset($_SESSION['preguntaId'])
+            && isset($_SESSION['id_respuesta']) && isset($_SESSION['tiempo'])) {
+
+            $pregunta = $this->model->devolverPregunta($_SESSION['preguntaId']);
+            $respuestas = $this->model->buscarRespuestas($_SESSION['preguntaId']);
+
+            if((time() - $_SESSION['tiempo']) > 15){
+                $tiempo = 0;
+            } else {
+                $tiempo = 15 - (time() - $_SESSION['tiempo']);
+            }
+
+            $respuesta = ['ok' => true, 'pregunta' => $pregunta,'respuestas' => $respuestas, 'tiempo' => $tiempo];
+
+
+        } else {
+            $respuesta = ['ok' => false];
         }
 
         echo json_encode($respuesta);
-
     }
 
     public function redirectToIndex()
