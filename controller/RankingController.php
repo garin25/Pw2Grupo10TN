@@ -27,7 +27,16 @@ class RankingController
 
         $ranking = $this->model->buscarRanking();
 
-        $data = ["page" => "Ranking",  "logout" => "/login/logout", "usuario" => $usuario, "ranking" => $ranking];
+        $i = 1;
+        $ranking_con_posicion = [];
+
+        foreach ($ranking as $usuario) {
+            $usuario['posicion'] = $i;
+            $ranking_con_posicion[] = $usuario;
+            $i++;
+        }
+
+        $data = ["page" => "Ranking",  "logout" => "/login/logout", "usuario" => $usuario, "ranking" => $ranking_con_posicion, "posicion" => 0];
         $this->renderer->render("ranking", $data);
     }
 
