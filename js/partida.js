@@ -51,7 +51,7 @@ function girarRuleta() {
             imageUrl: "../imagenes/logo.jpg",
             imageHeight: 100,
             confirmButtonText: "¡Vamos!",
-            draggable: true
+            draggable: false
         }).then(() => {
             cambiarAContenedorPregunta()
             traerPregunta(categoriaGanadora);
@@ -110,7 +110,7 @@ function respuestaCorrecta() {
         title: "¡Respuesta correcta!",
         text: "¡Sigue así!",
         icon: "success",
-        draggable: true,
+        draggable: false,
         timer: 2000,
         showConfirmButton: false
     }).then(() => {
@@ -123,7 +123,7 @@ function respuestaIncorrecta(){
         title: "Respuesta incorrecta",
         text: "¡Game over!",
         icon: "error",
-        draggable: true,
+        draggable: false,
         timer: 1500,
         showConfirmButton: false
     }).then(() => {
@@ -137,7 +137,7 @@ function tiempoAcabado(){
         title: "Tiempo acabado",
         text: "¡Game over!",
         icon: "error",
-        draggable: true,
+        draggable: false,
         timer: 1500,
         showConfirmButton: false
     }).then(() => {
@@ -167,6 +167,7 @@ function tiempoAcabado(){
                     const ok = data.ok;
 
                     if (ok === true) {
+                        vistaDeCarga()
                         // fijarse como se recibe el json capaz es data.id y asi
                         const pregunta = data.pregunta;
                         preguntaId = pregunta.preguntaId;
@@ -253,9 +254,7 @@ function tiempoAcabado(){
                             respuestaCorrecta();
                         } else {
                             //terminar partida , mensaje de fracaso , boton volver al home
-                            if(data.puntaje){
-                                puntaje = data.puntaje
-                            }
+                            puntaje = data.puntaje
                             respuestaIncorrecta();
                         }
                     }
@@ -381,6 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ok = data.ok;
 
                 if (ok === true) {
+                    vistaDeCarga();
                     cambiarAContenedorPregunta()
                     // fijarse como se recibe el json capaz es data.id y asi
                     const pregunta = data.pregunta;
@@ -425,4 +425,18 @@ document.addEventListener('DOMContentLoaded', () => {
     xhttp.open("GET", url, true);
     xhttp.send();
 })
+
+function vistaDeCarga() {
+
+    Swal.fire({
+        title: 'Cargando pregunta...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false, // Evita que se cierre haciendo clic fuera
+        showConfirmButton: false, // No muestra el botón 'Aceptar'
+        timer: 1000,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
 
