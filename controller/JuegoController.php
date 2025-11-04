@@ -55,24 +55,23 @@ class JuegoController
             return;
         }
 
-
-
+        $ids_a_evitar = $this->model->traerIdsAEvitar($_SESSION['usuarioId']);
 
         // Recuperamos el array de IDs a evitar
-        $ids_a_evitar = isset($_SESSION['preguntasVistas']) ? $_SESSION['preguntasVistas'] : [];
+        //$ids_a_evitar = isset($_SESSION['preguntasVistas']) ? $_SESSION['preguntasVistas'] : [];
         $pregunta = $this->model->buscarPregunta($datos['categoria'],  $_SESSION['dificultad'], $ids_a_evitar);
 
 // Añadimos el ID nuevo al array de la sesión
         if ($pregunta != null) {
             // Añadimos el nuevo ID a la lista
-            $_SESSION['preguntasVistas'][] = $pregunta['preguntaId'];
-        }
-
-        if(!$pregunta){
+            //$_SESSION['preguntasVistas'][] = $pregunta['preguntaId'];
+            $this->model->agregarIdsAEvitar($_SESSION['usuarioId'], $pregunta['preguntaId']);
+        } else {
             $respuesta = ['ok' => false, 'error' => 'No se encontraron más preguntas para esta categoría.'];
             echo json_encode($respuesta);
             return;
         }
+
         $respuestas = $this->model->buscarRespuestas($pregunta["preguntaId"]);
 
 
@@ -87,6 +86,8 @@ class JuegoController
             $tiempo = 15;
             $_SESSION['tiempo'] = time();
         }
+
+        $this->model->aumentarCantidadEnviadaEnPregunta($pregunta["preguntaId"]);
 
         $respuesta = ['ok' => true, 'pregunta' => $pregunta,'respuestas' => $respuestas, 'tiempo' => $tiempo];
         echo json_encode($respuesta);
@@ -141,9 +142,12 @@ class JuegoController
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
             $_SESSION['puntosPartida'] += 10;
             $_SESSION['tiempo'] = 0;
+            $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], true, date("Y-m-d H:i:s", time()));
         } else {
             $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida']];
-            $_SESSION['preguntasVistas'] = [];
+            //$_SESSION['preguntasVistas'] = [];
+            $this->model->aumentarRespondidasMalEnPregunta($_SESSION["preguntaId"]);
+            $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], false, date("Y-m-d H:i:s", time()));
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
             $this->resetSesion();
         }
@@ -158,6 +162,8 @@ class JuegoController
         }
 
         $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado', 'puntaje' => $_SESSION['puntosPartida']];
+        $this->model->aumentarRespondidasMalEnPregunta($_SESSION["preguntaId"]);
+        $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], false, date("Y-m-d H:i:s", time()));
         $this->model->partidaFinalizada($_SESSION['puntosPartida'], $_SESSION['usuarioId']);
         $this->resetSesion();
         echo json_encode($respuesta);
@@ -171,7 +177,7 @@ class JuegoController
 
         unset($_SESSION['preguntaId']);
         unset($_SESSION['id_respuesta']);
-        unset($_SESSION['preguntasVistas']);
+        //unset($_SESSION['preguntasVistas']);
         unset($_SESSION['puntosPartida']);
         unset($_SESSION['tiempo']);
     }
@@ -182,7 +188,7 @@ class JuegoController
             $this->redirectToIndex();
         }
 
-        if(isset($_SESSION['preguntasVistas']) && isset($_SESSION['puntosPartida']) && isset($_SESSION['preguntaId'])
+        if(isset($_SESSION['puntosPartida']) && isset($_SESSION['preguntaId'])
             && isset($_SESSION['id_respuesta']) && isset($_SESSION['tiempo'])) {
 
             $pregunta = $this->model->devolverPregunta($_SESSION['preguntaId']);

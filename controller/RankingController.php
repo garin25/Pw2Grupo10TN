@@ -30,9 +30,9 @@ class RankingController
         $i = 1;
         $ranking_con_posicion = [];
 
-        foreach ($ranking as $usuario) {
-            $usuario['posicion'] = $i;
-            $ranking_con_posicion[] = $usuario;
+        foreach ($ranking as $user) {
+            $user['posicion'] = $i;
+            $ranking_con_posicion[] = $user;
             $i++;
         }
 

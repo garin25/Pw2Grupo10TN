@@ -48,7 +48,7 @@ class LoginModel
         // (Total de incorrectas / Total de respuestas) = Ratio de error (tu nivel)
         $sql = "SELECT
                     IF(COUNT(preguntaId) = 0, 
-                       0.0,  -- POR DEFECTO ES 0 (FACIL)
+                       0.5,  -- POR DEFECTO ES 0 (FACIL)
                        (COUNT(preguntaId) - SUM(fue_correcta)) / COUNT(preguntaId)
                     ) AS nivelUsuario
                 FROM
