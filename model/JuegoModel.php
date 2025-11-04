@@ -24,10 +24,34 @@ class JuegoModel
         return null; // Si no se encuentra el usuario, devuelve null
     }
 
+    public function traerIdsAEvitar($usuarioId){
+
+        $sql = "SELECT preguntaId FROM preguntas_a_evitar WHERE usuarioid = ?";
+        $tipos = "s";
+        $params = array($usuarioId);
+
+        // FIX: Validar que la consulta devuelva un resultado
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+        if (is_array($resultado) && count($resultado) > 0) {
+            return $resultado;
+        }
+        return [];
+
+    }
+
+    public function agregarIdsAEvitar($usuarioId, $preguntaId){
+
+        $sql = "INSERT INTO preguntas_a_evitar (usuarioId, preguntaId) VALUES (?, ?)";
+        $tipos = "ii";
+        $params = array($usuarioId, $preguntaId);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+    }
+
     public function buscarPregunta($categoria, $dificultad, $idsVistos = []){
 
         // Usamos IF() de MySQL para evitar 100% la división por cero.
-        $ratioSeguro = "IF(p.cantidadEnviada = 0, 0, (p.respondidasMal / p.cantidadEnviada))";
+        $ratioSeguro = "IF(p.cantidadEnviada = 0, 0.5, (p.respondidasMal / p.cantidadEnviada))";
 
         $condicionDificultad = "";
 
@@ -92,6 +116,9 @@ class JuegoModel
             return $resultadoFallback[0];
         }
 
+        // si ya no hay disponible preguntas se podria agregar intento 3 en donde de haria un truncate
+        // en la tabla preguntas_a_evitar donde la categoria sea igual a la categoria que se busca.
+
         // 5. Si ya no hay más preguntas, devolvemos null
         return null;
     }
@@ -120,6 +147,33 @@ class JuegoModel
         $tipos = "i";
         $params = array($preguntaId);
         return $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
+    }
+
+    public function agregarRespuestaAlHistorial($preguntaId, $usuarioId, $fueCorrecta, $fecha){
+
+        $sql = "INSERT INTO historial_respuestas (usuarioId, preguntaId, fue_correcta, fecha_respuesta) VALUES (?, ?, ?, ?)";
+        $tipos = "iiis";
+        $params = array($usuarioId, $preguntaId, $fueCorrecta, $fecha);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+    }
+
+    public function aumentarCantidadEnviadaEnPregunta($preguntaId){
+
+        $sql = "UPDATE pregunta SET cantidadEnviada = cantidadEnviada + 1 WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+    }
+
+    public function aumentarRespondidasMalEnPregunta($preguntaId){
+
+        $sql = "UPDATE pregunta SET respondidasMal = respondidasMal + 1 WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
     }
 
 }
