@@ -1,5 +1,5 @@
-<h1>Editar Pregunta</h1>
 
+<a href="/editor">Volver</a>
 {{#mensaje_exito}}
     <div style="color: green; border: 1px solid green; padding: 10px;">
         {{mensaje_exito}}
@@ -22,7 +22,7 @@
     <label for="categoria">Categoria</label>
     <select id="categoria" name="categoria">
         {{#categorias}}
-            <option value="{{nombre}}">{{nombre}}</option>
+            <option value="{{nombre}}" {{#is_selected}}selected{{/is_selected}}>{{nombre}}</option>
         {{/categorias}}
     </select>
 

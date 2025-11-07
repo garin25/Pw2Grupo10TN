@@ -1,30 +1,48 @@
-<h1>Crear Pregunta</h1>
-    <form>
-        <label for="enunciado">Enunciado</label>
-        <input type="text" id="enunciado" name="enunciado">
-        <label for="categoria">Categoria</label>
-        <select id="categoria" name="categoria">
-            <option>CATEGORIA</option>
-        </select>
-    </form>
+<a href="/editor">Volver</a>
+{{#mensaje_exito}}
+    <div style="color: green; border: 1px solid green; padding: 10px;">
+        {{mensaje_exito}}
+    </div>
+{{/mensaje_exito}}
+{{#mensaje_error}}
+    <div style="color: red; border: 1px solid red; padding: 10px;">
+        {{mensaje_error}}
+    </div>
+{{/mensaje_error}}
 
+<form action="/editor/crearPregunta" method="POST">
 
+    <label for="enunciado">Enunciado</label>
+    <input type="text" id="enunciado" name="enunciado">
 
-    <form>
+    <label for="categoria">Categoria</label>
+    <select id="categoria" name="categoria">
+        {{#categorias}}
+            <option value="{{nombre}}">{{nombre}}</option>
+        {{/categorias}}
+    </select>
+
+    <hr>
+
+    <div>
         <label for="respuesta1">Respuesta 1:</label>
-        <input type="text" id="respuesta1" name="respuesta1">
-            <label for="rta1">Es correcta:</label>
-            <input type="radio" id="rta1" name="rtaCorrecta">
+        <input type="text" id="respuesta1" name="respuestas[]"> <label for="rta1">Es correcta:</label>
+        <input type="radio" id="rta1" name="rtaCorrecta" value="0" required> </div>
+
+    <div>
         <label for="respuesta2">Respuesta 2:</label>
-        <input type="text" id="respuesta2" name="respuesta2">
-             <label for="rta2">Es correcta:</label>
-             <input type="radio" id="rta2" name="rtaCorrecta">
+        <input type="text" id="respuesta2" name="respuestas[]"> <label for="rta2">Es correcta:</label>
+        <input type="radio" id="rta2" name="rtaCorrecta" value="1"> </div>
+
+    <div>
         <label for="respuesta3">Respuesta 3:</label>
-        <input type="text" id="respuesta3" name="respuesta3">
-            <label for="rta3">Es correcta:</label>
-            <input type="radio" id="rta3" name="rtaCorrecta">
+        <input type="text" id="respuesta3" name="respuestas[]"> <label for="rta3">Es correcta:</label>
+        <input type="radio" id="rta3" name="rtaCorrecta" value="2"> </div>
+
+    <div>
         <label for="respuesta4">Respuesta 4:</label>
-        <input type="text" id="respuesta4" name="respuesta4">
-            <label for="rta4">Es correcta:</label>
-             <input type="radio" id="rta4" name="rtaCorrecta">
-    </form>
+        <input type="text" id="respuesta4" name="respuestas[]"> <label for="rta4">Es correcta:</label>
+        <input type="radio" id="rta4" name="rtaCorrecta" value="3"> </div>
+
+    <button type="submit">Crear</button>
+</form>

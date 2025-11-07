@@ -41,6 +41,52 @@ ORDER BY
 
     }
 
+    public function crearPregunta(
+        $enunciado,
+        $categoriaNombre,
+        $respuestas, // Array de textos
+        $indiceCorrecto // string "0", "1", "2" o "3"
+    ) {
+
+        // 1. Obtener el ID de la categoría
+        $categoriaId = $this->obtenerIdDeCategoriaPorNombre($categoriaNombre);
+
+        // 2. Iniciar Transacción
+        $db = $this->conexion->getConexion();
+        $db->begin_transaction();
+
+        try {
+            // 3. Insertar la Pregunta "Padre"
+            $sql_pregunta = "INSERT INTO pregunta (enunciado, categoriaId) VALUES (?, ?)";
+            // Usamos el método de acción que creamos
+            $this->conexion->ejecutarConsulta($sql_pregunta, "si", [$enunciado, $categoriaId]);
+
+            // 4. Obtener el ID de la pregunta que acabamos de crear
+            $preguntaId = $db->insert_id; // <-- ID de la nueva pregunta
+
+            // 5. Iterar y guardar las Respuestas "Hijo"
+            foreach ($respuestas as $indice => $texto) {
+
+                // Comparamos el índice actual con el que nos llegó del form
+                $esCorrecta = ($indice == $indiceCorrecto) ? 1 : 0;
+
+                $sql_respuesta = "INSERT INTO respuesta (respuestaTexto, esCorrecta, preguntaId) 
+                              VALUES (?, ?, ?)";
+                $this->conexion->ejecutarConsulta($sql_respuesta, "sii", [$texto, $esCorrecta, $preguntaId]);
+            }
+
+            // 6. Si todo salió bien, confirmar
+            $db->commit();
+            return true;
+
+        } catch (Exception $e) {
+            // 7. Si algo falló, revertir todo
+            $db->rollback();
+            return false;
+        }
+    }
+
+
     public function eliminarPregunta($preguntaId){
 
         $tipos = "i";
@@ -143,7 +189,7 @@ ORDER BY
 
     public  function traerCategorias()
     {
-        $sql = "SELECT nombre FROM categoria";
+        $sql = "SELECT categoriaId, nombre FROM categoria";
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
 }
