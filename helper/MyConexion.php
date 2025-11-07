@@ -31,4 +31,26 @@ class MyConexion
         return null;
     }
 
+    /**
+     * Ejecuta una consulta SQL simple que no requiere parámetros (sin WHERE ?).
+     * Ideal para consultas SELECT que traen múltiples resultados.
+     *
+     * @param string $sql La consulta SQL a ejecutar.
+     * @return array Un array de resultados asociativo, o un array vacío si no hay resultados.
+     */
+    public function ejecutarConsultaSinParametros($sql) {
+
+        $resultado = $this->conexion->query($sql);
+
+        if ($resultado === false) {
+            return [];
+        }
+
+        if ($resultado->num_rows > 0) {
+            return $resultado->fetch_all(MYSQLI_ASSOC);
+        }
+
+        return [];
+    }
+
 }
