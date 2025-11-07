@@ -77,6 +77,28 @@ class EditorController
         $this->renderer->render("crearPregunta", $data);
     }
 
+    public function paginaEditarPregunta()
+    {
+        if (!isset($_SESSION['usuarioId'])) {
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION['usuarioId'];
+
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $preguntaId = $_GET['preguntaId'] ?? '';
+
+        $pregunta = $this->model->buscarPregunta($preguntaId)[0];
+        $respuestas = $this->model->buscarRespuestas($preguntaId);
+        // esto es por si agregamos mas categorias para que sea dinamico:
+        $categorias = $this->model->traerCategorias();
+
+        $data = ["page" => "editarPregunta", "logout" => "/login/logout", "usuario" => $usuario,
+            "pregunta" => $pregunta,"rta1" => $respuestas[0],"rta2" => $respuestas[1]
+            ,"rta3" => $respuestas[2],"rta4" => $respuestas[3],"categorias" => $categorias];
+        $this->renderer->render("editarPregunta", $data);
+    }
+
     public function redirectToIndex()
     {
         header("Location: /");

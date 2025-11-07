@@ -83,4 +83,26 @@ ORDER BY
         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
     }
 
+
+    public  function buscarPregunta($id)
+    {
+        $sqlRespuestas = "SELECT * FROM pregunta WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($id);
+        return $this->conexion->ejecutarConsulta($sqlRespuestas, $tipos, $params);
+    }
+
+    public  function buscarRespuestas($id)
+    {
+        $sqlRespuestas = "SELECT * FROM respuesta WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($id);
+        return $this->conexion->ejecutarConsulta($sqlRespuestas, $tipos, $params);
+    }
+
+    public  function traerCategorias()
+    {
+        $sql = "SELECT nombre FROM categoria";
+        return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }
 }
