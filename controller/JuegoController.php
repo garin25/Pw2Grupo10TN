@@ -32,6 +32,10 @@ class JuegoController
             $_SESSION['preguntasVistas'] = [];
         }
 
+        if(!isset($_SESSION['reportesHechos'])) {
+            $_SESSION['reportesHechos'] = 0;
+        }
+
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
         $data = ["page" => "Preguntas",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("juego", $data);
@@ -177,6 +181,7 @@ class JuegoController
 
         unset($_SESSION['preguntaId']);
         unset($_SESSION['id_respuesta']);
+        unset($_SESSION['reportesHechos']);
         //unset($_SESSION['preguntasVistas']);
         unset($_SESSION['puntosPartida']);
         unset($_SESSION['tiempo']);
@@ -208,6 +213,39 @@ class JuegoController
         }
 
         echo json_encode($respuesta);
+    }
+
+    public function reportar(){
+
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+        header('Content-Type: application/json');
+
+        $json_crudo = file_get_contents('php://input');
+
+        $datos = json_decode($json_crudo, true);
+
+        if ($datos['preguntaId'] != "" && $datos['descripcion'] != "" && $_SESSION['reportesHechos'] <= 3) {
+
+            $this->model->reportarPregunta($datos['preguntaId'], $_SESSION['usuarioId'], $datos['descripcion']);
+            $cantidadReportes = $this->model->verCantidadDeReportesPorPregunta($datos['preguntaId']);
+
+            if($cantidadReportes['cantidadReportes'] > 5){
+                $this->model->editarEstadoDeReporte($datos['preguntaId']);
+            }
+
+            $_SESSION['reportesHechos'] += 1;
+            $respuesta = ['ok' => true, 'cantidadReportes' => $cantidadReportes];
+
+
+        } else {
+            $respuesta = ['ok' => false, 'error' => 'Has hecho demasiados reportes en esta partida'];
+        }
+
+        echo json_encode($respuesta);
+
     }
 
     public function redirectToIndex()

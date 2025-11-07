@@ -41,7 +41,7 @@ function girarRuleta() {
     ruleta.style.transform = `rotate(-${anguloAcumulado}deg)`;
     ruleta.classList.add('girando');
 
-    //categoriaa
+    //categoria
     setTimeout(() => {
         btnGirar.disabled = false;
 
@@ -105,7 +105,7 @@ function cambiarAPartidaPerdida() {
 }
 
 
-function respuestaCorrecta() {
+/*function respuestaCorrecta() {
     Swal.fire({
         title: "¡Respuesta correcta!",
         text: "¡Sigue así!",
@@ -116,9 +116,71 @@ function respuestaCorrecta() {
     }).then(() => {
         cambiarAContenedorRuleta();
     });
+}*/
+
+function respuestaCorrecta() {
+    Swal.fire({
+        title: "¡Respuesta correcta!",
+        text: "¡Sigue así!",
+        icon: "success",
+        draggable: false,
+
+        // --- Modificaciones Clave ---
+        // 1. Eliminamos 'timer' y 'showConfirmButton: false'
+        showConfirmButton: true, // Habilitamos el botón principal
+        confirmButtonText: 'Continuar', // Texto para la acción principal
+
+        // 2. Agregamos el botón secundario "Reportar"
+        showDenyButton: true, // Muestra un segundo botón
+        denyButtonText: 'Reportar', // El texto que pediste
+        // ---------------------------
+
+    }).then((result) => {
+        // --- Manejo de la Lógica ---
+        if (result.isConfirmed) {
+            // Se presiona el botón 'Continuar'
+            cambiarAContenedorRuleta();
+        } else if (result.isDenied) {
+            // Se presiona el botón 'Reportar'
+            crearReporte();
+            cambiarAContenedorRuleta();
+        }
+        // Si se cierra el modal sin hacer clic (result.dismiss), no ocurre nada
+    });
 }
 
-function respuestaIncorrecta(){
+function respuestaIncorrecta() {
+    Swal.fire({
+        title: "¡Respuesta incorrecta!",
+        text: "¡Game Over!",
+        icon: "error",
+        draggable: false,
+
+        // --- Modificaciones Clave ---
+        // 1. Eliminamos 'timer' y 'showConfirmButton: false'
+        showConfirmButton: true, // Habilitamos el botón principal
+        confirmButtonText: 'Continuar', // Texto para la acción principal
+
+        // 2. Agregamos el botón secundario "Reportar"
+        showDenyButton: true, // Muestra un segundo botón
+        denyButtonText: 'Reportar', // El texto que pediste
+        // ---------------------------
+
+    }).then((result) => {
+        // --- Manejo de la Lógica ---
+        if (result.isConfirmed) {
+            // Se presiona el botón 'Continuar'
+            cambiarAPartidaPerdida();
+        } else if (result.isDenied) {
+            // Se presiona el botón 'Reportar'
+            crearReporte();
+            cambiarAPartidaPerdida();
+        }
+        // Si se cierra el modal sin hacer clic (result.dismiss), no ocurre nada
+    });
+}
+
+/*function respuestaIncorrecta(){
     Swal.fire({
         title: "Respuesta incorrecta",
         text: "¡Game over!",
@@ -130,7 +192,7 @@ function respuestaIncorrecta(){
         // crear estadisticas partida y boton volver al home
         cambiarAPartidaPerdida()
     });
-}
+}*/
 
 function tiempoAcabado(){
     Swal.fire({
@@ -436,6 +498,107 @@ function vistaDeCarga() {
         timer: 1000,
         didOpen: () => {
             Swal.showLoading();
+        }
+    });
+}
+
+function enviarReporte(descripcion) {
+    const url = '/juego/reportar';
+    const xhttp = new XMLHttpRequest();
+
+    const datosParaEnviar = {
+        "preguntaId": preguntaId,
+        "descripcion": descripcion,
+    };
+    const postData = JSON.stringify(datosParaEnviar);
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+
+            const respuestaJSON = this.responseText;
+
+            try {
+
+                const data = JSON.parse(respuestaJSON);
+                console.log(data);
+                const ok = data.ok;
+                if (ok === true) {
+
+                    Swal.fire({
+                        title: '¡Reporte Enviado!',
+                        text: 'Gracias por tu ayuda, revisaremos el error pronto.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                } else {
+
+                    Swal.fire({
+                        title: "¡Reporte no enviado!",
+                        text: data.error,
+                        icon: "error",
+                        draggable: false,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                }
+
+
+            } catch (error) {
+                console.error("Error al parsear la respuesta JSON:", error);
+            }
+
+        }
+
+    };
+
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(postData);
+}
+
+
+function crearReporte(){
+    Swal.fire({
+        title: 'Reportar un Error',
+        text: 'Por favor, describe el error que encontraste en esta pregunta.',
+
+        // --- Configuración del textarea ---
+        input: 'textarea', // Esto crea un área de texto para la entrada del usuario
+        inputPlaceholder: 'Escribe tu descripción aquí...',
+        inputAttributes: {
+            'aria-label': 'Descripción del reporte',
+            maxlength: 500 // Opcional: limitar la longitud
+        },
+
+        // --- Configuración de Botones ---
+        showCancelButton: true, // Muestra el botón de Cancelar
+        confirmButtonText: 'Enviar Reporte', // Texto para el botón de Enviar
+        cancelButtonText: 'Cancelar', // Texto para el botón de Cancelar
+
+        // --- Apariencia y Comportamiento ---
+        icon: 'question', // Opcional: un icono para la alerta
+        // draggable: false, // Ya lo tenías, pero puede eliminarse si no es necesario
+        // timer: 1500, // Se elimina el timer para dar tiempo al usuario de escribir
+        // showConfirmButton: false // Se elimina porque necesitamos los botones
+    }).then((result) => {
+        // --- Manejo de la Respuesta ---
+        if (result.isConfirmed) {
+            // El usuario presionó el botón de "Enviar Reporte" (Confirmar)
+            const descripcion = result.value; // El texto escrito en el textarea
+            if (descripcion && descripcion.trim() !== '') {
+                // Llama a tu función para enviar el reporte con la descripción
+                enviarReporte(descripcion);
+            } else {
+                // Manejar si el campo está vacío (opcional)
+                Swal.fire('Atención', 'Debes escribir una descripción para enviar el reporte.', 'warning');
+            }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // El usuario presionó el botón de "Cancelar" o hizo clic fuera del modal
+            // El modal se cierra automáticamente, no necesitas una acción adicional
+            console.log("Reporte cancelado.");
         }
     });
 }

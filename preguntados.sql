@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2025 a las 15:27:20
+-- Tiempo de generación: 07-11-2025 a las 15:56:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,7 +69,27 @@ INSERT INTO `historial_respuestas` (`id_historial`, `usuarioId`, `preguntaId`, `
 (3, 4, 13, 0, '2025-11-04 18:04:01'),
 (4, 4, 31, 1, '2025-11-04 18:17:28'),
 (5, 4, 3, 1, '2025-11-04 18:18:01'),
-(6, 4, 6, 0, '2025-11-04 18:18:44');
+(6, 4, 6, 0, '2025-11-04 18:18:44'),
+(7, 4, 13, 1, '2025-11-05 03:53:51'),
+(8, 4, 40, 0, '2025-11-05 03:54:18'),
+(9, 4, 105, 1, '2025-11-07 18:19:15'),
+(10, 4, 54, 1, '2025-11-07 18:19:35'),
+(11, 4, 127, 0, '2025-11-07 18:20:00'),
+(12, 4, 30, 0, '2025-11-07 18:20:54'),
+(13, 4, 170, 0, '2025-11-07 18:25:44'),
+(14, 4, 156, 0, '2025-11-07 18:28:47'),
+(15, 4, 57, 0, '2025-11-07 18:29:49'),
+(16, 4, 132, 0, '2025-11-07 18:30:43'),
+(17, 4, 133, 0, '2025-11-07 18:31:40'),
+(18, 4, 158, 1, '2025-11-07 18:33:38'),
+(19, 4, 4, 0, '2025-11-07 18:33:51'),
+(20, 4, 153, 0, '2025-11-07 18:36:19'),
+(21, 4, 26, 0, '2025-11-07 18:40:08'),
+(22, 4, 34, 0, '2025-11-07 18:41:45'),
+(23, 4, 18, 1, '2025-11-07 18:44:13'),
+(24, 4, 36, 0, '2025-11-07 18:44:26'),
+(25, 4, 2, 0, '2025-11-07 18:46:44'),
+(26, 4, 138, 0, '2025-11-07 18:55:26');
 
 -- --------------------------------------------------------
 
@@ -143,7 +163,22 @@ INSERT INTO `partida` (`id_partida`, `usuarioId`, `puntos`, `fecha`) VALUES
 (52, 4, 0, '2025-11-04 18:01:23'),
 (53, 4, 10, '2025-11-04 18:03:41'),
 (54, 4, 0, '2025-11-04 18:04:01'),
-(55, 4, 20, '2025-11-04 18:18:44');
+(55, 4, 20, '2025-11-04 18:18:44'),
+(56, 4, 10, '2025-11-05 03:54:18'),
+(57, 4, 20, '2025-11-07 18:20:00'),
+(58, 4, 0, '2025-11-07 18:20:54'),
+(59, 4, 0, '2025-11-07 18:25:44'),
+(60, 4, 0, '2025-11-07 18:28:47'),
+(61, 4, 0, '2025-11-07 18:29:49'),
+(62, 4, 0, '2025-11-07 18:30:43'),
+(63, 4, 0, '2025-11-07 18:31:40'),
+(64, 4, 10, '2025-11-07 18:33:51'),
+(65, 4, 0, '2025-11-07 18:36:19'),
+(66, 4, 0, '2025-11-07 18:40:08'),
+(67, 4, 0, '2025-11-07 18:41:45'),
+(68, 4, 10, '2025-11-07 18:44:26'),
+(69, 4, 0, '2025-11-07 18:46:44'),
+(70, 4, 0, '2025-11-07 18:55:26');
 
 -- --------------------------------------------------------
 
@@ -156,189 +191,191 @@ CREATE TABLE `pregunta` (
   `categoriaId` int(11) NOT NULL,
   `enunciado` text NOT NULL,
   `puntaje` int(11) NOT NULL DEFAULT 10,
-  `respondidasMal` int(11) DEFAULT NULL,
-  `cantidadEnviada` int(11) DEFAULT NULL
+  `respondidasMal` int(11) NOT NULL DEFAULT 1,
+  `cantidadEnviada` int(11) NOT NULL DEFAULT 2,
+  `esReportada` tinyint(1) NOT NULL DEFAULT 0,
+  `esSugerida` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pregunta`
 --
 
-INSERT INTO `pregunta` (`preguntaId`, `categoriaId`, `enunciado`, `puntaje`, `respondidasMal`, `cantidadEnviada`) VALUES
-(1, 1, '¿Cuántos jugadores tiene un equipo de fútbol en el campo durante un partido?', 10, 1, 2),
-(2, 1, '¿Qué país ganó la primera Copa del Mundo de fútbol en 1930?', 10, 1, 2),
-(3, 1, '¿En qué deporte se considera a Michael Jordan como el mejor de todos los tiempos?', 10, 1, 3),
-(4, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de Verano?', 10, 1, 2),
-(5, 1, '¿Cómo se llama el trofeo que se entrega al ganador de la Copa Libertadores?', 10, 1, 2),
-(6, 1, '¿En qué país se inventó el voleibol?', 10, 2, 3),
-(7, 1, '¿Qué tenista tiene el récord de más títulos de Grand Slam en la categoría masculina?', 10, 1, 2),
-(8, 1, '¿En qué año se celebraron los primeros Juegos Olímpicos modernos en Atenas?', 10, 1, 2),
-(9, 1, '¿Qué es un \"hat-trick\" perfecto en el fútbol?', 10, 1, 2),
-(10, 1, '¿Quién fue el primer piloto en ganar 7 campeonatos mundiales de Fórmula 1?', 10, 1, 2),
-(11, 2, '¿Quién fue el primer hombre en pisar la Luna en 1969?', 10, 1, 2),
-(12, 2, '¿En qué año comenzó la Primera Guerra Mundial?', 10, 1, 2),
-(13, 2, '¿Qué civilización antigua construyó las pirámides de Giza?', 10, 2, 3),
-(14, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 1, 2),
-(15, 2, '¿En qué ciudad fue asesinado el archiduque Francisco Fernando, evento que desencadenó la Primera Guerra Mundial?', 10, 1, 2),
-(16, 2, '¿Qué civilización precolombina construyó la ciudad de Machu Picchu?', 10, 1, 2),
-(17, 2, '¿Quién fue la última reina de Egipto?', 10, 1, 2),
-(18, 2, '¿Cómo se llamó la operación militar del desembarco de Normandía durante la Segunda Guerra Mundial?', 10, 1, 2),
-(19, 2, '¿Quién fue el líder de la facción bolchevique durante la Revolución Rusa?', 10, 1, 2),
-(20, 2, '¿Qué imperio fue derrotado en la Batalla de Waterloo en 1815?', 10, 1, 2),
-(21, 3, '¿Cuál es el símbolo químico del agua?', 10, 1, 2),
-(22, 3, '¿Qué planeta de nuestro sistema solar es conocido como el \"Planeta Rojo\"?', 10, 1, 2),
-(23, 3, '¿Qué gas es esencial para la respiración de los seres humanos?', 10, 1, 2),
-(24, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 1, 2),
-(25, 3, '¿Cómo se llama el proceso por el cual las plantas producen su propio alimento usando la luz solar?', 10, 1, 2),
-(26, 3, '¿Cuántos corazones tiene un pulpo?', 10, 1, 2),
-(27, 3, '¿Cuál es el animal terrestre más grande del mundo?', 10, 1, 2),
-(28, 3, '¿Cuál es la velocidad aproximada de la luz en el vacío?', 10, 1, 2),
-(29, 3, '¿Qué orgánulo es conocido como la \"central energética\" de la célula?', 10, 1, 2),
-(30, 3, '¿Qué científico propuso la teoría de la relatividad general?', 10, 1, 2),
-(31, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 3),
-(32, 4, '¿En qué continente se encuentra Argentina?', 10, 1, 2),
-(33, 4, '¿Cuál es la capital de Italia?', 10, 1, 2),
-(34, 4, '¿Cuál es el desierto cálido más grande del mundo?', 10, 1, 2),
-(35, 4, '¿Qué país tiene la mayor cantidad de islas en el mundo?', 10, 1, 2),
-(36, 4, '¿En qué país se encuentra el Monte Everest, la montaña más alta del mundo?', 10, 1, 2),
-(37, 4, '¿Cuál es el lago más profundo del mundo, ubicado en Siberia?', 10, 1, 2),
-(38, 4, '¿Cuál es la capital de Australia?', 10, 1, 2),
-(39, 4, '¿Qué es la Fosa de las Marianas?', 10, 1, 2),
-(40, 4, '¿Qué dos países comparten la isla de La Española en el Caribe?', 10, 2, 3),
-(41, 5, '¿Qué significa la sigla HTML en desarrollo web?', 10, 1, 2),
-(42, 5, '¿Cuál de estos es un lenguaje de programación orientado a objetos: HTML, CSS o Java?', 10, 1, 2),
-(43, 5, '¿Qué símbolo se usa para comentarios de una sola línea en lenguajes como Java, C# y JavaScript?', 10, 1, 2),
-(44, 5, '¿Qué es una variable en programación?', 10, 1, 2),
-(45, 5, '¿Para qué se utiliza comúnmente el comando \"git clone\"?', 10, 1, 2),
-(46, 5, '¿Qué significa API?', 10, 1, 2),
-(47, 5, '¿En qué paradigma de programación los objetos son la principal abstracción?', 10, 1, 2),
-(48, 5, '¿Qué es la recursividad en el contexto de la programación?', 10, 1, 2),
-(49, 5, '¿Cuál es la diferencia principal entre \"==\" y \"===\" en JavaScript?', 10, 1, 2),
-(50, 5, '¿Qué patrón de diseño utiliza una interfaz para crear familias de objetos relacionados sin especificar sus clases concretas?', 10, 1, 2),
-(51, 6, '¿Cuánto es 9 multiplicado por 7?', 10, 1, 2),
-(52, 6, '¿Cómo se llama un polígono que tiene 5 lados?', 10, 1, 2),
-(53, 6, 'Si tienes 30 manzanas y te comes la mitad, ¿cuántas te quedan?', 10, 1, 2),
-(54, 6, '¿Cuál es el valor del número Pi ($pi$) redondeado a dos decimales?', 10, 1, 2),
-(55, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 1, 2),
-(56, 6, '¿Cuánto suman los ángulos internos de cualquier triángulo?', 10, 1, 2),
-(57, 6, '¿Qué teorema establece que en un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos?', 10, 1, 2),
-(58, 6, '¿Qué es un número primo?', 10, 1, 2),
-(59, 6, '¿Cuál es el resultado de 2 elevado a la potencia de 10 (2^10)?', 10, 1, 2),
-(60, 6, '¿Qué es el factorial de 5 (representado como 5!)?', 10, 1, 2),
-(61, 1, '¿En qué deporte se utiliza el término \"ace\"?', 10, 5, 20),
-(62, 2, '¿Quién fue el primer emperador romano?', 10, 2, 15),
-(63, 3, '¿Cuál es la fórmula química del agua?', 10, 10, 30),
-(64, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 12),
-(65, 5, '¿Qué significa el acrónimo SQL?', 10, 8, 25),
-(66, 6, '¿Cuántos lados tiene un hexágono?', 10, 3, 18),
-(67, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de verano?', 10, 7, 22),
-(68, 2, '¿En qué año cayó el Muro de Berlín?', 10, 4, 17),
-(69, 3, '¿Qué gas es el más abundante en la atmósfera terrestre?', 10, 15, 40),
-(70, 4, '¿Cuál es la capital de Australia?', 10, 6, 21),
-(71, 5, '¿Qué lenguaje de programación se utiliza principalmente para el desarrollo web frontend?', 10, 12, 35),
-(72, 6, '¿Cuál es el valor de $\\pi$ (pi) aproximado a dos decimales?', 10, 9, 28),
-(73, 1, '¿Qué país ha ganado más Copas Mundiales de la FIFA?', 10, 1, 14),
-(74, 2, '¿Qué civilización construyó las pirámides de Giza?', 10, 5, 19),
-(75, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 11, 32),
-(76, 4, '¿Dónde se encuentra el desierto del Sahara?', 10, 2, 16),
-(77, 5, '¿Qué estructura de datos funciona con el principio LIFO?', 10, 7, 23),
-(78, 6, '¿Cómo se llama el lado más largo de un triángulo rectángulo?', 10, 4, 20),
-(79, 1, '¿Quién es considerado el mejor jugador de baloncesto de todos los tiempos?', 10, 8, 26),
-(80, 2, '¿Quién escribió \"Don Quijote de la Mancha\"?', 10, 3, 15),
-(81, 3, '¿Qué planeta es conocido como el \"Planeta Rojo\"?', 10, 14, 38),
-(82, 4, '¿Cuál es el país más pequeño del mundo por área?', 10, 6, 25),
-(83, 5, '¿Qué es un \"commit\" en Git?', 10, 10, 31),
-(84, 6, '¿Cuál es el resultado de $5 \\times (3 + 2)$?', 10, 5, 21),
-(85, 1, '¿Cuál es la distancia de un maratón en kilómetros?', 10, 10, 28),
-(86, 2, '¿Quién fue la primera mujer en ganar un Premio Nobel?', 10, 2, 13),
-(87, 3, '¿Qué órgano produce la bilis?', 10, 13, 36),
-(88, 4, '¿Qué océano es el más grande?', 10, 7, 24),
-(89, 5, '¿Qué es un \"bug\" en programación?', 10, 11, 33),
-(90, 6, '¿Qué tipo de número es 7/3 (fracción)?', 10, 6, 22),
-(91, 1, '¿Qué equipo de fútbol tiene más Ligas de Campeones de la UEFA?', 10, 4, 18),
-(92, 2, '¿En qué siglo comenzó la Revolución Francesa?', 10, 1, 10),
-(93, 3, '¿Qué capa de la Tierra protege de los rayos UV?', 10, 16, 42),
-(94, 4, '¿Cuál es la montaña más alta del mundo?', 10, 8, 29),
-(95, 5, '¿Qué es un bucle \"for\"?', 10, 13, 37),
-(96, 6, '¿Qué es un número primo?', 10, 7, 25),
-(97, 1, '¿Cuántos jugadores hay en un equipo de béisbol en el campo?', 10, 3, 17),
-(98, 2, '¿Quién fue presidente de EEUU durante la Segunda Guerra Mundial?', 10, 5, 20),
-(99, 3, '¿Cuál es la unidad básica de la herencia?', 10, 18, 45),
-(100, 4, '¿Cuál es la capital de Canadá?', 10, 9, 30),
-(101, 5, '¿Qué lenguaje se utiliza para estilizar páginas web?', 10, 14, 39),
-(102, 6, '¿Cuál es el valor de $4!$ (factorial de 4)?', 10, 8, 27),
-(103, 1, '¿Quién inventó el fútbol?', 10, 6, 21),
-(104, 2, '¿En qué año llegó el hombre a la Luna?', 10, 2, 11),
-(105, 3, '¿Qué animal realiza la fotosíntesis?', 10, 19, 48),
-(106, 4, '¿Qué estrecho separa Asia de América del Norte?', 10, 10, 32),
-(107, 5, '¿Qué significa HTML?', 10, 15, 41),
-(108, 6, '¿Qué es el módulo de un número complejo?', 10, 9, 29),
-(109, 1, '¿Qué es un \"hat-trick\" en fútbol?', 10, 7, 24),
-(110, 2, '¿Qué famosa batalla tuvo lugar en 1066?', 10, 3, 16),
-(111, 3, '¿Qué tipo de células son las neuronas?', 10, 20, 50),
-(112, 4, '¿Cuál es el volcán más activo del mundo?', 10, 11, 34),
-(113, 5, '¿Qué es una API?', 10, 16, 43),
-(114, 6, '¿Qué figura geométrica tiene cuatro lados iguales y cuatro ángulos rectos?', 10, 10, 31),
-(115, 1, '¿Cuál es el nombre del trofeo de la Copa Mundial de la FIFA?', 10, 8, 26),
-(116, 2, '¿Cuál fue la capital del Imperio Azteca?', 10, 4, 19),
-(117, 3, '¿Qué científico postuló la Teoría de la Relatividad?', 10, 22, 55),
-(118, 4, '¿En qué continente se encuentra el Monte Kilimanjaro?', 10, 12, 36),
-(119, 5, '¿Qué significa JSON?', 10, 17, 45),
-(120, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 11, 33),
-(121, 1, '¿Quién es el máximo goleador en la historia del Real Madrid?', 10, 9, 28),
-(122, 2, '¿Qué evento marca el inicio de la Edad Media?', 10, 5, 20),
-(123, 3, '¿Qué es un catalizador en una reacción química?', 10, 24, 60),
-(124, 4, '¿Cuál es el lago más grande de África?', 10, 13, 38),
-(125, 5, '¿Cuál es la función principal de un compilador?', 10, 18, 47),
-(126, 6, '¿Cuál es el área de un círculo con radio 5?', 10, 12, 35),
-(127, 1, '¿Qué deporte se juega en Wimbledon?', 10, 10, 30),
-(128, 2, '¿Quién fue Cleopatra?', 10, 6, 22),
-(129, 3, '¿Cómo se llama la energía que usa el Sol?', 10, 26, 65),
-(130, 4, '¿Qué país es el único que limita con Portugal?', 10, 14, 40),
-(131, 5, '¿Qué es un algoritmo de búsqueda binaria?', 10, 19, 49),
-(132, 6, '¿Qué es la pendiente de una recta?', 10, 13, 37),
-(133, 1, '¿Qué selección ganó el primer Mundial de fútbol?', 10, 11, 32),
-(134, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 7, 23),
-(135, 3, '¿Qué parte de la planta realiza la transpiración?', 10, 28, 70),
-(136, 4, '¿Cuál es la diferencia horaria estándar de UTC?', 10, 15, 42),
-(137, 5, '¿Qué es una variable de entorno?', 10, 20, 51),
-(138, 6, '¿Qué es un vector en matemáticas?', 10, 14, 39),
-(139, 1, '¿De qué color es la tarjeta que expulsa a un jugador en fútbol?', 10, 12, 34),
-(140, 2, '¿Quién fue el líder de la India que promovió la no violencia?', 10, 8, 25),
-(141, 3, '¿Qué elemento tiene el símbolo O en la tabla periódica?', 10, 30, 75),
-(142, 4, '¿En qué ciudad se encuentra el Big Ben?', 10, 16, 44),
-(143, 5, '¿Qué lenguaje se usa para el análisis de datos y la IA?', 10, 21, 53),
-(144, 6, '¿Qué es la desviación estándar?', 10, 15, 41),
-(145, 1, '¿En qué año se fundó el Comité Olímpico Internacional (COI)?', 10, 13, 36),
-(146, 2, '¿Qué dinastia construyó la Gran Muralla China?', 10, 9, 27),
-(147, 3, '¿Cuál es la función del ADN?', 10, 32, 80),
-(148, 4, '¿Cuál es la isla más grande del mundo?', 10, 17, 46),
-(149, 5, '¿Qué significa CRUD en bases de datos?', 10, 22, 55),
-(150, 6, '¿Cuál es el perímetro de un cuadrado de lado 4?', 10, 16, 43),
-(151, 1, '¿Qué tenista es conocido como el \"Rey de la Arcilla\"?', 10, 14, 38),
-(152, 2, '¿Qué evento desencadenó la Primera Guerra Mundial?', 10, 10, 29),
-(153, 3, '¿Qué parte del ojo controla la cantidad de luz que entra?', 10, 34, 85),
-(154, 4, '¿Qué cordillera atraviesa Chile y Argentina?', 10, 18, 48),
-(155, 5, '¿Qué es un framework web?', 10, 23, 57),
-(156, 6, '¿Cuál es el valor de $e$ (número de Euler) aproximado?', 10, 17, 45),
-(157, 1, '¿Cuántos puntos vale un tiro libre en baloncesto?', 10, 15, 40),
-(158, 2, '¿Quién fue el líder del nazismo en Alemania?', 10, 11, 31),
-(159, 3, '¿Qué es un ecosistema?', 10, 36, 90),
-(160, 4, '¿Cuál es el punto más bajo de la Tierra?', 10, 19, 50),
-(161, 5, '¿Qué es la recursividad?', 10, 24, 59),
-(162, 6, '¿Qué es una matriz identidad?', 10, 18, 47),
-(163, 1, '¿De qué nacionalidad es el piloto de F1 Lewis Hamilton?', 10, 16, 42),
-(164, 2, '¿En qué batalla fue derrotado Napoleón?', 10, 12, 33),
-(165, 3, '¿Qué científicos descubrieron la estructura de doble hélice del ADN?', 10, 38, 95),
-(166, 4, '¿Qué ciudad es conocida como la \"Ciudad Eterna\"?', 10, 20, 52),
-(167, 5, '¿Qué es un ORM?', 10, 25, 61),
-(168, 6, '¿Qué es una función inyectiva?', 10, 19, 49),
-(169, 1, '¿Qué es un birdie en golf?', 10, 17, 44),
-(170, 2, '¿Qué civilización es famosa por la invención del papel y la pólvora?', 10, 13, 35),
-(171, 3, '¿Cómo se llama la ciencia que estudia los terremotos?', 10, 40, 100),
-(172, 4, '¿Qué monumento es la principal atracción de París?', 10, 21, 54),
-(173, 5, '¿Qué es un sistema operativo?', 10, 26, 63),
-(174, 6, '¿Qué estudia la trigonometría?', 10, 20, 51);
+INSERT INTO `pregunta` (`preguntaId`, `categoriaId`, `enunciado`, `puntaje`, `respondidasMal`, `cantidadEnviada`, `esReportada`, `esSugerida`) VALUES
+(1, 1, '¿Cuántos jugadores tiene un equipo de fútbol en el campo durante un partido?', 10, 1, 2, 0, 0),
+(2, 1, '¿Qué país ganó la primera Copa del Mundo de fútbol en 1930?', 10, 2, 3, 0, 0),
+(3, 1, '¿En qué deporte se considera a Michael Jordan como el mejor de todos los tiempos?', 10, 1, 3, 0, 0),
+(4, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de Verano?', 10, 2, 3, 0, 0),
+(5, 1, '¿Cómo se llama el trofeo que se entrega al ganador de la Copa Libertadores?', 10, 1, 2, 0, 0),
+(6, 1, '¿En qué país se inventó el voleibol?', 10, 2, 3, 0, 0),
+(7, 1, '¿Qué tenista tiene el récord de más títulos de Grand Slam en la categoría masculina?', 10, 1, 2, 0, 0),
+(8, 1, '¿En qué año se celebraron los primeros Juegos Olímpicos modernos en Atenas?', 10, 1, 2, 0, 0),
+(9, 1, '¿Qué es un \"hat-trick\" perfecto en el fútbol?', 10, 1, 2, 0, 0),
+(10, 1, '¿Quién fue el primer piloto en ganar 7 campeonatos mundiales de Fórmula 1?', 10, 1, 2, 0, 0),
+(11, 2, '¿Quién fue el primer hombre en pisar la Luna en 1969?', 10, 1, 2, 0, 0),
+(12, 2, '¿En qué año comenzó la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
+(13, 2, '¿Qué civilización antigua construyó las pirámides de Giza?', 10, 2, 4, 0, 0),
+(14, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
+(15, 2, '¿En qué ciudad fue asesinado el archiduque Francisco Fernando, evento que desencadenó la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
+(16, 2, '¿Qué civilización precolombina construyó la ciudad de Machu Picchu?', 10, 1, 2, 0, 0),
+(17, 2, '¿Quién fue la última reina de Egipto?', 10, 1, 2, 0, 0),
+(18, 2, '¿Cómo se llamó la operación militar del desembarco de Normandía durante la Segunda Guerra Mundial?', 10, 1, 3, 0, 0),
+(19, 2, '¿Quién fue el líder de la facción bolchevique durante la Revolución Rusa?', 10, 1, 2, 0, 0),
+(20, 2, '¿Qué imperio fue derrotado en la Batalla de Waterloo en 1815?', 10, 1, 2, 0, 0),
+(21, 3, '¿Cuál es el símbolo químico del agua?', 10, 1, 2, 0, 0),
+(22, 3, '¿Qué planeta de nuestro sistema solar es conocido como el \"Planeta Rojo\"?', 10, 1, 2, 0, 0),
+(23, 3, '¿Qué gas es esencial para la respiración de los seres humanos?', 10, 1, 2, 0, 0),
+(24, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 1, 2, 0, 0),
+(25, 3, '¿Cómo se llama el proceso por el cual las plantas producen su propio alimento usando la luz solar?', 10, 1, 2, 0, 0),
+(26, 3, '¿Cuántos corazones tiene un pulpo?', 10, 2, 3, 0, 0),
+(27, 3, '¿Cuál es el animal terrestre más grande del mundo?', 10, 1, 2, 0, 0),
+(28, 3, '¿Cuál es la velocidad aproximada de la luz en el vacío?', 10, 1, 2, 0, 0),
+(29, 3, '¿Qué orgánulo es conocido como la \"central energética\" de la célula?', 10, 1, 2, 0, 0),
+(30, 3, '¿Qué científico propuso la teoría de la relatividad general?', 10, 2, 3, 0, 0),
+(31, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 3, 0, 0),
+(32, 4, '¿En qué continente se encuentra Argentina?', 10, 1, 2, 0, 0),
+(33, 4, '¿Cuál es la capital de Italia?', 10, 1, 2, 0, 0),
+(34, 4, '¿Cuál es el desierto cálido más grande del mundo?', 10, 2, 3, 0, 0),
+(35, 4, '¿Qué país tiene la mayor cantidad de islas en el mundo?', 10, 1, 2, 0, 0),
+(36, 4, '¿En qué país se encuentra el Monte Everest, la montaña más alta del mundo?', 10, 2, 3, 0, 0),
+(37, 4, '¿Cuál es el lago más profundo del mundo, ubicado en Siberia?', 10, 1, 2, 0, 0),
+(38, 4, '¿Cuál es la capital de Australia?', 10, 1, 2, 0, 0),
+(39, 4, '¿Qué es la Fosa de las Marianas?', 10, 1, 2, 0, 0),
+(40, 4, '¿Qué dos países comparten la isla de La Española en el Caribe?', 10, 3, 4, 0, 0),
+(41, 5, '¿Qué significa la sigla HTML en desarrollo web?', 10, 1, 2, 0, 0),
+(42, 5, '¿Cuál de estos es un lenguaje de programación orientado a objetos: HTML, CSS o Java?', 10, 1, 2, 0, 0),
+(43, 5, '¿Qué símbolo se usa para comentarios de una sola línea en lenguajes como Java, C# y JavaScript?', 10, 1, 2, 0, 0),
+(44, 5, '¿Qué es una variable en programación?', 10, 1, 2, 0, 0),
+(45, 5, '¿Para qué se utiliza comúnmente el comando \"git clone\"?', 10, 1, 2, 0, 0),
+(46, 5, '¿Qué significa API?', 10, 1, 2, 0, 0),
+(47, 5, '¿En qué paradigma de programación los objetos son la principal abstracción?', 10, 1, 2, 0, 0),
+(48, 5, '¿Qué es la recursividad en el contexto de la programación?', 10, 1, 2, 0, 0),
+(49, 5, '¿Cuál es la diferencia principal entre \"==\" y \"===\" en JavaScript?', 10, 1, 2, 0, 0),
+(50, 5, '¿Qué patrón de diseño utiliza una interfaz para crear familias de objetos relacionados sin especificar sus clases concretas?', 10, 1, 2, 0, 0),
+(51, 6, '¿Cuánto es 9 multiplicado por 7?', 10, 1, 2, 0, 0),
+(52, 6, '¿Cómo se llama un polígono que tiene 5 lados?', 10, 1, 2, 0, 0),
+(53, 6, 'Si tienes 30 manzanas y te comes la mitad, ¿cuántas te quedan?', 10, 1, 2, 0, 0),
+(54, 6, '¿Cuál es el valor del número Pi ($pi$) redondeado a dos decimales?', 10, 1, 3, 0, 0),
+(55, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 1, 2, 0, 0),
+(56, 6, '¿Cuánto suman los ángulos internos de cualquier triángulo?', 10, 1, 2, 0, 0),
+(57, 6, '¿Qué teorema establece que en un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos?', 10, 2, 3, 0, 0),
+(58, 6, '¿Qué es un número primo?', 10, 1, 2, 0, 0),
+(59, 6, '¿Cuál es el resultado de 2 elevado a la potencia de 10 (2^10)?', 10, 1, 2, 0, 0),
+(60, 6, '¿Qué es el factorial de 5 (representado como 5!)?', 10, 1, 2, 0, 0),
+(61, 1, '¿En qué deporte se utiliza el término \"ace\"?', 10, 5, 20, 0, 0),
+(62, 2, '¿Quién fue el primer emperador romano?', 10, 2, 15, 0, 0),
+(63, 3, '¿Cuál es la fórmula química del agua?', 10, 10, 30, 0, 0),
+(64, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 12, 0, 0),
+(65, 5, '¿Qué significa el acrónimo SQL?', 10, 8, 25, 0, 0),
+(66, 6, '¿Cuántos lados tiene un hexágono?', 10, 3, 18, 0, 0),
+(67, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de verano?', 10, 7, 22, 0, 0),
+(68, 2, '¿En qué año cayó el Muro de Berlín?', 10, 4, 17, 0, 0),
+(69, 3, '¿Qué gas es el más abundante en la atmósfera terrestre?', 10, 15, 40, 0, 0),
+(70, 4, '¿Cuál es la capital de Australia?', 10, 6, 21, 0, 0),
+(71, 5, '¿Qué lenguaje de programación se utiliza principalmente para el desarrollo web frontend?', 10, 12, 35, 0, 0),
+(72, 6, '¿Cuál es el valor de $\\pi$ (pi) aproximado a dos decimales?', 10, 9, 28, 0, 0),
+(73, 1, '¿Qué país ha ganado más Copas Mundiales de la FIFA?', 10, 1, 14, 0, 0),
+(74, 2, '¿Qué civilización construyó las pirámides de Giza?', 10, 5, 19, 0, 0),
+(75, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 11, 32, 0, 0),
+(76, 4, '¿Dónde se encuentra el desierto del Sahara?', 10, 2, 16, 0, 0),
+(77, 5, '¿Qué estructura de datos funciona con el principio LIFO?', 10, 7, 23, 0, 0),
+(78, 6, '¿Cómo se llama el lado más largo de un triángulo rectángulo?', 10, 4, 20, 0, 0),
+(79, 1, '¿Quién es considerado el mejor jugador de baloncesto de todos los tiempos?', 10, 8, 26, 0, 0),
+(80, 2, '¿Quién escribió \"Don Quijote de la Mancha\"?', 10, 3, 15, 0, 0),
+(81, 3, '¿Qué planeta es conocido como el \"Planeta Rojo\"?', 10, 14, 38, 0, 0),
+(82, 4, '¿Cuál es el país más pequeño del mundo por área?', 10, 6, 25, 0, 0),
+(83, 5, '¿Qué es un \"commit\" en Git?', 10, 10, 31, 0, 0),
+(84, 6, '¿Cuál es el resultado de $5 \\times (3 + 2)$?', 10, 5, 21, 0, 0),
+(85, 1, '¿Cuál es la distancia de un maratón en kilómetros?', 10, 10, 28, 0, 0),
+(86, 2, '¿Quién fue la primera mujer en ganar un Premio Nobel?', 10, 2, 13, 0, 0),
+(87, 3, '¿Qué órgano produce la bilis?', 10, 13, 36, 0, 0),
+(88, 4, '¿Qué océano es el más grande?', 10, 7, 24, 0, 0),
+(89, 5, '¿Qué es un \"bug\" en programación?', 10, 11, 33, 0, 0),
+(90, 6, '¿Qué tipo de número es 7/3 (fracción)?', 10, 6, 22, 0, 0),
+(91, 1, '¿Qué equipo de fútbol tiene más Ligas de Campeones de la UEFA?', 10, 4, 18, 0, 0),
+(92, 2, '¿En qué siglo comenzó la Revolución Francesa?', 10, 1, 10, 0, 0),
+(93, 3, '¿Qué capa de la Tierra protege de los rayos UV?', 10, 16, 42, 0, 0),
+(94, 4, '¿Cuál es la montaña más alta del mundo?', 10, 8, 29, 0, 0),
+(95, 5, '¿Qué es un bucle \"for\"?', 10, 13, 37, 0, 0),
+(96, 6, '¿Qué es un número primo?', 10, 7, 25, 0, 0),
+(97, 1, '¿Cuántos jugadores hay en un equipo de béisbol en el campo?', 10, 3, 17, 0, 0),
+(98, 2, '¿Quién fue presidente de EEUU durante la Segunda Guerra Mundial?', 10, 5, 20, 0, 0),
+(99, 3, '¿Cuál es la unidad básica de la herencia?', 10, 18, 45, 0, 0),
+(100, 4, '¿Cuál es la capital de Canadá?', 10, 9, 30, 0, 0),
+(101, 5, '¿Qué lenguaje se utiliza para estilizar páginas web?', 10, 14, 39, 0, 0),
+(102, 6, '¿Cuál es el valor de $4!$ (factorial de 4)?', 10, 8, 27, 0, 0),
+(103, 1, '¿Quién inventó el fútbol?', 10, 6, 21, 0, 0),
+(104, 2, '¿En qué año llegó el hombre a la Luna?', 10, 2, 11, 0, 0),
+(105, 3, '¿Qué animal realiza la fotosíntesis?', 10, 19, 49, 0, 0),
+(106, 4, '¿Qué estrecho separa Asia de América del Norte?', 10, 10, 32, 0, 0),
+(107, 5, '¿Qué significa HTML?', 10, 15, 41, 0, 0),
+(108, 6, '¿Qué es el módulo de un número complejo?', 10, 9, 29, 0, 0),
+(109, 1, '¿Qué es un \"hat-trick\" en fútbol?', 10, 7, 24, 0, 0),
+(110, 2, '¿Qué famosa batalla tuvo lugar en 1066?', 10, 3, 16, 0, 0),
+(111, 3, '¿Qué tipo de células son las neuronas?', 10, 20, 50, 0, 0),
+(112, 4, '¿Cuál es el volcán más activo del mundo?', 10, 11, 34, 0, 0),
+(113, 5, '¿Qué es una API?', 10, 16, 43, 0, 0),
+(114, 6, '¿Qué figura geométrica tiene cuatro lados iguales y cuatro ángulos rectos?', 10, 10, 31, 0, 0),
+(115, 1, '¿Cuál es el nombre del trofeo de la Copa Mundial de la FIFA?', 10, 8, 26, 0, 0),
+(116, 2, '¿Cuál fue la capital del Imperio Azteca?', 10, 4, 19, 0, 0),
+(117, 3, '¿Qué científico postuló la Teoría de la Relatividad?', 10, 22, 55, 0, 0),
+(118, 4, '¿En qué continente se encuentra el Monte Kilimanjaro?', 10, 12, 36, 0, 0),
+(119, 5, '¿Qué significa JSON?', 10, 17, 45, 0, 0),
+(120, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 11, 33, 0, 0),
+(121, 1, '¿Quién es el máximo goleador en la historia del Real Madrid?', 10, 9, 28, 0, 0),
+(122, 2, '¿Qué evento marca el inicio de la Edad Media?', 10, 5, 20, 0, 0),
+(123, 3, '¿Qué es un catalizador en una reacción química?', 10, 24, 60, 0, 0),
+(124, 4, '¿Cuál es el lago más grande de África?', 10, 13, 38, 0, 0),
+(125, 5, '¿Cuál es la función principal de un compilador?', 10, 18, 47, 0, 0),
+(126, 6, '¿Cuál es el área de un círculo con radio 5?', 10, 12, 35, 0, 0),
+(127, 1, '¿Qué deporte se juega en Wimbledon?', 10, 11, 31, 0, 0),
+(128, 2, '¿Quién fue Cleopatra?', 10, 6, 22, 0, 0),
+(129, 3, '¿Cómo se llama la energía que usa el Sol?', 10, 26, 65, 0, 0),
+(130, 4, '¿Qué país es el único que limita con Portugal?', 10, 14, 40, 0, 0),
+(131, 5, '¿Qué es un algoritmo de búsqueda binaria?', 10, 19, 49, 0, 0),
+(132, 6, '¿Qué es la pendiente de una recta?', 10, 14, 38, 0, 0),
+(133, 1, '¿Qué selección ganó el primer Mundial de fútbol?', 10, 12, 33, 0, 0),
+(134, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 7, 23, 0, 0),
+(135, 3, '¿Qué parte de la planta realiza la transpiración?', 10, 28, 70, 0, 0),
+(136, 4, '¿Cuál es la diferencia horaria estándar de UTC?', 10, 15, 42, 0, 0),
+(137, 5, '¿Qué es una variable de entorno?', 10, 20, 51, 0, 0),
+(138, 6, '¿Qué es un vector en matemáticas?', 10, 15, 40, 0, 0),
+(139, 1, '¿De qué color es la tarjeta que expulsa a un jugador en fútbol?', 10, 12, 34, 0, 0),
+(140, 2, '¿Quién fue el líder de la India que promovió la no violencia?', 10, 8, 25, 0, 0),
+(141, 3, '¿Qué elemento tiene el símbolo O en la tabla periódica?', 10, 30, 75, 0, 0),
+(142, 4, '¿En qué ciudad se encuentra el Big Ben?', 10, 16, 44, 0, 0),
+(143, 5, '¿Qué lenguaje se usa para el análisis de datos y la IA?', 10, 21, 53, 0, 0),
+(144, 6, '¿Qué es la desviación estándar?', 10, 15, 41, 0, 0),
+(145, 1, '¿En qué año se fundó el Comité Olímpico Internacional (COI)?', 10, 13, 36, 0, 0),
+(146, 2, '¿Qué dinastia construyó la Gran Muralla China?', 10, 9, 27, 0, 0),
+(147, 3, '¿Cuál es la función del ADN?', 10, 32, 80, 0, 0),
+(148, 4, '¿Cuál es la isla más grande del mundo?', 10, 17, 46, 0, 0),
+(149, 5, '¿Qué significa CRUD en bases de datos?', 10, 22, 55, 0, 0),
+(150, 6, '¿Cuál es el perímetro de un cuadrado de lado 4?', 10, 16, 43, 0, 0),
+(151, 1, '¿Qué tenista es conocido como el \"Rey de la Arcilla\"?', 10, 14, 38, 0, 0),
+(152, 2, '¿Qué evento desencadenó la Primera Guerra Mundial?', 10, 10, 29, 0, 0),
+(153, 3, '¿Qué parte del ojo controla la cantidad de luz que entra?', 10, 35, 86, 0, 0),
+(154, 4, '¿Qué cordillera atraviesa Chile y Argentina?', 10, 18, 48, 0, 0),
+(155, 5, '¿Qué es un framework web?', 10, 23, 57, 0, 0),
+(156, 6, '¿Cuál es el valor de $e$ (número de Euler) aproximado?', 10, 18, 46, 0, 0),
+(157, 1, '¿Cuántos puntos vale un tiro libre en baloncesto?', 10, 15, 40, 0, 0),
+(158, 2, '¿Quién fue el líder del nazismo en Alemania?', 10, 11, 32, 0, 0),
+(159, 3, '¿Qué es un ecosistema?', 10, 36, 90, 0, 0),
+(160, 4, '¿Cuál es el punto más bajo de la Tierra?', 10, 19, 50, 0, 0),
+(161, 5, '¿Qué es la recursividad?', 10, 24, 59, 0, 0),
+(162, 6, '¿Qué es una matriz identidad?', 10, 18, 47, 0, 0),
+(163, 1, '¿De qué nacionalidad es el piloto de F1 Lewis Hamilton?', 10, 16, 42, 0, 0),
+(164, 2, '¿En qué batalla fue derrotado Napoleón?', 10, 12, 33, 0, 0),
+(165, 3, '¿Qué científicos descubrieron la estructura de doble hélice del ADN?', 10, 38, 95, 0, 0),
+(166, 4, '¿Qué ciudad es conocida como la \"Ciudad Eterna\"?', 10, 20, 52, 0, 0),
+(167, 5, '¿Qué es un ORM?', 10, 25, 61, 0, 0),
+(168, 6, '¿Qué es una función inyectiva?', 10, 19, 49, 0, 0),
+(169, 1, '¿Qué es un birdie en golf?', 10, 17, 44, 0, 0),
+(170, 2, '¿Qué civilización es famosa por la invención del papel y la pólvora?', 10, 14, 36, 0, 0),
+(171, 3, '¿Cómo se llama la ciencia que estudia los terremotos?', 10, 40, 100, 0, 0),
+(172, 4, '¿Qué monumento es la principal atracción de París?', 10, 21, 54, 0, 0),
+(173, 5, '¿Qué es un sistema operativo?', 10, 26, 63, 0, 0),
+(174, 6, '¿Qué estudia la trigonometría?', 10, 20, 51, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -362,7 +399,40 @@ INSERT INTO `preguntas_a_evitar` (`preguntas_a_evitar_id`, `preguntaId`, `usuari
 (3, 13, 4),
 (4, 31, 4),
 (5, 3, 4),
-(6, 6, 4);
+(6, 6, 4),
+(7, 13, 4),
+(8, 40, 4),
+(9, 105, 4),
+(10, 54, 4),
+(11, 127, 4),
+(12, 30, 4),
+(13, 170, 4),
+(14, 156, 4),
+(15, 57, 4),
+(16, 132, 4),
+(17, 133, 4),
+(18, 158, 4),
+(19, 4, 4),
+(20, 153, 4),
+(21, 26, 4),
+(22, 34, 4),
+(23, 18, 4),
+(24, 36, 4),
+(25, 2, 4),
+(26, 138, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reportes`
+--
+
+CREATE TABLE `reportes` (
+  `reportesId` int(11) NOT NULL,
+  `usuarioId` int(11) NOT NULL,
+  `preguntaId` int(11) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1176,6 +1246,14 @@ ALTER TABLE `preguntas_a_evitar`
   ADD KEY `preguntaId` (`preguntaId`);
 
 --
+-- Indices de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD PRIMARY KEY (`reportesId`),
+  ADD KEY `usuarioId` (`usuarioId`),
+  ADD KEY `preguntaId` (`preguntaId`);
+
+--
 -- Indices de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
@@ -1212,13 +1290,13 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `historial_respuestas`
 --
 ALTER TABLE `historial_respuestas`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `partida`
 --
 ALTER TABLE `partida`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
@@ -1230,7 +1308,13 @@ ALTER TABLE `pregunta`
 -- AUTO_INCREMENT de la tabla `preguntas_a_evitar`
 --
 ALTER TABLE `preguntas_a_evitar`
-  MODIFY `preguntas_a_evitar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `preguntas_a_evitar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  MODIFY `reportesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
@@ -1279,6 +1363,13 @@ ALTER TABLE `pregunta`
 ALTER TABLE `preguntas_a_evitar`
   ADD CONSTRAINT `preguntas_a_evitar_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuario` (`usuarioId`),
   ADD CONSTRAINT `preguntas_a_evitar_ibfk_2` FOREIGN KEY (`preguntaId`) REFERENCES `pregunta` (`preguntaId`);
+
+--
+-- Filtros para la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`usuarioId`) REFERENCES `usuario` (`usuarioId`),
+  ADD CONSTRAINT `reportes_ibfk_2` FOREIGN KEY (`preguntaId`) REFERENCES `pregunta` (`preguntaId`);
 
 --
 -- Filtros para la tabla `respuesta`
