@@ -63,24 +63,65 @@ ORDER BY
         $this->conexion->ejecutarConsulta($sql_pregunta, $tipos, $params);
     }
 
-    public function editarPregunta($preguntaId,$enunciado,$categoria){
-        $categoriaId = $this->obtenerIdDeCategoriaPorNombre($categoria);
-        $sql = "UPDATE pregunta SET"
-            ." enunciado = ?,"
-            ." categoriaId = ? WHERE preguntaid = ?";
-        $tipos = "sii";
-        $params = array($preguntaId,$enunciado,$categoriaId);
 
-         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+    public function actualizarPreguntaYRespuestas(
+        $preguntaId,
+        $enunciado,
+        $categoriaNombre,
+        $respuestas,
+        $idRespuestaCorrecta
+    ) {
 
-}
+        $categoriaId = $this->obtenerIdDeCategoriaPorNombre($categoriaNombre);
+        // Obtenemos la conexión directa para manejar la transacción
+        $db = $this->conexion->getConexion();
+        $db->begin_transaction();
+
+        try {
+            // 1. Actualizar la pregunta
+            $sql_pregunta = "UPDATE pregunta SET enunciado = ?, categoriaId = ? WHERE preguntaId = ?";
+            $this->conexion->ejecutarConsulta($sql_pregunta, "sii", [$enunciado, $categoriaId, $preguntaId]);
+
+            // 2. Actualizar el texto de CADA respuesta
+            foreach ($respuestas as $id => $data) {
+                $texto = $data['texto'];
+                $sql_respuesta = "UPDATE respuesta SET respuestaTexto = ? WHERE id_respuesta = ?";
+                $this->conexion->ejecutarConsulta($sql_respuesta, "si", [$texto, $id]);
+            }
+
+            // 3a. Poner TODAS las respuestas de esta pregunta a 0
+            $sql_reset = "UPDATE respuesta SET esCorrecta = 0 WHERE preguntaId = ?";
+            $this->conexion->ejecutarConsulta($sql_reset, "i", [$preguntaId]);
+
+            // 3b. Poner la respuesta ELEGIDA a 1
+            $sql_set = "UPDATE respuesta SET esCorrecta = 1 WHERE id_respuesta = ?";
+            $this->conexion->ejecutarConsulta($sql_set, "i", [$idRespuestaCorrecta]);
+
+            // 4. Si todo salió bien, confirmamos los cambios
+            $db->commit();
+            return true;
+
+        } catch (Exception $e) {
+            // 5. Si algo falló, revertimos todo
+            $db->rollback();
+            return false;
+        }
+    }
+
+
+
 
     public function obtenerIdDeCategoriaPorNombre($nombreCategoria){
         $sql = "SELECT categoriaId FROM categoria WHERE nombre = ?";
         $tipos = "s";
         $params = array($nombreCategoria);
 
-        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if (!empty($resultado)) {
+            return $resultado[0]['categoriaId'];
+        }
+        return null;
     }
 
 

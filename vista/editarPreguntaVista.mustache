@@ -1,47 +1,53 @@
-
 <h1>Editar Pregunta</h1>
-<form action="/editor/editarPregunta">
+
+{{#mensaje_exito}}
+    <div style="color: green; border: 1px solid green; padding: 10px;">
+        {{mensaje_exito}}
+    </div>
+{{/mensaje_exito}}
+{{#mensaje_error}}
+    <div style="color: red; border: 1px solid red; padding: 10px;">
+        {{mensaje_error}}
+    </div>
+{{/mensaje_error}}
+
+
+<form action="/editor/editarPregunta" method="POST">
+
     <input type="hidden" name="preguntaId" value="{{pregunta.preguntaId}}">
+
     <label for="enunciado">Enunciado</label>
     <input type="text" id="enunciado" name="enunciado" value="{{pregunta.enunciado}}">
+
     <label for="categoria">Categoria</label>
     <select id="categoria" name="categoria">
         {{#categorias}}
-        <option value="{{nombre}}">{{nombre}}</option>
+            <option value="{{nombre}}">{{nombre}}</option>
         {{/categorias}}
     </select>
-    <button type="submit">Editar</button>
-</form>
 
-<form action="/editor/editarRespuesta">
-    <input type="hidden" name="respuestaId" value="{{rta1.id_respuesta}}">
-    <label for="respuesta1">Respuesta 1:</label>
-    <input type="text" id="respuesta1" name="respuesta1" value="{{rta1.respuestaTexto}}">
-    <label for="rta1">Es correcta:</label>
-    <input type="radio" id="rta1" name="rtaCorrecta">
-    <button type="submit">Editar</button>
-</form>
-<form action="/editor/editarRespuesta">
-    <input type="hidden" name="respuestaId" value="{{rta2.id_respuesta}}">
-    <label for="respuesta2">Respuesta 2:</label>
-    <input type="text" id="respuesta2" name="respuesta2" value="{{rta2.respuestaTexto}}">
-    <label for="rta2">Es correcta:</label>
-    <input type="radio" id="rta2" name="rtaCorrecta">
-    <button type="submit">Editar</button>
-</form>
-<form action="/editor/editarRespuesta">
-    <input type="hidden" name="respuestaId" value="{{rta3.id_respuesta}}">
-    <label for="respuesta3">Respuesta 3:</label>
-    <input type="text" id="respuesta3" name="respuesta3" value="{{rta3.respuestaTexto}}">
-    <label for="rta3">Es correcta:</label>
-    <input type="radio" id="rta3" name="rtaCorrecta">
-    <button type="submit">Editar</button>
-</form>
-<form action="/editor/editarRespuesta">
-    <input type="hidden" name="respuestaId" value="{{rta4.id_respuesta}}">
-    <label for="respuesta4">Respuesta 4:</label>
-    <input type="text" id="respuesta4" name="respuesta4" value="{{rta4.respuestaTexto}}">
-    <label for="rta4">Es correcta:</label>
-    <input type="radio" id="rta4" name="rtaCorrecta">
-    <button type="submit">Editar</button>
+    <hr>
+
+    <h3>Respuestas</h3>
+    {{#respuestas}}
+        <div>
+            <input type="hidden" name="respuestas[{{id_respuesta}}][id]" value="{{id_respuesta}}">
+
+            <label for="respuesta_{{id_respuesta}}">Respuesta:</label>
+            <input type="text" id="respuesta_{{id_respuesta}}"
+                   name="respuestas[{{id_respuesta}}][texto]"
+                   value="{{respuestaTexto}}">
+
+            <label for="radio_{{id_respuesta}}">Es correcta:</label>
+            <input type="radio"
+                   id="radio_{{id_respuesta}}"
+                   name="rtaCorrecta"
+                   value="{{id_respuesta}}"
+                   {{#esCorrecta}}checked{{/esCorrecta}}>
+
+        </div>
+        <br>
+    {{/respuestas}}
+
+    <button type="submit">Guardar Todos los Cambios</button>
 </form>
