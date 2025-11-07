@@ -125,7 +125,9 @@ class JuegoModel
 
     public  function buscarRespuestas($id)
     {
-        $sqlRespuestas = "SELECT * FROM respuesta WHERE preguntaId = ?";
+        $sqlRespuestas = "SELECT * FROM respuesta 
+                        WHERE preguntaId = ? 
+                        ORDER BY RAND()";
         $tipos = "i";
         $params = array($id);
         return $this->conexion->ejecutarConsulta($sqlRespuestas, $tipos, $params);
@@ -172,6 +174,33 @@ class JuegoModel
         $sql = "UPDATE pregunta SET respondidasMal = respondidasMal + 1 WHERE preguntaId = ?";
         $tipos = "i";
         $params = array($preguntaId);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+    }
+
+    public function reportarPregunta($preguntaId, $usuarioId, $descripcion){
+
+        $sql = "INSERT INTO reportes (usuarioId, preguntaId, descripcion) VALUES (?, ?, ?)";
+        $tipos = "iis";
+        $params = array($usuarioId, $preguntaId, $descripcion);
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+    }
+
+    public function verCantidadDeReportesPorPregunta($preguntaId){
+
+        $sql = "SELECT COUNT(*) as cantidadReportes FROM reportes WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+        return $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
+
+    }
+
+    public function editarEstadoDeReporte($preguntaId){
+
+        $sql = "UPDATE pregunta SET esReportada = ? WHERE preguntaId = ?";
+        $tipos = "ii";
+        $params = array(true, $preguntaId);
         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
     }
