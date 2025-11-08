@@ -25,7 +25,7 @@ class LoginModel
     }
 
     public function iniciarSesion($idUsuario, $pass){
-        $sql = "SELECT usuarioId, nombre_usuario, password FROM usuario WHERE usuarioId = ?";
+        $sql = "SELECT usuarioId, nombre_usuario, password , id_rol FROM usuario WHERE usuarioId = ?";
         $tipos = "i";
         $params = array($idUsuario);
         $usuario = $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];

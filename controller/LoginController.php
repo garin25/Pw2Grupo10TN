@@ -95,6 +95,7 @@ class LoginController
         if ($usuario !== null) {
             $_SESSION['usuarioId'] = $usuario['usuarioId'];
             $_SESSION['nombre_usuario'] = $usuario['nombre_usuario'];
+            $_SESSION['id_rol'] = $usuario['id_rol']; // es 1:Jugador 2:Editor 3:Administrador
             $respuesta = [
                 "ok" => true,
                 "usuario" => $usuario
