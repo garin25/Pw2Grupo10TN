@@ -1,0 +1,53 @@
+
+<a href="/editor">Volver</a>
+{{#mensaje_exito}}
+    <div style="color: green; border: 1px solid green; padding: 10px;">
+        {{mensaje_exito}}
+    </div>
+{{/mensaje_exito}}
+{{#mensaje_error}}
+    <div style="color: red; border: 1px solid red; padding: 10px;">
+        {{mensaje_error}}
+    </div>
+{{/mensaje_error}}
+
+
+<form action="/editor/editarPregunta" method="POST">
+
+    <input type="hidden" name="preguntaId" value="{{pregunta.preguntaId}}">
+
+    <label for="enunciado">Enunciado</label>
+    <input type="text" id="enunciado" name="enunciado" value="{{pregunta.enunciado}}">
+
+    <label for="categoria">Categoria</label>
+    <select id="categoria" name="categoria">
+        {{#categorias}}
+            <option value="{{nombre}}" {{#is_selected}}selected{{/is_selected}}>{{nombre}}</option>
+        {{/categorias}}
+    </select>
+
+    <hr>
+
+    <h3>Respuestas</h3>
+    {{#respuestas}}
+        <div>
+            <input type="hidden" name="respuestas[{{id_respuesta}}][id]" value="{{id_respuesta}}">
+
+            <label for="respuesta_{{id_respuesta}}">Respuesta:</label>
+            <input type="text" id="respuesta_{{id_respuesta}}"
+                   name="respuestas[{{id_respuesta}}][texto]"
+                   value="{{respuestaTexto}}">
+
+            <label for="radio_{{id_respuesta}}">Es correcta:</label>
+            <input type="radio"
+                   id="radio_{{id_respuesta}}"
+                   name="rtaCorrecta"
+                   value="{{id_respuesta}}"
+                   {{#esCorrecta}}checked{{/esCorrecta}}>
+
+        </div>
+        <br>
+    {{/respuestas}}
+
+    <button type="submit">Guardar Todos los Cambios</button>
+</form>

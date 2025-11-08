@@ -68,7 +68,7 @@ function cargarPassword(usuarioId, user) {
                     <input id="pass" class="email" name="pass" type="password">
                 </div>
 
-                <button id="submit-form" class="btn">Iniciar sesión</button> `
+                <button id="submit-form" class="boton">Iniciar sesión</button> `
 
     addClickSubmitForm(usuarioId);
     
@@ -133,7 +133,7 @@ function cargarEmail() {
                     <input id="email" class="email" placeholder="example@algo.com" name="email" type="text">
                 </div>
 
-                <button id="submit" class="btn">Verificar</button>`;
+                <button id="submit" class="boton">Verificar</button>`;
 }
 
 volver.addEventListener("click", () => {

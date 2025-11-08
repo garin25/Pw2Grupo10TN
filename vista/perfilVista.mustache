@@ -1,0 +1,77 @@
+
+<div class="bg-white shadow-2xl rounded-xl p-6 border-t-8" style="border-top-width: 8px; border-style: solid; border-color: #8D44B6;">
+
+    <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
+
+        <div class="relative flex-shrink-0">
+            <img src="/{{usuarioConsultado.foto_perfil}}" alt="Foto de Perfil" class="h-32 w-32 object-cover rounded-full border-4 ring-2 shadow-lg" style="border-color: #8D44B6;">
+            <span class="absolute bottom-0 right-0 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-xl" style="background-color: #F8DE41;">
+    Nivel 15
+</span>
+        </div>
+
+        <div class="text-center md:text-left">
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-1">
+                {{usuarioConsultado.nombre_usuario}}
+            </h1>
+            <p class="text-lg font-medium mb-3" style="color: #8D44B6;">
+    Maestro de Trivia
+</p>
+
+            <div class="flex justify-center md:justify-start space-x-3">
+                <button class="flex items-center text-white font-semibold py-1.5 px-3 rounded-lg shadow-md transition duration-150 hover:bg-[#723696]" style="background-color: #8D44B6;">
+                    <i class="bi bi-chat-dots-fill mr-2"></i> Mensaje
+                </button>
+                <button class="flex items-center text-gray-800 font-semibold py-1.5 px-3 rounded-lg shadow-md hover:bg-[#E5C73C] transition duration-150" style="background-color: #F8DE41;">
+                    <i class="bi bi-pencil-fill mr-2"></i> Editar perfil
+</button>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-6 border-gray-200">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+        <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
+            <p class="text-3xl md:text-4xl font-extrabold text-white">12.5K</p>
+            <p class="text-sm font-medium text-white opacity-90">Puntos Totales</p>
+        </div>
+        <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
+            <p class="text-3xl md:text-4xl font-extrabold text-white">85</p>
+            <p class="text-sm font-medium text-white opacity-90">Partidas Ganadas</p>
+        </div>
+        <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
+            <p class="text-3xl md:text-4xl font-extrabold text-white">3</p>
+            <p class="text-sm font-medium text-white opacity-90">Logros Desbloqueados</p>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Logros</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center space-x-4">
+                <div class="text-3xl">⚽</div>
+                <div>
+                    <p class="font-semibold text-gray-800">Leyenda de Deportes</p>
+                    <p class="text-sm text-gray-500">Responder 10 preguntas correctamente</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center space-x-4">
+                <div class="text-3xl">🏛️</div>
+                <div>
+                    <p class="font-semibold text-gray-800">Historiador</p>
+                    <p class="text-sm text-gray-500">Responder 50 preguntas correctamente de historia </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center space-x-4">
+                <div class="text-3xl">🐛</div>
+                <div>
+                    <p class="font-semibold text-gray-800">Cazador de Errores</p>
+                    <p class="text-sm text-gray-500">Detectar un error en una pregunta</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

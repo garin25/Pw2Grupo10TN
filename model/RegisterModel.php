@@ -2,7 +2,6 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // Carga el autoloader de Composer
 class RegisterModel
 {
 
@@ -15,10 +14,14 @@ class RegisterModel
         $this->config = parse_ini_file("config/config.ini");
     }
 
-    public function crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$año,$pais,$ciudad,$token){
+    public function crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$anio,$pais,$ciudad,$token){
 
         $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais,ciudad,email,password,nombre_usuario,id_rol,token) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        $this->conexion->registrarUsuario($sql, $nombreCompleto,$año,$sexo,$pais,$ciudad,$email,$passwordHash,$nombre_usuario,1,$token);
+        $tipos = "sissssssis";
+        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token);
+
+        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+        /*$this->conexion->registrarUsuario($sql, $nombreCompleto,$año,$sexo,$pais,$ciudad,$email,$passwordHash,$nombre_usuario,1,$token);*/
 
         // Puedo poner el codigo de PHPMAILER aca por que si se ejecuta este metodo significa que se registro correctamente
         // De lo contrario este metodo no se hubiera ejecutado
@@ -64,24 +67,51 @@ class RegisterModel
         }
     }
     public function usuarioYaExiste($nombre_usuario, $email) {
-        return $this->conexion->usuarioYaExiste($nombre_usuario, $email);
+
+        $sql = "SELECT usuarioId FROM usuario WHERE nombre_usuario = ? OR email = ?";
+        $tipos = "ss";
+        $params = array($nombre_usuario, $email);
+
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if ($resultado != null){
+            return $resultado[0];
+        }
+
+        return false;
+
+        /*return $this->conexion->usuarioYaExiste($nombre_usuario, $email);*/
     }
 
     public function activar($token)
     {
         $exitoso = false;
-       $usuario=$this->verificarUsuarioNoVerificado($token);
+        $usuario=$this->verificarUsuarioNoVerificado($token);
 
        if($usuario!=null){
            $exitoso =true;
-           $this->conexion->activar($usuario);
+           $sql = "UPDATE usuario SET cuenta_verificada = true, token = NULL WHERE usuarioId = ?";
+           $tipos = "i";
+           $params = array($usuario['usuarioId']);
+
+           $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
        }
        return $exitoso;
     }
 
     public function verificarUsuarioNoVerificado($token){
         $sql = "SELECT usuarioId FROM usuario WHERE token = ? AND cuenta_verificada = false LIMIT 1";
-        return $this->conexion->verificarUsuarioNoVerificado($sql,$token);
+        $tipos = "s";
+        $params = array($token);
+
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if ($resultado != null){
+            return $resultado[0];
+        }
+
+        return null;
     }
 
 

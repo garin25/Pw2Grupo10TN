@@ -1,0 +1,48 @@
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+
+    <div class="flex justify-between items-center mb-6 flex-shrink-0">
+        <h3 class="text-2xl font-bold text-gray-800">Preguntas</h3>
+        <a href="/editor/paginaCrearPregunta">Crear Pregunta</a>
+    </div>
+
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">Id</th>
+                <th scope="col" class="px-6 py-3">Enunciado</th>
+                <th scope="col" class="px-6 py-3">Categoria</th>
+                <th scope="col" class="px-6 py-3">Ratio</th>
+                <th scope="col" class="px-6 py-3">Editar</th>
+                <th scope="col" class="px-6 py-3">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#preguntas}}
+                <tr class="border-b bg-green-50 hover:bg-green-100">
+
+                    <th scope="row" class="px-6 py-4 font-bold text-gray-900">{{preguntaId}}</th>
+                    <td class="px-6 py-4">{{enunciado}}</td>
+                    <td class="px-6 py-4">{{categoria}}</td>
+                    <td class="px-6 py-4">{{ratio}}</td>
+
+                    <td class="px-6 py-4">
+                        <a href="/editor/paginaEditarPregunta?preguntaId={{preguntaId}}">Editar</a>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <form action="/editor/eliminarPregunta" method="POST">
+                            <input type="hidden" value="{{preguntaId}}" name="preguntaId">
+                            <button type="submit" class="text-red-600 hover:text-red-800">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            {{/preguntas}}
+            </tbody>
+        </table>
+    </div>
+
+</main>

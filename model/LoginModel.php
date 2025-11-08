@@ -12,16 +12,25 @@ class LoginModel
     public function obtenerIdUsuarioPorEmail($email)
     {
         $sql = "SELECT usuarioId, nombre_usuario FROM usuario WHERE email = ?";
-        return $this->obtenerIdUsuario($sql, $email);
+        $tipos = "s";
+        $params = array($email);
+        $result = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if($result != null){
+            return $result[0];
+        }
+
+        return null;
 
     }
 
     public function iniciarSesion($idUsuario, $pass){
-        $sql = "SELECT usuarioId, nombre_usuario, password FROM usuario WHERE usuarioId = ?";
+        $sql = "SELECT usuarioId, nombre_usuario, password , id_rol FROM usuario WHERE usuarioId = ?";
+        $tipos = "i";
+        $params = array($idUsuario);
+        $usuario = $this->conexion->ejecutarConsulta($sql, $tipos, $params)[0];
 
-        $usuario = $this->obtenerUsuarioPorId($sql, $idUsuario);
-
-        if ($usuario===null) {
+        if ($usuario === null) {
             return null;
         }
 
@@ -33,33 +42,26 @@ class LoginModel
             return null;
         }
     }
-
-    public function obtenerIdUsuario($sql, $email)
+    public function calcularNivelUsuario($usuarioId)
     {
-        $stmt = $this->conexion->getConexion()->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
+        // (Total de respuestas - Total de correctas) = Total de incorrectas
+        // (Total de incorrectas / Total de respuestas) = Ratio de error (tu nivel)
+        $sql = "SELECT
+                    IF(COUNT(preguntaId) = 0, 
+                       0.5,  -- POR DEFECTO ES 0 (FACIL)
+                       (COUNT(preguntaId) - SUM(fue_correcta)) / COUNT(preguntaId)
+                    ) AS nivelUsuario
+                FROM
+                    historial_respuestas
+                WHERE
+                    usuarioId = ?";
 
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
+        $tipos = "i";
+        $params = array($usuarioId);
 
-        return null;
-    }
-    public function obtenerUsuarioPorId($sql, $usuarioId){
-        $stmt = $this->conexion->getConexion()->prepare($sql);
-        $stmt->bind_param("i", $usuarioId);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
-        if ($resultado->num_rows === 1) {
-            $fila = $resultado->fetch_assoc();
-            return $fila;
-        }
-
-        return null;
+        return $resultado[0]['nivelUsuario'];
     }
 
 }

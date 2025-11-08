@@ -1,5 +1,4 @@
 <?php
-
 class LobbyController
 {
     private $model;
@@ -18,8 +17,13 @@ class LobbyController
 
     public function lobby()
     {
-        $data = ["page" => "Lobby",  "logout" => "/login/logout"];
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION["usuarioId"];
 
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+        $data = ["page" => "Lobby",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("lobby", $data);
     }
 

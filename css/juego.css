@@ -7,7 +7,7 @@
 }
 
 main {
-    background-image: url(../imagenes/texture-lobby.png);
+    background-image: url(../imagenes/texture-lobby.jpg);
     background-size: cover;
     min-height: 100vh;
     width: 100vw;
@@ -135,7 +135,7 @@ main {
     flex-direction: column;
     border-radius: 12px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15),
-        0px 6px 20px rgba(0, 0, 0, 0.2);
+    0px 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 #preguntas-sup {
@@ -192,13 +192,13 @@ main {
 }
 
 #contenedor-ruleta,
-#contenedor-preguntas {
+#contenedor-preguntas,
+#contenedor-partidaPerdida {
     position: absolute;
     top: 50%;
     left: 62%;
     transform: translate(-50%, -50%);
 }
-
 
 @media(max-width: 768px){
     #contenedor-ruleta {
@@ -221,7 +221,7 @@ main {
         transform: rotate(var(--rotation)) translateY(-150px) translateX(-50%);
     }
 
-    #contenedor-preguntas {
+    #contenedor-preguntas, #contenedor-partidaPerdida {
         width: 90vw;
         height: 60vh;
         padding: 1em;
@@ -263,4 +263,111 @@ main {
     opacity: 1;
     pointer-events: auto;
     transition: opacity 0.3s ease;
+}
+
+#contenedor-partidaPerdida {
+    width: 70vw;
+    max-width: 800px;
+    height: 70vh;
+    min-height: 400px;
+    padding: 25px;
+    background-color: #FDF6E3;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    color: #ecf0f1;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#contenedor-partidaPerdida #preguntas-img {
+    width: 600px;
+    height: auto;
+    display: block;
+    margin: 1px auto 20px auto;
+    border-radius: 8px;
+}
+
+#contenedor-partidaPerdida .partidaFinalizada p {
+    font-size: 2em;
+    font-weight: 700;
+    color: #f1c40f;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+#contenedor-partidaPerdida #puntaje {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    background-color: #8773be;
+    border-radius: 6px;
+    width: 80%;
+}
+
+#contenedor-partidaPerdida #botones {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+#contenedor-partidaPerdida .btn {
+    padding: 12px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+}
+
+#contenedor-partidaPerdida #volver {
+    background-color: #8773be;
+    color: white;
+}
+
+#contenedor-partidaPerdida #volver:hover {
+    background-color: #7358bb;
+}
+
+#contenedor-partidaPerdida #inicio {
+    background-color: #f1c40f;
+    color: #2c3e50;
+}
+
+.btn:hover {
+
+}
+
+#contenedor-partidaPerdida #inicio:hover {
+    background-color: #ffcd08;
+}
+
+#timer{
+    padding: 0.5em;
+    border-radius: 8px;
+    border: 2px solid black;
+    background-color: beige;
+    color: black;
+    position: fixed;
+    top: 6em;
+    right: 6em;
+    z-index: 10;
+}
+
+.tiempo{
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+.oculto{
+    display: none;
 }

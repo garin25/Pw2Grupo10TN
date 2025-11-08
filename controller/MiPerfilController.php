@@ -13,12 +13,19 @@ class MiPerfilController
 
     public function base()
     {
-        $this->loginForm();
+        $this->miPerfil();
     }
 
-    public function loginForm()
+    public function miPerfil()
     {
-        $data = ["page" => "Mi perfil"];
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION["usuarioId"];
+
+
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+        $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario];
         $this->renderer->render("miPerfil", $data);
     }
 
@@ -27,5 +34,7 @@ class MiPerfilController
         header("Location: /");
         exit;
     }
+
+
 
 }
