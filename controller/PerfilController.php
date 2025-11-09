@@ -28,15 +28,15 @@ class PerfilController
         $usuarioConsultado = $this->model->buscarDatosUsuario($usuarioNombre);
 
         if($usuarioConsultado != null){
-            $data = ["page" => "Perfil de " . $usuarioNombre,  "logout" => "/login/logout", "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado];
+            $url_qr_publica = $usuarioConsultado['img_qr'] ?? '';
+
+            $data = ["page" => "Perfil de " . $usuarioNombre, "logout" => "/login/logout", "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado, "url_qr" => $url_qr_publica];
             $this->renderer->render("perfil", $data);
         } else {
             $this->redirectToIndex();
         }
-
-
-
     }
+
 
     public function redirectToIndex()
     {

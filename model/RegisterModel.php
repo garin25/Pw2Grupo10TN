@@ -1,10 +1,11 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\ErrorCorrectionLevel;
 
 class RegisterModel
 {
-
     private $conexion;
     private $config;
 
@@ -14,42 +15,88 @@ class RegisterModel
         $this->config = parse_ini_file("config/config.ini");
     }
 
-    public function crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$anio,$pais,$ciudad,$token){
+    public function crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad, $token)
+    {
+        // 1. INSERTAR EL USUARIO INICIALMENTE
+        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, id_rol, token, img_qr) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais,ciudad,email,password,nombre_usuario,id_rol,token) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        $tipos = "sissssssis";
-        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token);
+        // Columna 'img_qr' se inicializa vacía o con un valor por defecto (ej: '') en el INSERT.
+        // Opcionalmente, puedes quitar img_qr de aquí y solo hacer el UPDATE después del QR.
+        $img_qr_default = ''; // Valor por defecto o NULL si la columna lo permite
+
+        $tipos = "sissssssiss";
+        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token, $img_qr_default);
 
         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
-        /*$this->conexion->registrarUsuario($sql, $nombreCompleto,$año,$sexo,$pais,$ciudad,$email,$passwordHash,$nombre_usuario,1,$token);*/
 
-        // Puedo poner el codigo de PHPMAILER aca por que si se ejecuta este metodo significa que se registro correctamente
-        // De lo contrario este metodo no se hubiera ejecutado
+
+        // --- Generación y guardado del QR ---
+
+        // 1. Obtener la URL de configuración
+        $url_base = $this->config["url_base"];
+
+        // 2. Definir la URL que codificará el QR
+        $url_perfil_qr = $url_base . "/perfil/" . $nombre_usuario;
+
+        // 3. Configurar rutas de guardado
+        $nombre_archivo_qr = 'qr_' . $nombre_usuario . '.png';
+        $ruta_absoluta_guardado = __DIR__ . '/../../imagenes/';
+        $ruta_completa_archivo = $ruta_absoluta_guardado . $nombre_archivo_qr;
+
+        // RUTA PÚBLICA que guardaremos en la DB
+        $url_qr_publica = "/imagenes/" . $nombre_archivo_qr;
+
+        // 4. Generar y guardar el QR (en el servidor)
+        try {
+            if (!file_exists($ruta_absoluta_guardado)) {
+                mkdir($ruta_absoluta_guardado, 0777, true);
+            }
+
+            $qrCode = new QrCode($url_perfil_qr);
+            $qrCode->setSize(300);
+            $qrCode->setMargin(10);
+            $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
+            $qrCode->setWriterByName('png');
+
+            file_put_contents($ruta_completa_archivo, $qrCode->writeString());
+
+            // 5. ACTUALIZAR LA COLUMNA img_qr EN LA DB
+            $sql_update = "UPDATE usuario SET img_qr = ? WHERE nombre_usuario = ?";
+            $tipos_update = "ss"; //Para decir que los 2 valores son cadenas de texto
+            $params_update = array($url_qr_publica, $nombre_usuario);
+
+            $this->conexion->ejecutarConsulta($sql_update, $tipos_update, $params_update);
+
+        } catch (\Exception $e) {
+            error_log("Error al generar o guardar QR: " . $e->getMessage());
+        }
+
+
+        // --- CÓDIGO DE PHPMailer ---
 
         $mail = new PHPMailer(true);
 
         try {
             // ---- Configuración del servidor de correo (SMTP) ----
+            // ... Tu configuración de SMTP ...
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; // Servidor SMTP (ej. Gmail)
+            $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = $this->config["email"];
-            $mail->Password   = $this->config["contrasenia"];// Contraseña de aplicacion
+            $mail->Password   = $this->config["contrasenia"];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
             $mail->CharSet    = 'UTF-8';
 
             // ---- Remitente y Destinatario ----
-           // $mail->setFrom('garinchristian4@gmail.com', 'Preguntados');
             $mail->setFrom($this->config["email"], 'Preguntados');
-
-            $mail->addAddress($email, $nombre_usuario); // El correo del usuario que se registró
+            $mail->addAddress($email, $nombre_usuario);
 
             // ---- Contenido del Email ----
             $mail->isHTML(true);
             $mail->Subject = '¡Activa tu cuenta!';
 
-            // Construir el enlace de activación
             $enlace_activacion = "localhost/register/activacion";
 
             $mail->Body    = "<h1>¡Gracias por registrarte!</h1>

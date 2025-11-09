@@ -23,9 +23,10 @@ class MiPerfilController
         }
         $usuarioId = $_SESSION["usuarioId"];
 
-
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-        $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario];
+
+        $url_qr_publica = $usuario['img_qr'] ?? '';
+        $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario, "url_qr" => $url_qr_publica];
         $this->renderer->render("miPerfil", $data);
     }
 

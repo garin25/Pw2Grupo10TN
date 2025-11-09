@@ -8,7 +8,6 @@
                 Nivel 15
             </span>
         </div>
-
         <div class="text-center md:text-left">
             <h1 class="text-3xl font-extrabold text-gray-900 mb-1">
                 {{usuario.nombre_usuario}}
@@ -26,6 +25,11 @@
                 </button>
             </div>
         </div>
+        {{#url_qr}}
+            <div class="mt-4 p-2 bg-white rounded-lg shadow-lg border">
+                <img src="{{url_qr}}" alt="Código QR de mi perfil" class="w-24 h-24 object-contain">
+            </div>
+        {{/url_qr}}
     </div>
 
     <hr class="my-6 border-gray-200">
