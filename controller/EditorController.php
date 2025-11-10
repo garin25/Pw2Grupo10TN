@@ -18,9 +18,10 @@ class EditorController
 
     public function abmPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
+
         $usuarioId = $_SESSION['usuarioId'];
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
@@ -46,7 +47,9 @@ class EditorController
     public function crearPregunta()
     {
 
-        if (!isset($_SESSION['usuarioId'])) { $this->redirectToIndex(); }
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
 
         $enunciado = $_POST['enunciado'];
         $categoriaNombre = $_POST['categoria'];
@@ -75,7 +78,9 @@ class EditorController
 
     public function editarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) { $this->redirectToIndex(); }
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
 
         $preguntaId = $_POST['preguntaId'];
         $enunciado = $_POST['enunciado'];
@@ -105,7 +110,7 @@ class EditorController
 
     public function eliminarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $preguntaId = $_POST['preguntaId'] ?? null;
@@ -124,7 +129,7 @@ class EditorController
 
     public function paginaCrearPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -150,7 +155,7 @@ class EditorController
 
     public function paginaEditarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -193,7 +198,7 @@ class EditorController
 
     public function paginaReportes()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -219,7 +224,7 @@ class EditorController
 
     public function denegarReporte()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $reportesId = $_POST['reportesId'] ?? null;
@@ -235,6 +240,55 @@ class EditorController
         }
 
         header("Location: /editor/paginaReportes");
+        exit;
+    }
+    public function paginaUsuarios(){
+        if (!isset($_SESSION['usuarioId'])) {
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION['usuarioId'];
+
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $usuarios = $this->model->traerJugadores();
+
+        $data = [
+            "page" => "usuariosVista",
+            "logout" => "/login/logout",
+            "usuario" => $usuario,
+            "usuarios" => $usuarios];
+
+        if (isset($_SESSION['mensaje_exito'])) {
+            $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
+            unset($_SESSION['mensaje_exito']);
+        }
+
+        if (isset($_SESSION['mensaje_error'])) {
+            $data['mensaje_error'] = $_SESSION['mensaje_error'];
+            unset($_SESSION['mensaje_error']);
+        }
+
+        $this->renderer->render("usuarios", $data);
+    }
+
+    public function cambiarRol(){
+        if (!isset($_SESSION['usuarioId'])) {
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_POST['usuarioId'] ?? '';
+        $nuevoRol = $_POST['nuevoRol'] ?? '';
+
+        if ($usuarioId && $nuevoRol) {
+            $exito =  $this->model->actualizarRolUsuario($usuarioId, $nuevoRol);
+        }
+
+        if ($exito) {
+            $_SESSION['mensaje_exito'] = "¡Rol actualizado correctamente a:" . " " . $nuevoRol;
+        } else {
+            $_SESSION['mensaje_error'] = "Error: No se pudo cambiar el rol.";
+        }
+
+        header("Location: /editor/paginaUsuarios");
         exit;
     }
     public function redirectToIndex()

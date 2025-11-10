@@ -18,7 +18,7 @@ class JuegoController
 
     public function juego()
     {
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION["usuarioId"];
@@ -43,7 +43,7 @@ class JuegoController
 
     public function pregunta(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
@@ -101,7 +101,7 @@ class JuegoController
 
     public function verificarRespuesta(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
@@ -161,7 +161,7 @@ class JuegoController
 
     public function finalizarPartida(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
@@ -175,7 +175,7 @@ class JuegoController
 
     public function resetSesion(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
@@ -189,7 +189,7 @@ class JuegoController
 
     public function devolverPregunta(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
@@ -217,7 +217,7 @@ class JuegoController
 
     public function reportar(){
 
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
 
