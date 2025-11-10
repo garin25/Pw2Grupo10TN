@@ -1,0 +1,70 @@
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+    <a href="/editor/paginaReportes">Volver</a>
+    {{#mensaje_exito}}
+        <div style="color: green; border: 1px solid green; padding: 10px;">
+            {{mensaje_exito}}
+        </div>
+    {{/mensaje_exito}}
+    {{#mensaje_error}}
+        <div style="color: red; border: 1px solid red; padding: 10px;">
+            {{mensaje_error}}
+        </div>
+    {{/mensaje_error}}
+    <div class="flex justify-between items-center mb-6 flex-shrink-0">
+        <h3 class="text-2xl font-bold text-gray-800">Reportes</h3>
+    </div>
+        <div>
+            <h2>Pregunta:</h2>
+            <p>{{enunciado}}</p>
+
+
+            <h3>Respuestas:</h3>
+            {{#respuestas}}
+                <div>
+                    <span>{{id_respuesta}}</span>
+                    <span>{{respuestaTexto}}</span>
+                    <span>Correcta: {{esCorrecta}}</span>
+                </div>
+                <br>
+            {{/respuestas}}
+
+            <a href="/editor/paginaEditarPregunta?preguntaId={{preguntaId}}">Modificar</a>
+        </div>
+
+
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">Usuario</th>
+                <th scope="col" class="px-6 py-3">Motivo</th>
+                <th scope="col" class="px-6 py-3">Denegar</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#reportes}}
+                <tr class="border-b bg-green-50 hover:bg-green-100">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <a  href="/perfil/{{nombre_usuario}}"><img class="w-10 h-10 rounded-full object-cover mr-3" src="/{{foto_perfil}}" alt="Foto de Juan"></a>
+                            <a  href="/perfil/{{nombre_usuario}}"><span style="font-weight: bold">{{nombre_usuario}}</span></a>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">{{descripcion}}</td>
+                    <td class="px-6 py-4">
+                        <form action="/editor/denegarReporte" method="POST">
+                            <input type="hidden" value="{{reportesId}}" name="reportesId">
+                            <input type="hidden" value="{{preguntaId}}" name="preguntaId">
+                            <button type="submit" class="text-red-600 hover:text-red-800">
+                                Denegar
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            {{/reportes}}
+            </tbody>
+        </table>
+    </div>
+
+</main>

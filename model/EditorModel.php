@@ -143,6 +143,9 @@ ORDER BY
             $sql_set = "UPDATE respuesta SET esCorrecta = 1 WHERE id_respuesta = ?";
             $this->conexion->ejecutarConsulta($sql_set, "i", [$idRespuestaCorrecta]);
 
+            // 3c Borrar todos los reportes de esa pregunta
+            $sql_reportes = "DELETE FROM reportes WHERE preguntaId = ?";
+            $this->conexion->ejecutarConsulta($sql_reportes, "i", [$preguntaId]);
             // 4. Si todo salió bien, confirmamos los cambios
             $db->commit();
             return true;
@@ -193,10 +196,23 @@ ORDER BY
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
 
-    public  function traerReportes()
+    public  function traerPreguntasyCantidadDeReportes()
+    {
+        $sql = "SELECT p.preguntaId, p.enunciado, c.nombre as categoria , count(r.preguntaId) as cantidadReportes FROM pregunta p JOIN categoria c ON c.categoriaId = p.categoriaId JOIN reportes r ON r.preguntaId = p.preguntaId WHERE p.preguntaId = r.preguntaId GROUP BY p.preguntaId ORDER BY c.categoriaId ASC";
+        return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }
+   /* public  function traerReportes()
     {
         $sql = "SELECT r.reportesId ,r.descripcion ,p.enunciado,p.preguntaId ,u.foto_perfil ,u.nombre_usuario FROM reportes r JOIN pregunta p ON p.preguntaId = r.preguntaId JOIN usuario u ON u.usuarioId = r.usuarioId";
         return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }*/
+
+    public  function traerReportes($preguntaId)
+    {
+        $sql = "SELECT r.reportesId ,r.descripcion ,p.enunciado as enunciado,p.preguntaId ,u.foto_perfil ,u.nombre_usuario FROM reportes r JOIN pregunta p ON p.preguntaId = r.preguntaId JOIN usuario u ON u.usuarioId = r.usuarioId WHERE p.preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+        return $this->conexion->ejecutarConsulta($sql, $tipos, $params);
     }
 
     public function eliminarReporte($reportesId){
@@ -225,5 +241,7 @@ ORDER BY
         return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
 
     }
+
+
 
 }

@@ -1383,6 +1383,27 @@ ALTER TABLE `respuesta`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`);
+
+
+
+INSERT INTO reportes(usuarioId, preguntaId, descripcion)
+VALUES
+    (1, 1, "Reporte 1"),  -- Modificado (era Reporte 3)
+    (1, 20, "Reporte 4"),
+    (1, 20, "Reporte 5"),
+    (1, 20, "Reporte 6"),
+    (1, 40, "Reporte 7"),
+    (1, 40, "Reporte 8"),
+    (1, 40, "Reporte 9"),
+    (1, 60, "Reporte 10"),
+    (1, 4, "Reporte 11"), -- Aquí empiezan los del segundo script
+    (1, 5, "Reporte 12"),
+    (1, 21, "Reporte 13"),
+    (1, 25, "Reporte 14"),
+    (1, 42, "Reporte 15"),
+    (1, 44, "Reporte 16"),
+    (1, 47, "Reporte 17"),
+    (1, 64, "Reporte 18");
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
