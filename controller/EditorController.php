@@ -18,9 +18,10 @@ class EditorController
 
     public function abmPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
+
         $usuarioId = $_SESSION['usuarioId'];
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
@@ -46,7 +47,9 @@ class EditorController
     public function crearPregunta()
     {
 
-        if (!isset($_SESSION['usuarioId'])) { $this->redirectToIndex(); }
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
 
         $enunciado = $_POST['enunciado'];
         $categoriaNombre = $_POST['categoria'];
@@ -75,7 +78,9 @@ class EditorController
 
     public function editarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) { $this->redirectToIndex(); }
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
 
         $preguntaId = $_POST['preguntaId'];
         $enunciado = $_POST['enunciado'];
@@ -105,7 +110,7 @@ class EditorController
 
     public function eliminarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $preguntaId = $_POST['preguntaId'] ?? null;
@@ -124,7 +129,7 @@ class EditorController
 
     public function paginaCrearPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -150,7 +155,7 @@ class EditorController
 
     public function paginaEditarPregunta()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -193,7 +198,7 @@ class EditorController
 
     public function paginaReportes()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION['usuarioId'];
@@ -219,7 +224,7 @@ class EditorController
 
     public function denegarReporte()
     {
-        if (!isset($_SESSION['usuarioId'])) {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
             $this->redirectToIndex();
         }
         $reportesId = $_POST['reportesId'] ?? null;
