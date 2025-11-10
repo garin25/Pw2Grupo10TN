@@ -28,6 +28,18 @@ class EditorController
         $preguntas = $this->model->traerPreguntas();
 
         $data = ["page" => "abmPregunta", "logout" => "/login/logout", "usuario" => $usuario,"preguntas" => $preguntas];
+
+        // Agrego mensaje de exito o error por si hizo una operacion
+        if (isset($_SESSION['mensaje_exito'])) {
+            $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
+            unset($_SESSION['mensaje_exito']); // Borrarlo para que no aparezca de nuevo
+        }
+
+        // Revisar si hay un mensaje de error
+        if (isset($_SESSION['mensaje_error'])) {
+            $data['mensaje_error'] = $_SESSION['mensaje_error'];
+            unset($_SESSION['mensaje_error']);
+        }
         $this->renderer->render("abmPregunta", $data);
     }
 
@@ -99,7 +111,12 @@ class EditorController
         $preguntaId = $_POST['preguntaId'] ?? null;
 
         if ($preguntaId) {
-            $this->model->eliminarPregunta($preguntaId);
+          $exito =  $this->model->eliminarPregunta($preguntaId);
+        }
+        if ($exito) {
+            $_SESSION['mensaje_exito'] = "¡Pregunta eliminada correctamente!";
+        } else {
+            $_SESSION['mensaje_error'] = "Error: No se pudo eliminar la pregunta.";
         }
         header("Location: /editor");
         exit;
@@ -173,6 +190,53 @@ class EditorController
         $this->renderer->render("editarPregunta", $data);
     }
 
+
+    public function paginaReportes()
+    {
+        if (!isset($_SESSION['usuarioId'])) {
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION['usuarioId'];
+
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+        $reportes = $this->model->traerReportes();
+        $data = ["page" => "reportes", "logout" => "/login/logout", "usuario" => $usuario,"reportes"=> $reportes];
+
+
+          if (isset($_SESSION['mensaje_exito'])) {
+            $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
+            unset($_SESSION['mensaje_exito']); // Borrarlo para que no aparezca de nuevo
+        }
+
+        // Revisar si hay un mensaje de error
+        if (isset($_SESSION['mensaje_error'])) {
+            $data['mensaje_error'] = $_SESSION['mensaje_error'];
+            unset($_SESSION['mensaje_error']);
+        }
+
+        $this->renderer->render("reportes", $data);
+    }
+
+    public function denegarReporte()
+    {
+        if (!isset($_SESSION['usuarioId'])) {
+            $this->redirectToIndex();
+        }
+        $reportesId = $_POST['reportesId'] ?? null;
+
+        if ($reportesId) {
+           $exito = $this->model->eliminarReporte($reportesId);
+        }
+
+        if ($exito) {
+            $_SESSION['mensaje_exito'] = "¡Reporte denegado correctamente!";
+        } else {
+            $_SESSION['mensaje_error'] = "Error: No se pudo denegar el reporte.";
+        }
+
+        header("Location: /editor/paginaReportes");
+        exit;
+    }
     public function redirectToIndex()
     {
         header("Location: /");

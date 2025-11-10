@@ -31,13 +31,6 @@ class MyConexion
         return null;
     }
 
-    /**
-     * Ejecuta una consulta SQL simple que no requiere parámetros (sin WHERE ?).
-     * Ideal para consultas SELECT que traen múltiples resultados.
-     *
-     * @param string $sql La consulta SQL a ejecutar.
-     * @return array Un array de resultados asociativo, o un array vacío si no hay resultados.
-     */
     public function ejecutarConsultaSinParametros($sql) {
 
         $resultado = $this->conexion->query($sql);
@@ -51,6 +44,37 @@ class MyConexion
         }
 
         return [];
+    }
+
+    /**
+     * Ejecuta una consulta de modificación (INSERT, UPDATE, DELETE).
+     *
+     * @param string $sql La consulta SQL.
+     * @param string $tipos Los tipos de parámetros (ej: "sii").
+     * @param array $params Los parámetros.
+     * @return int|false El número de filas afectadas, o false si la ejecución falló.
+     */
+    public function ejecutarModificacion($sql, $tipos, $params) {
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bind_param($tipos, ...$params);
+
+        // execute() devuelve true si la ejecución fue exitosa, false si falló.
+        $exito = $stmt->execute();
+
+        if (!$exito) {
+            // La consulta falló (ej. error de sintaxis, clave foránea)
+            $stmt->close();
+            return false;
+        }
+
+        // Si la ejecución fue exitosa, vemos cuántas filas se borraron.
+        $filasAfectadas = $stmt->affected_rows;
+        $stmt->close();
+
+        // Esto te devolverá 1 si borró 1 fila, 0 si no encontró la fila
+        // para borrar, etc. Es mucho más útil que un simple 'true'.
+        return $filasAfectadas;
     }
 
 }

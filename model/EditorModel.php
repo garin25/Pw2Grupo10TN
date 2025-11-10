@@ -106,7 +106,7 @@ ORDER BY
 
         // 4. Finalmente, borrar la pregunta "padre"
         $sql_pregunta = "DELETE FROM pregunta WHERE preguntaId = ?";
-        $this->conexion->ejecutarConsulta($sql_pregunta, $tipos, $params);
+       return $this->conexion->ejecutarModificacion($sql_pregunta, $tipos, $params);
     }
 
 
@@ -192,4 +192,21 @@ ORDER BY
         $sql = "SELECT categoriaId, nombre FROM categoria";
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
+
+    public  function traerReportes()
+    {
+        $sql = "SELECT r.reportesId ,r.descripcion ,p.enunciado,p.preguntaId ,u.foto_perfil ,u.nombre_usuario FROM reportes r JOIN pregunta p ON p.preguntaId = r.preguntaId JOIN usuario u ON u.usuarioId = r.usuarioId";
+        return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }
+
+    public function eliminarReporte($reportesId){
+
+        $tipos = "i";
+        $params = [$reportesId];
+
+        $sql_historial = "DELETE FROM reportes WHERE reportesId = ?";
+        return $this->conexion->ejecutarModificacion($sql_historial, $tipos, $params);
+
+    }
+
 }
