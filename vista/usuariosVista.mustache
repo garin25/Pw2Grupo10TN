@@ -1,0 +1,56 @@
+
+{{#mensaje_error}}
+    <div style="color: red; border: 1px solid red; padding: 10px;">
+        {{mensaje_error}}
+    </div>
+{{/mensaje_error}}
+
+<main class="flex-grow p-4 md:p-8 overflow-y-auto">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"> Gestión de Usuarios y Roles</h2>
+            {{#mensaje_exito}}
+                <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 10px">
+                    {{mensaje_exito}}
+                </div>
+            {{/mensaje_exito}}
+        </div>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol Actual</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                {{#usuarios}}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{usuarioId}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{nombre_usuario}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{email}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-purple-600">{{id_rol}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <form action="/editor/cambiarRol" method="POST" class="flex items-center space-x-2">
+                                <input type="hidden" name="usuarioId" value="{{usuarioId}}">
+
+                                <select name="nuevoRol" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                    <option value="1" {{#rol_es_jugador}}selected{{/rol_es_jugador}}>Jugador</option>
+                                    <option value="2" {{#rol_es_editor}}selected{{/rol_es_editor}}>Editor</option>
+                                    <option value="3" {{#rol_es_admin}}selected{{/rol_es_admin}}>Admin</option>
+                                </select>
+                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                                    Cambiar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/usuarios}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
