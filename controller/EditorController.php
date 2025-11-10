@@ -204,11 +204,30 @@ class EditorController
         $usuarioId = $_SESSION['usuarioId'];
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-        $reportes = $this->model->traerReportes();
+        $reportes = $this->model->traerPreguntasyCantidadDeReportes();
         $data = ["page" => "reportes", "logout" => "/login/logout", "usuario" => $usuario,"reportes"=> $reportes];
+        $this->renderer->render("reportes", $data);
+    }
+
+    public function detalleReporte()
+    {
+
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+        $usuarioId = $_SESSION['usuarioId'];
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $preguntaId = $_GET['preguntaId'] ?? '';
+        $reportes = $this->model->traerReportes($preguntaId);
+
+        $respuestas = $this->model->buscarRespuestas($preguntaId);
+
+        $data = ["page" => "reportes", "logout" => "/login/logout", "usuario" => $usuario,"reportes"=> $reportes ,
+            "preguntaId" => $preguntaId,"enunciado"=>$reportes[0]["enunciado"],"respuestas"=>$respuestas];
 
 
-          if (isset($_SESSION['mensaje_exito'])) {
+        if (isset($_SESSION['mensaje_exito'])) {
             $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
             unset($_SESSION['mensaje_exito']); // Borrarlo para que no aparezca de nuevo
         }
@@ -219,7 +238,7 @@ class EditorController
             unset($_SESSION['mensaje_error']);
         }
 
-        $this->renderer->render("reportes", $data);
+        $this->renderer->render("detalleReporte", $data);
     }
 
     public function denegarReporte()
@@ -228,6 +247,7 @@ class EditorController
             $this->redirectToIndex();
         }
         $reportesId = $_POST['reportesId'] ?? null;
+        $preguntaId = $_POST['preguntaId'] ?? '';
 
         if ($reportesId) {
            $exito = $this->model->eliminarReporte($reportesId);
@@ -239,6 +259,7 @@ class EditorController
             $_SESSION['mensaje_error'] = "Error: No se pudo denegar el reporte.";
         }
 
+        //header("Location: /editor/detalleReporte?preguntaId=".$preguntaId);
         header("Location: /editor/paginaReportes");
         exit;
     }
