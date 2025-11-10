@@ -209,4 +209,21 @@ ORDER BY
 
     }
 
+    public function traerJugadores(){
+        $sql = "SELECT * FROM usuario";
+        return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }
+
+    public function actualizarRolUsuario($usuarioId, $nuevoRol) {
+
+        $sql = "UPDATE usuario SET id_rol = ? WHERE usuarioId = ?";
+
+        $tipos = "ii";
+
+        $params = [$nuevoRol, $usuarioId];
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+
+    }
+
 }
