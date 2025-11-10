@@ -32,9 +32,19 @@ function girarRuleta() {
 
     const sectorGanadorIndex = Math.floor(Math.random() * numSectores);
     const categoriaGanadora = getCategoria(sectorGanadorIndex);
-    const anguloObjetivo = sectorGanadorIndex * gradosPorSector + gradosPorSector / 2;
+
+    const anguloDeseadoFinal = sectorGanadorIndex * gradosPorSector + gradosPorSector / 2;
+
+    const anguloActualVisual = anguloAcumulado % 360;
+
+    let anguloNecesario = anguloDeseadoFinal - anguloActualVisual;
+
+    if (anguloNecesario < 0) {
+        anguloNecesario += 360;
+    }
+
     const girosCompletos = 5;
-    const anguloTotalDeGiro = (girosCompletos * 360) + anguloObjetivo;
+    const anguloTotalDeGiro = (girosCompletos * 360) + anguloNecesario;
 
     anguloAcumulado += anguloTotalDeGiro;
 
@@ -44,11 +54,21 @@ function girarRuleta() {
     //categoria
     setTimeout(() => {
         btnGirar.disabled = false;
+        let nombreArchivo;
+        let nombreCategoriaLimpio = categoriaGanadora.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        if (nombreCategoriaLimpio === 'Ciencias Naturales') {
+            nombreArchivo = 'cienciasNaturales';
+        } else {
+            nombreArchivo = nombreCategoriaLimpio.toLowerCase();
+        }
+
+        const rutaImagen = `../imagenes/${nombreArchivo}.png`;
 
         Swal.fire({
             title: `¡Categoría ${categoriaGanadora}!`,
             text: "¡Prepárate para responder la pregunta!",
-            imageUrl: "../imagenes/logo.jpg",
+            imageUrl: rutaImagen,
             imageHeight: 100,
             confirmButtonText: "¡Vamos!",
             draggable: false
@@ -62,7 +82,8 @@ function girarRuleta() {
 btnGirar.addEventListener('click', girarRuleta);
 
 function getCategoria(sectorGanadorIndex) {
-    switch (sectorGanadorIndex){
+    const indiceCorregido = (sectorGanadorIndex + 1) % numSectores;
+    switch (indiceCorregido){
         case 0:
             return 'Deporte'
         break;
