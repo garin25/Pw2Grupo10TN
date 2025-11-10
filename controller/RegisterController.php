@@ -67,7 +67,7 @@ class RegisterController
         // Recolectamos los datos y eliminamos espacios en blanco
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
         $email = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? ''; // No hacemos trim a la contraseña
+        $password = $_POST['password'] ?? '';
         $confirm_password = $_POST['confirm_password'] ?? '';
         $nombre_usuario = trim($_POST['nombre_usuario'] ?? '');
         $sexo = $_POST['sexo'] ?? '';
@@ -77,7 +77,6 @@ class RegisterController
 
         $data = []; // Array para acumular errores
 
-        // --- Validación de datos ---
         if (empty($nombreCompleto) || empty($email) || empty($password) || empty($nombre_usuario) || empty($sexo) || empty($anio) || empty($pais) || empty($ciudad)) {
             $data['error'] = "Todos los campos son obligatorios.";
         } elseif (strlen($password) < 8) {
@@ -90,19 +89,70 @@ class RegisterController
             $data['error'] = "El nombre de usuario o el email ya están registrados.";
         }
 
-        // Si hubo algún error, volvemos a renderizar el formulario con el mensaje
+        $rutaFotoPerfil = '/imagenes/img-perfil-default.jpg'; // Valor por defecto
+
+        if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] == UPLOAD_ERR_OK) {
+
+            $carpetaSubidas = $_SERVER['DOCUMENT_ROOT'] . '/uploads/perfiles/';
+            $archivoTemporal = $_FILES['fotoPerfil']['tmp_name'];
+
+            $limiteTamano = 5 * 1024 * 1024;
+            $tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+            $tipoArchivo = mime_content_type($archivoTemporal);
+
+            if ($_FILES['fotoPerfil']['size'] > $limiteTamano) {
+                $data['error'] = "La imagen es demasiado grande (máximo 5MB).";
+            } elseif (!in_array($tipoArchivo, $tiposPermitidos)) {
+                $data['error'] = "Tipo de archivo no permitido (solo JPG, PNG, GIF).";
+            } else {
+                $extension = pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION);
+                $nombreUnico = uniqid('user_') . '.' . $extension;
+
+                $rutaDestinoFisica = $carpetaSubidas . $nombreUnico;
+
+                if (move_uploaded_file($archivoTemporal, $rutaDestinoFisica)) {
+                    $rutaFotoPerfil = '/uploads/perfiles/' . $nombreUnico;
+                } else {
+                    $data['error'] = "Error al guardar la imagen de perfil.";
+                }
+            }
+
+        } elseif (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] != UPLOAD_ERR_NO_FILE) {
+            $data['error'] = "Hubo un error al subir la foto de perfil.";
+        }
+
+
         if (!empty($data['error'])) {
+            $data['nombreCompleto'] = $nombreCompleto;
+            $data['email'] = $email;
+            $data['nombre_usuario'] = $nombre_usuario;
+            $data['sexo'] = $sexo;
+            $data['año'] = $anio;
+            $data['pais'] = $pais;
+            $data['ciudad'] = $ciudad;
+            $data['login'] = "/login";
+
             $this->renderer->render("registrarse", $data);
             return;
         }
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        // Genera un token criptográficamente seguro de 64 caracteres
-        $token = bin2hex(random_bytes(32));
-        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad,$token);
+        $token = bin2hex(random_bytes(32)); // Token de 64 caracteres
+
+        $this->model->crearUsuario(
+            $nombreCompleto,
+            $email,
+            $passwordHash,
+            $nombre_usuario,
+            $sexo,
+            $anio,
+            $pais,
+            $ciudad,
+            $token,
+            $rutaFotoPerfil
+        );
 
         header("Location: /register/activacion?token=" . $token);
-
         exit();
     }
     public function activar(){

@@ -14,11 +14,13 @@ class RegisterModel
         $this->config = parse_ini_file("config/config.ini");
     }
 
-    public function crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$anio,$pais,$ciudad,$token){
+    public function crearUsuario($nombreCompleto, $email, $passwordHash,$nombre_usuario,$sexo,$anio,$pais,$ciudad,$token, $rutaFotoPerfil){
 
-        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais,ciudad,email,password,nombre_usuario,id_rol,token) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        $tipos = "sissssssis";
-        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token);
+        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais,ciudad,email,password,nombre_usuario,id_rol,token, foto_perfil) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+        $tipos = "sissssssiss";
+
+        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token, $rutaFotoPerfil);
 
         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
         /*$this->conexion->registrarUsuario($sql, $nombreCompleto,$año,$sexo,$pais,$ciudad,$email,$passwordHash,$nombre_usuario,1,$token);*/
@@ -40,7 +42,7 @@ class RegisterModel
             $mail->CharSet    = 'UTF-8';
 
             // ---- Remitente y Destinatario ----
-           // $mail->setFrom('garinchristian4@gmail.com', 'Preguntados');
+            // $mail->setFrom('garinchristian4@gmail.com', 'Preguntados');
             $mail->setFrom($this->config["email"], 'Preguntados');
 
             $mail->addAddress($email, $nombre_usuario); // El correo del usuario que se registró
@@ -59,11 +61,9 @@ class RegisterModel
             $mail->AltBody = 'Para activar tu cuenta, copiá y pegá este enlace en tu navegador: ' . $enlace_activacion;
 
             $mail->send();
-            echo '<h2>¡Registro casi completo!</h2>';
-            echo '<p>Te hemos enviado un correo. Por favor, revisá tu bandeja de entrada para activar tu cuenta.</p>';
 
         } catch (Exception $e) {
-            echo "El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}";
+            error_log("El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}");
         }
     }
     public function usuarioYaExiste($nombre_usuario, $email) {
@@ -88,16 +88,16 @@ class RegisterModel
         $exitoso = false;
         $usuario=$this->verificarUsuarioNoVerificado($token);
 
-       if($usuario!=null){
-           $exitoso =true;
-           $sql = "UPDATE usuario SET cuenta_verificada = true, token = NULL WHERE usuarioId = ?";
-           $tipos = "i";
-           $params = array($usuario['usuarioId']);
+        if($usuario!=null){
+            $exitoso =true;
+            $sql = "UPDATE usuario SET cuenta_verificada = true, token = NULL WHERE usuarioId = ?";
+            $tipos = "i";
+            $params = array($usuario['usuarioId']);
 
-           $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+            $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
-       }
-       return $exitoso;
+        }
+        return $exitoso;
     }
 
     public function verificarUsuarioNoVerificado($token){
