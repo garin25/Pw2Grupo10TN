@@ -2,7 +2,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Writer\PngWriter;
 
 class RegisterModel
 {
@@ -41,7 +44,8 @@ class RegisterModel
 
         // 3. Configurar rutas de guardado
         $nombre_archivo_qr = 'qr_' . $nombre_usuario . '.png';
-        $ruta_absoluta_guardado = __DIR__ . '/../../imagenes/';
+        $ruta_absoluta_guardado = $_SERVER['DOCUMENT_ROOT'] . '/imagenes/';
+        //$ruta_absoluta_guardado = __DIR__ . '/../../imagenes/';
         $ruta_completa_archivo = $ruta_absoluta_guardado . $nombre_archivo_qr;
 
         // RUTA PÚBLICA que guardaremos en la DB
@@ -53,13 +57,19 @@ class RegisterModel
                 mkdir($ruta_absoluta_guardado, 0777, true);
             }
 
-            $qrCode = new QrCode($url_perfil_qr);
-            $qrCode->setSize(300);
-            $qrCode->setMargin(10);
-            $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
-            $qrCode->setWriterByName('png');
+            $result = Builder::create()
+                ->writer(new PngWriter())
+                ->data($url_perfil_qr) // Contenido del QR: la URL del perfil
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())// Nivel de corrección 'H'
+                ->size(300)
+                ->margin(10)
+                ->build();
 
-            file_put_contents($ruta_completa_archivo, $qrCode->writeString());
+            // *** FIN DEL BUILDER ***
+
+            // Guardar el archivo en el servidor
+            $result->saveToFile($ruta_completa_archivo);
 
             // 5. ACTUALIZAR LA COLUMNA img_qr EN LA DB
             $sql_update = "UPDATE usuario SET img_qr = ? WHERE nombre_usuario = ?";
