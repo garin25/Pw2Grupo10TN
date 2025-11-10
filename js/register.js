@@ -82,4 +82,49 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    const fotoPerfilInput = document.getElementById('fotoPerfilInput');
+    const fotoPreview = document.getElementById('fotoPreview');
+
+    if (fotoPerfilInput && fotoPreview) {
+
+        fotoPerfilInput.addEventListener('change', function() {
+
+            const file = this.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    fotoPreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    const form = document.getElementById('contenedor-form-registro');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const passwordError = document.getElementById('password-error');
+
+    if (form && password && confirmPassword && passwordError) {
+
+        form.addEventListener('submit', function(event) {
+
+            if (password.value !== confirmPassword.value) {
+
+                event.preventDefault();
+
+                passwordError.classList.remove('hidden');
+
+                password.classList.add('input-error');
+                confirmPassword.classList.add('input-error');
+
+            } else {
+                passwordError.classList.add('hidden');
+                password.classList.remove('input-error');
+                confirmPassword.classList.remove('input-error');
+            }
+        });
+    }
 });

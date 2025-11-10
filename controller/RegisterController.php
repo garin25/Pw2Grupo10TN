@@ -68,6 +68,7 @@ class RegisterController
         $nombreCompleto = trim($_POST['nombreCompleto'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? ''; // No hacemos trim a la contraseña
+        $confirm_password = $_POST['confirm_password'] ?? '';
         $nombre_usuario = trim($_POST['nombre_usuario'] ?? '');
         $sexo = $_POST['sexo'] ?? '';
         $anio = (int)($_POST['año'] ?? 0);
@@ -81,6 +82,8 @@ class RegisterController
             $data['error'] = "Todos los campos son obligatorios.";
         } elseif (strlen($password) < 8) {
             $data['error'] = "La contraseña debe tener al menos 8 caracteres.";
+        } elseif ($password !== $confirm_password) {
+            $data['error'] = "Las contraseñas no coinciden.";
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $data['error'] = "El formato del email no es válido.";
         } elseif ($this->model->usuarioYaExiste($nombre_usuario, $email)) {
@@ -108,7 +111,7 @@ class RegisterController
         }
 
         $token = trim($_POST['token'] ?? '');
-       $exitoso = $this->model->activar($token);
+        $exitoso = $this->model->activar($token);
 
         if ($exitoso) {
             header("Location: /register/resultadoActivacion?exito=1");
