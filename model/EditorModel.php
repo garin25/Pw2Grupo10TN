@@ -226,7 +226,8 @@ ORDER BY
     }
 
     public function traerJugadores(){
-        $sql = "SELECT * FROM usuario";
+        $sql = "SELECT  u.*, r.nombre_rol FROM usuario u  
+                JOIN roles r ON u.id_rol = r.id_rol";;
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
 

@@ -273,11 +273,21 @@ class EditorController
 
         $usuarios = $this->model->traerJugadores();
 
+        $usuariosProcesados = [];
+        foreach ($usuarios as $u) {
+            // Creamos las flags booleanas que Mustache necesita para el 'selected'
+            $u['rol_es_jugador'] = ($u['id_rol'] == 1);
+            $u['rol_es_editor'] = ($u['id_rol'] == 2);
+            $u['rol_es_admin'] = ($u['id_rol'] == 3);
+            $usuariosProcesados[] = $u;
+        }
+
         $data = [
             "page" => "usuariosVista",
             "logout" => "/login/logout",
             "usuario" => $usuario,
-            "usuarios" => $usuarios];
+            "usuarios" => $usuariosProcesados
+        ];
 
         if (isset($_SESSION['mensaje_exito'])) {
             $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
