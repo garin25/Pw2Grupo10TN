@@ -39,7 +39,7 @@ class MustacheRenderer{
                     $headerFile = 'headerEditor.mustache';
                     break;
                 case 3: // Admin
-                    $headerFile = 'headerEditor.mustache'; // Despues habria que crearle un header al Admin
+                    $headerFile = 'headerAdmin.mustache'; // Despues habria que crearle un header al Admin
                     break;
                 case 1: // Jugador
                 default: // Cualquier otro caso (incluido el default 1)

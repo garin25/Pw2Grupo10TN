@@ -282,11 +282,14 @@ class EditorController
             $usuariosProcesados[] = $u;
         }
 
+        $esAdmin = ($_SESSION['id_rol'] == 3);
+
         $data = [
             "page" => "usuariosVista",
             "logout" => "/login/logout",
             "usuario" => $usuario,
-            "usuarios" => $usuariosProcesados
+            "usuarios" => $usuariosProcesados,
+            "es_admin" => $esAdmin
         ];
 
         if (isset($_SESSION['mensaje_exito'])) {
