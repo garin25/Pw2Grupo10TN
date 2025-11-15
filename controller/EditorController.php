@@ -325,6 +325,187 @@ class EditorController
         header("Location: /editor/paginaUsuarios");
         exit;
     }
+
+    public function paginaCategorias()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $usuarioId = $_SESSION['usuarioId'];
+        $usuario = $this->model->buscarDatosUsuario($usuarioId); // Para el header
+
+        $categorias = $this->model->traerCategorias();
+
+        $data = ["page" => "Gestión de Categorías",
+            "logout" => "/login/logout",
+            "usuario" => $usuario,
+            "categorias" => $categorias];
+
+        if (isset($_SESSION['mensaje_exito'])) {
+            $data['mensaje_exito'] = $_SESSION['mensaje_exito'];
+            unset($_SESSION['mensaje_exito']);
+        }
+        if (isset($_SESSION['mensaje_error'])) {
+            $data['mensaje_error'] = $_SESSION['mensaje_error'];
+            unset($_SESSION['mensaje_error']);
+        }
+
+        $this->renderer->render("gestionCategorias", $data);
+    }
+
+    public function paginaCrearCategoria()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $usuarioId = $_SESSION['usuarioId'];
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $data = ["page" => "Crear Categoría",
+            "logout" => "/login/logout",
+            "usuario" => $usuario];
+
+        $this->renderer->render("crearCategoria", $data);
+    }
+
+    public function crearCategoria()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $nombre = $_POST['nombre'] ?? '';
+        $color = $_POST['color'] ?? '#FFFFFF';
+        $imagen = $_FILES['ruta_imagen'];
+
+        $ruta_para_bd = '';
+
+        if (isset($imagen) && $imagen['error'] == 0) {
+            $directorio_destino = "imagenes/";
+            if (!file_exists($directorio_destino)) {
+                mkdir($directorio_destino, 0777, true);
+            }
+
+            // Creamos un nombre de archivo único para evitar sobreescribir
+            $nombre_archivo = uniqid() . '-' . basename($imagen['name']);
+            $ruta_completa_archivo = $directorio_destino . $nombre_archivo;
+
+            // Movemos el archivo de la carpeta temporal a nuestro directorio
+            if (move_uploaded_file($imagen['tmp_name'], $ruta_completa_archivo)) {
+                $ruta_para_bd = "/" . $ruta_completa_archivo;
+            }
+        }
+
+        if (!empty($nombre) && !empty($ruta_para_bd)) {
+            $exito = $this->model->crearCategoria($nombre, $color, $ruta_para_bd);
+            if ($exito) {
+                $_SESSION['mensaje_exito'] = "¡Categoría creada correctamente!";
+            } else {
+                $_SESSION['mensaje_error'] = "Error al crear la categoría.";
+            }
+        } else {
+            $_SESSION['mensaje_error'] = "Faltan datos (nombre o imagen).";
+        }
+
+        header("Location: /editor/paginaCategorias");
+        exit;
+    }
+
+    public function paginaEditarCategoria()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $idCategoria = $_GET['id'] ?? 0;
+
+        $categoria = $this->model->traerCategoriaPorId($idCategoria);
+
+        if ($categoria == null) {
+            $_SESSION['mensaje_error'] = "Categoría no encontrada.";
+            header("Location: /editor/paginaCategorias");
+            exit;
+        }
+
+        $usuarioId = $_SESSION['usuarioId'];
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $data = ["page" => "Editar Categoría",
+            "logout" => "/login/logout",
+            "usuario" => $usuario,
+            "categoria" => $categoria];
+
+        $this->renderer->render("editarCategoria", $data);
+    }
+
+    public function actualizarCategoria()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $idCategoria = $_POST['id'] ?? 0;
+        $nombre = $_POST['nombre'] ?? '';
+        $color = $_POST['color'] ?? '#FFFFFF';
+        $imagen_actual = $_POST['imagen_actual'] ?? '';
+        $nueva_imagen = $_FILES['ruta_imagen'];
+
+        $ruta_para_bd = $imagen_actual;
+
+        if (isset($nueva_imagen) && $nueva_imagen['error'] == 0) {
+            $directorio_destino = "imagenes/";
+            if (!file_exists($directorio_destino)) {
+                mkdir($directorio_destino, 0777, true);
+            }
+
+            $nombre_archivo = uniqid() . '-' . basename($nueva_imagen['name']);
+            $ruta_completa_archivo = $directorio_destino . $nombre_archivo;
+
+            if (move_uploaded_file($nueva_imagen['tmp_name'], $ruta_completa_archivo)) {
+                $ruta_para_bd = "/" . $ruta_completa_archivo;
+
+            }
+        }
+
+        $exito = $this->model->actualizarCategoria($idCategoria, $nombre, $color, $ruta_para_bd);
+
+        if ($exito) {
+            $_SESSION['mensaje_exito'] = "¡Categoría actualizada correctamente!";
+        } else {
+            $_SESSION['mensaje_error'] = "Error al actualizar la categoría.";
+        }
+
+        header("Location: /editor/paginaCategorias");
+        exit;
+    }
+
+    public function eliminarCategoria()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $idCategoria = $_POST['id'] ?? 0;
+
+        $conteo = $this->model->contarPreguntasPorCategoria($idCategoria);
+
+        if ($conteo > 0) {
+            $_SESSION['mensaje_error'] = "No se puede eliminar: La categoría tiene " . $conteo . " preguntas asociadas.";
+        } else {
+
+            $exito = $this->model->eliminarCategoria($idCategoria);
+            if ($exito) {
+                $_SESSION['mensaje_exito'] = "Categoría eliminada correctamente.";
+            } else {
+                $_SESSION['mensaje_error'] = "Error al eliminar la categoría.";
+            }
+        }
+
+        header("Location: /editor/paginaCategorias");
+        exit;
+    }
     public function redirectToIndex()
     {
         header("Location: /");

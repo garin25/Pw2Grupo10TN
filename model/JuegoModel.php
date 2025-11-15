@@ -205,4 +205,12 @@ class JuegoModel
 
     }
 
+    public function traerCategoriasActivas()
+    {
+        // Trae todas las categorías de la tabla
+        $sql = "SELECT * FROM categoria";
+
+        // Usamos el método que no requiere parámetros
+        return $this->conexion->ejecutarConsultaSinParametros($sql);
+    }
 }

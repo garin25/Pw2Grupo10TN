@@ -16,8 +16,8 @@ class JuegoController
         $this->juego();
     }
 
-    public function juego()
-    {
+    public function juego(){
+
         if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
@@ -26,18 +26,50 @@ class JuegoController
         if (!isset($_SESSION['puntosPartida'])) {
             $_SESSION['puntosPartida'] = 0;
         }
-
-        //Inicializo las preguntas vistas
         if(!isset($_SESSION['preguntasVistas'])) {
             $_SESSION['preguntasVistas'] = [];
         }
-
         if(!isset($_SESSION['reportesHechos'])) {
             $_SESSION['reportesHechos'] = 0;
         }
 
+        $categorias = $this->model->traerCategoriasActivas();
+
+        $categoriasProcesadas = [];
+        $totalCategorias = count($categorias);
+
+        $gradientCSS = "";
+
+        if ($totalCategorias > 0) {
+            $porcentajePorSector = 100 / $totalCategorias;
+
+            for ($i = 0; $i < $totalCategorias; $i++) {
+                $categoria = $categorias[$i];
+                $color = $categoria['color'];
+
+                $gradosPorSector = 360 / $totalCategorias;
+                $categoria['grados'] = ($i * $gradosPorSector) + ($gradosPorSector / 2);
+
+                $inicioPorcentaje = $i * $porcentajePorSector;
+                $finPorcentaje = ($i + 1) * $porcentajePorSector;
+
+                $gradientCSS .= "$color $inicioPorcentaje% $finPorcentaje%, ";
+
+                $categoriasProcesadas[] = $categoria;
+            }
+            $gradientCSS = rtrim($gradientCSS, ", ");
+        }
+
+
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-        $data = ["page" => "Preguntas",  "logout" => "/login/logout", "usuario" => $usuario];
+
+        $data = ["page" => "Preguntas",
+            "logout" => "/login/logout",
+            "usuario" => $usuario,
+            "categorias" => $categoriasProcesadas,
+            "gradientCSS" => $gradientCSS // <-- ¡Pasamos el nuevo string de CSS!
+        ];
+
         $this->renderer->render("juego", $data);
     }
 

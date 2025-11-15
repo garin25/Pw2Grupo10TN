@@ -19,7 +19,7 @@ contenedorPreguntas.classList.add('oculto');
 contenedorPerder.classList.add('oculto');
 
 
-const numSectores = 6;
+const numSectores = document.querySelectorAll('.imagen-sector').length;
 const gradosPorSector = 360 / numSectores;
 let anguloAcumulado = 0;
 
@@ -31,7 +31,10 @@ function girarRuleta() {
     btnGirar.disabled = true;
 
     const sectorGanadorIndex = Math.floor(Math.random() * numSectores);
-    const categoriaGanadora = getCategoria(sectorGanadorIndex);
+    const todosLosSectores = document.querySelectorAll('.imagen-sector');
+    const sectorGanadorElemento = todosLosSectores[sectorGanadorIndex];
+    const categoriaGanadora = sectorGanadorElemento.dataset.nombreCategoria;
+    const rutaImagenGanadora = sectorGanadorElemento.dataset.rutaImagen;
 
     const anguloDeseadoFinal = sectorGanadorIndex * gradosPorSector + gradosPorSector / 2;
 
@@ -54,16 +57,7 @@ function girarRuleta() {
     //categoria
     setTimeout(() => {
         btnGirar.disabled = false;
-        let nombreArchivo;
-        let nombreCategoriaLimpio = categoriaGanadora.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-        if (nombreCategoriaLimpio === 'Ciencias Naturales') {
-            nombreArchivo = 'cienciasNaturales';
-        } else {
-            nombreArchivo = nombreCategoriaLimpio.toLowerCase();
-        }
-
-        const rutaImagen = `../imagenes/${nombreArchivo}.png`;
+        const rutaImagen = rutaImagenGanadora;
 
         Swal.fire({
             title: `¡Categoría ${categoriaGanadora}!`,
@@ -81,29 +75,6 @@ function girarRuleta() {
 }
 btnGirar.addEventListener('click', girarRuleta);
 
-function getCategoria(sectorGanadorIndex) {
-    const indiceCorregido = (sectorGanadorIndex + 1) % numSectores;
-    switch (indiceCorregido){
-        case 0:
-            return 'Deporte'
-        break;
-        case 1:
-            return 'Historia'
-            break;
-        case 2:
-            return 'Ciencias Naturales'
-            break;
-        case 3:
-            return 'Geografía'
-            break;
-        case 4:
-            return 'Programación'
-            break;
-        case 5:
-            return 'Matemática'
-            break;
-    }
-}
 function cambiarAContenedorRuleta() {
     contenedorPreguntas.classList.remove('visible');
     contenedorPreguntas.classList.add('oculto');

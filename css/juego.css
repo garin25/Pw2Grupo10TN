@@ -32,8 +32,8 @@ main {
 
 .ruleta-container {
     position: relative;
-    width: 385px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
     margin-bottom: 2em;
 }
 
@@ -44,15 +44,6 @@ main {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     border: 8px solid #333;
 
-    /* GRADIENTE CÓNICO PARA LAS 6 SECCIONES (60 grados c/u) */
-    background: conic-gradient(
-            #FFD700 0% 16.66%,
-            #3CB371 16.66% 33.32%,
-            #1E90FF 33.32% 49.98%,
-            #FF4500 49.98% 66.64%,
-            #9932CC 66.64% 83.3%,
-            #DC143C 83.3% 100%
-    );
 }
 
 .sectores-texto {

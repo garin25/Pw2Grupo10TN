@@ -1,0 +1,29 @@
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+    <a href="/editor/paginaCategorias" class="text-blue-500 mb-4">&larr; Volver a Gestión</a>
+    <h3 class="text-2xl font-bold text-gray-800 mb-6">Crear Nueva Categoría</h3>
+
+    <form action="/editor/crearCategoria" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
+
+        <div class="mb-4">
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="color" class="block text-sm font-medium text-gray-700">Color (Hex):</label>
+            <input type="color" id="color" name="color" value="#FFFFFF" class="mt-1 block rounded-md shadow-sm">
+            <span class="text-xs text-gray-500">Ej: #FF3B30</span>
+        </div>
+
+        <div class="mb-4">
+            <label for="ruta_imagen" class="block text-sm font-medium text-gray-700">Icono de la Categoría:</label>
+            <input type="file" id="ruta_imagen" name="ruta_imagen" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" required>
+        </div>
+
+        <hr class="my-6">
+
+        <button type="submit" class="p-2 rounded-lg font-bold text-white" style="background-color: #8D44B6;">
+            Crear Categoría
+        </button>
+    </form>
+</main>
