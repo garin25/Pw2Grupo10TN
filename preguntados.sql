@@ -30,21 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `categoria` (
   `categoriaId` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `color` varchar(7) DEFAULT NULL
+  `color` varchar(7) DEFAULT NULL,
+  `ruta_imagen` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `categoria`
 --
 
-INSERT INTO `categoria` (`categoriaId`, `nombre`, `color`) VALUES
-(1, 'Deporte', '#FF3B30'),
-(2, 'Historia', '#FFCC00'),
-(3, 'Ciencias Naturales', '#34C759'),
-(4, 'Geografía', '#007AFF'),
-(5, 'Programación', '#FF9500'),
-(6, 'Matemática', '#AF52DE');
-
+INSERT INTO `categoria` (`categoriaId`, `nombre`, `color`, `ruta_imagen`) VALUES
+    (1, 'Deporte', '#FF3B30', '/imagenes/deporte.png'),
+    (2, 'Historia', '#FFCC00', '/imagenes/historia.png'),
+    (3, 'Ciencias Naturales', '#34C759', '/imagenes/cienciasNaturales.png'),
+    (4, 'Geografía', '#007AFF', '/imagenes/geografia.png'),
+    (5, 'Programación', '#FF9500', '/imagenes/programacion.png'),
+    (6, 'Matemática', '#AF52DE', '/imagenes/matematica.png');
 -- --------------------------------------------------------
 
 --

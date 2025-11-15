@@ -10,19 +10,15 @@
 
     <section id="contenedor-ruleta">
         <div class="ruleta-container">
-            <div class="ruleta">
+            <div class="ruleta" style="background: conic-gradient({{gradientCSS}});">
                 <div class="sectores-texto">
-                    <img class="imagen-sector" src="/imagenes/historia.png" style="--rotation: 30deg;">
-
-                    <img class="imagen-sector" src="/imagenes/cienciasNaturales.png" style="--rotation: 90deg;">
-
-                    <img class="imagen-sector" src="/imagenes/geografia.png" style="--rotation: 150deg;">
-
-                    <img class="imagen-sector" src="/imagenes/programacion.png"  style="--rotation: 210deg;">
-
-                    <img class="imagen-sector" src="/imagenes/matematica.png" style="--rotation: 270deg;">
-
-                    <img class="imagen-sector" src="../imagenes/deporte.png" style="--rotation: 330deg;">
+                    {{#categorias}}
+                        <img class="imagen-sector"
+                             src="{{ruta_imagen}}"
+                             alt="Categoría {{nombre}}"
+                             data-nombre-categoria="{{nombre}}"
+                             data-ruta-imagen="{{ruta_imagen}}"  style="--rotation: {{grados}}deg;">
+                    {{/categorias}}
                 </div>
             </div>
             <div class="puntero"></div>
