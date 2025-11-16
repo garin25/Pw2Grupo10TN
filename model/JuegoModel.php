@@ -92,6 +92,8 @@ class JuegoModel
             WHERE c.nombre = ? 
             $condicionDificultad
             $clausulaExclusion
+            AND esSugerida = 0
+            AND esReportada = 0
             ORDER BY RAND()
             LIMIT 1";
 
@@ -107,6 +109,8 @@ class JuegoModel
                     JOIN categoria c ON c.categoriaId = p.categoriaId
                     WHERE c.nombre = ? 
                     $clausulaExclusion
+                    AND  esSugerida = 0
+                    AND esReportada = 0
                     ORDER BY RAND()
                     LIMIT 1";
 
@@ -115,6 +119,9 @@ class JuegoModel
         if (is_array($resultadoFallback) && count($resultadoFallback) > 0) {
             return $resultadoFallback[0];
         }
+
+
+
 
         // si ya no hay disponible preguntas se podria agregar intento 3 en donde de haria un truncate
         // en la tabla preguntas_a_evitar donde la categoria sea igual a la categoria que se busca.
@@ -203,6 +210,43 @@ class JuegoModel
         $params = array(true, $preguntaId);
         $this->conexion->ejecutarConsulta($sql, $tipos, $params);
 
+    }
+
+    public function enviarPreguntaSugerida($enunciado, $respuestas, $categoriaId, $respuestaCorrecta)
+    {
+        $db = $this->conexion->getConexion();
+        $db->begin_transaction();
+
+        try {
+
+            $sql_pregunta = "INSERT INTO pregunta (enunciado, categoriaId, esSugerida) VALUES (?, ?, ?)";
+
+            $this->conexion->ejecutarConsulta($sql_pregunta, "sii", [$enunciado, $categoriaId, 1]);
+
+
+            $preguntaId = $db->insert_id;
+            $i = 0;
+            foreach ($respuestas as $respuesta) {
+
+                $sql_respuesta = "INSERT INTO respuesta (respuestaTexto, esCorrecta, preguntaId) 
+                              VALUES (?, ?, ?)";
+
+                if ($i == $respuestaCorrecta){
+                    $this->conexion->ejecutarConsulta($sql_respuesta, "sii", [$respuesta, 1, $preguntaId]);
+                } else {
+                    $this->conexion->ejecutarConsulta($sql_respuesta, "sii", [$respuesta, 0, $preguntaId]);
+                }
+
+                $i += 1;
+            }
+
+            $db->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $db->rollback();
+            return false;
+        }
     }
 
     public function traerCategoriasActivas()
