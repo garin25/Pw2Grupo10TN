@@ -10,6 +10,7 @@ include_once("controller/JuegoController.php");
 include_once("controller/MiPerfilController.php");
 include_once("controller/PerfilController.php");
 include_once("controller/EditorController.php");
+include_once("controller/AdminController.php");
 include_once("model/LoginModel.php");
 include_once("model/RegisterModel.php");
 include_once("model/RankingModel.php");
@@ -18,6 +19,7 @@ include_once("model/JuegoModel.php");
 include_once("model/MiPerfilModel.php");
 include_once("model/PerfilModel.php");
 include_once("model/EditorModel.php");
+include_once("model/AdminModel.php");
 include_once('vendor/autoload.php');
 include_once ("helper/MustacheRenderer.php");
 
@@ -59,6 +61,8 @@ class ConfigFactory
         $this->objetos["PerfilController"] = new PerfilController(new PerfilModel($this->conexion), $this->renderer);
 
         $this->objetos["EditorController"] = new EditorController(new EditorModel($this->conexion), $this->renderer);
+
+        $this->objetos["AdminController"] = new AdminController(new AdminModel($this->conexion), $this->renderer);
 
 
     }
