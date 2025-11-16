@@ -175,26 +175,44 @@ class AdminModel
         $datosNivel = $this->getNivelJugadores();
 
         // 2. REUTILIZAR tu helper (devuelve la URL web)
-        // Ej: /imagenes/temp/grafico_nivel_65f8c.png
+        // $urlGrafico es, por ej: /imagenes/temp/grafico_nivel_65f8c.png
         $urlGrafico = $this->crearImagenGraficoNivel($datosNivel);
 
-        // 3. Reconstruir la RUTA ABSOLUTA para Dompdf y unlink()
+        // 3. Reconstruir la RUTA ABSOLUTA (para LEER el archivo)
         $rutaAbsoluta = $_SERVER['DOCUMENT_ROOT'] . $urlGrafico;
 
-        // 4. Crear el HTML (Dompdf usa la RUTA ABSOLUTA)
-        $html = "<html><body><h1>Reporte de Nivel</h1><img src='". $rutaAbsoluta ."'></body></html>";
+        // --- ¡ESTA ES LA SOLUCIÓN! ---
 
-        // 5. Generar PDF (Dompdf)
+        // 4. Leer los datos binarios de la imagen que acabas de crear
+        $imageData = file_get_contents($rutaAbsoluta);
+
+        // 5. Codificar esos datos en Base64
+        $imageBase64 = 'data:image/png;base64,' . base64_encode($imageData);
+
+        // 6. Crear el HTML (usando la cadena Base64 en el src)
+        $html = "<html>
+                <head><style>body { font-family: sans-serif; }</style></head>
+                <body>
+                    <h1>Reporte de Nivel</h1>
+                    <img src='". $imageBase64 ."' style='width: 100%;'>
+                </body>
+            </html>";
+
+        // 7. Generar PDF (Dompdf)
         $dompdf = new Dompdf();
+        // 'isRemoteEnabled' ya no es ni siquiera necesario, pero no hace daño
         $dompdf->set_option('isRemoteEnabled', true);
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        // 6. ¡LIMPIAR EL ARCHIVO TEMPORAL!
-        // Esto es ahora obligatorio
+        // 8. Guarda el PDF final en una variable
+        $pdfOutputString = $dompdf->output();
+
+        // 9. ¡Ahora sí, borra el archivo temporal!
         unlink($rutaAbsoluta);
 
-        // 7. Devolver el PDF como string
-        return $dompdf->output();
+        // 10. Devuelve el PDF
+        return $pdfOutputString;
     }
+
 }
