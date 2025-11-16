@@ -104,7 +104,11 @@ ORDER BY
         $sql_respuestas = "DELETE FROM respuesta WHERE preguntaId = ?";
         $this->conexion->ejecutarConsulta($sql_respuestas, $tipos, $params);
 
-        // 4. Finalmente, borrar la pregunta "padre"
+        // 4. Borrar de la tercera tabla "hijo"
+        $sql_reportes = "DELETE FROM reportes WHERE preguntaId = ?";
+        $this->conexion->ejecutarConsulta($sql_reportes, $tipos, $params);
+
+        // 5. Finalmente, borrar la pregunta "padre"
         $sql_pregunta = "DELETE FROM pregunta WHERE preguntaId = ?";
        return $this->conexion->ejecutarModificacion($sql_pregunta, $tipos, $params);
     }
