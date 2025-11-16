@@ -104,7 +104,11 @@ ORDER BY
         $sql_respuestas = "DELETE FROM respuesta WHERE preguntaId = ?";
         $this->conexion->ejecutarConsulta($sql_respuestas, $tipos, $params);
 
-        // 4. Finalmente, borrar la pregunta "padre"
+        // 4. Borrar de la tercera tabla "hijo"
+        $sql_reportes = "DELETE FROM reportes WHERE preguntaId = ?";
+        $this->conexion->ejecutarConsulta($sql_reportes, $tipos, $params);
+
+        // 5. Finalmente, borrar la pregunta "padre"
         $sql_pregunta = "DELETE FROM pregunta WHERE preguntaId = ?";
        return $this->conexion->ejecutarModificacion($sql_pregunta, $tipos, $params);
     }
@@ -192,7 +196,7 @@ ORDER BY
 
     public  function traerCategorias()
     {
-        $sql = "SELECT categoriaId, nombre FROM categoria";
+        $sql = "SELECT * FROM categoria";
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
 
@@ -243,6 +247,54 @@ ORDER BY
 
     }
 
+    public function crearCategoria($nombre, $color, $ruta_imagen) {
+        $sql = "INSERT INTO categoria (nombre, color, ruta_imagen) VALUES (?, ?, ?)";
+        $tipos = "sss";
+        $params = [$nombre, $color, $ruta_imagen];
 
+        // ejecutarModificacion porque es un INSERT y queremos saber si funcionó
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+    }
 
+    public function traerCategoriaPorId($id) {
+        $sql = "SELECT * FROM categoria WHERE categoriaId = ?";
+        $tipos = "i";
+        $params = [$id];
+
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if ($resultado != null) {
+            return $resultado[0];
+        }
+        return null;
+    }
+
+    public function actualizarCategoria($id, $nombre, $color, $ruta_imagen) {
+        $sql = "UPDATE categoria SET nombre = ?, color = ?, ruta_imagen = ? WHERE categoriaId = ?";
+        $tipos = "sssi";
+        $params = [$nombre, $color, $ruta_imagen, $id];
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+    }
+
+    public function contarPreguntasPorCategoria($id) {
+        $sql = "SELECT COUNT(*) AS total FROM pregunta WHERE categoriaId = ?";
+        $tipos = "i";
+        $params = [$id];
+
+        $resultado = $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+
+        if ($resultado != null) {
+            return $resultado[0]['total'];
+        }
+        return 0;
+    }
+
+    public function eliminarCategoria($id) {
+        $sql = "DELETE FROM categoria WHERE categoriaId = ?";
+        $tipos = "i";
+        $params = [$id];
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+    }
 }
