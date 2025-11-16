@@ -248,6 +248,67 @@ class JuegoController
 
     }
 
+    public function sugerirPregunta(){
+
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
+            $this->redirectToIndex();
+        }
+
+        $usuarioId = $_SESSION["usuarioId"];
+
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+        $data = ["page" => "Sugerir Pregunta",  "logout" => "/login/logout", "usuario" => $usuario];
+        $this->renderer->render("sugerirPregunta", $data);
+
+    }
+
+    public function enviarPreguntaSugerida()
+    {
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
+            $this->redirectToIndex();
+        }
+
+        header('Content-Type: application/json');
+
+        $json_crudo = file_get_contents('php://input');
+
+        $datos = json_decode($json_crudo, true);
+
+        if ($datos['enunciado'] == "") {
+            $respuesta = ['ok' => false, 'error' => "form", 'msj' => "Por favor escriba un enunciado"];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        foreach ($datos['respuestas'] as $respuesta) {
+            if($respuesta == ""){
+                $respuesta = ['ok' => false, 'error' => "form", 'msj' => "Por favor escriba las respuestas"];
+                echo json_encode($respuesta);
+                return;
+            }
+        }
+
+        if ($datos['respuestaCorrecta'] == "") {
+            $respuesta = ['ok' => false, 'error' => "form", 'msj' => "Por favor seleccione una respuesta como correcta"];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        if ($datos['categoria'] == "") {
+            $respuesta = ['ok' => false, 'error' => "form", 'msj' => "Por favor seleccione categoria"];
+        }
+
+        $result = $this->model->enviarPreguntaSugerida($datos['enunciado'], $datos['respuestas'], $datos['categoria'], $datos['respuestaCorrecta']);
+
+        if($result){
+            $respuesta = ['ok' => true, 'msj' => "Pregunta enviada correctamente"];
+        } else {
+            $respuesta = ['ok' => false, 'error' => "error", 'msj' => "No se pudo enviar la pregunta"];
+        }
+
+        echo json_encode($respuesta);
+    }
+
     public function redirectToIndex()
     {
         header("Location: /");

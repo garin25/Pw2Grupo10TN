@@ -195,6 +195,12 @@ class EditorController
         $this->renderer->render("editarPregunta", $data);
     }
 
+    public function buscarCategorias() {
+        $categorias = $this->model->traerCategorias();
+        $data = ["categorias" => $categorias];
+        echo json_encode($data);
+}
+
 
     public function paginaReportes()
     {
