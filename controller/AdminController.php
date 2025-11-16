@@ -34,13 +34,10 @@ class AdminController
         $this->renderer->render("graficos", $data);
     }
     public function descargarReporteNivel() {
-        // 1. Llama a la función del modelo que genera el PDF
-        // (Esta función es casi igual a la que hicimos antes,
-        // pero SÓLO para el gráfico de nivel)
         $pdfString = $this->model->generarPdfDeNivel();
 
         if ($pdfString) {
-            // 2. Envía el PDF al navegador
+            // Envía el PDF al navegador
             header('Content-Type: application/pdf');
             header('Content-Disposition: attachment; filename="reporte_nivel.pdf"');
             echo $pdfString;
@@ -49,11 +46,10 @@ class AdminController
     }
 
     public function descargarReporteSexo() {
-        // 1. Llama a la función del modelo que genera el PDF
         $pdfString = $this->model->generarPdfDeSexo();
 
         if ($pdfString) {
-            // 2. Envía el PDF al navegador
+            // Envía el PDF al navegador
             header('Content-Type: application/pdf');
             header('Content-Disposition: attachment; filename="reporte_sexo.pdf"');
             echo $pdfString;
