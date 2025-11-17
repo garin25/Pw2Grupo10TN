@@ -1,53 +1,66 @@
+<main class="w-full md:w-3/4 p-6 flex-grow h-screen overflow-auto" style="background-image: url(../imagenes/texture-lobby.jpg); background-size: cover;">
 
-<a href="/editor">Volver</a>
-{{#mensaje_exito}}
-    <div style="color: green; border: 1px solid green; padding: 10px;">
-        {{mensaje_exito}}
-    </div>
-{{/mensaje_exito}}
-{{#mensaje_error}}
-    <div style="color: red; border: 1px solid red; padding: 10px;">
-        {{mensaje_error}}
-    </div>
-{{/mensaje_error}}
+    <div class="w-full flex justify-center pt-12">
+
+        <div class="bg-white shadow-2xl rounded-xl p-6 max-w-sm w-full text-center border-t-8" style="border-color: #8D44B6;">
+
+            <a href="/editor" class="block text-left text-blue-600 hover:underline mb-4 font-semibold">Volver</a>
+
+            {{#mensaje_exito}}
+                <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 1rem;">
+                    {{mensaje_exito}}
+                </div>
+            {{/mensaje_exito}}
+            {{#mensaje_error}}
+                <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 1rem;">
+                    {{mensaje_error}}
+                </div>
+            {{/mensaje_error}}
+
+            <form action="/editor/editarPregunta" method="POST">
+                <input type="hidden" name="preguntaId" value="{{pregunta.preguntaId}}">
+
+                <label for="enunciado">Enunciado:</label>
+                <br>
+                <textarea id="enunciado" name="enunciado" rows="3" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;">{{pregunta.enunciado}}</textarea>
+                <br><br> <label for="categoria">Categoria:</label>
+                <br>
+                <select id="categoria" name="categoria" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;">
+                    {{#categorias}}
+                        <option value="{{nombre}}" {{#is_selected}}selected{{/is_selected}}>{{nombre}}</option>
+                    {{/categorias}}
+                </select>
+
+                <hr class="my-4">
+
+                <h3 class="font-semibold mb-2">Respuestas</h3>
+
+                {{#respuestas}}
+                    <div class="mt-2">
+                        <input type="hidden" name="respuestas[{{id_respuesta}}][id]" value="{{id_respuesta}}">
+
+                        <label for="respuesta_{{id_respuesta}}">Respuesta:</label>
+                        <br>
+                        <textarea id="respuesta_{{id_respuesta}}"
+                                  name="respuestas[{{id_respuesta}}][texto]"
+                                  rows="2" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;">{{respuestaTexto}}</textarea>
+
+                        <label for="radio_{{id_respuesta}}">Es correcta:</label>
+                        <input type="radio"
+                               id="radio_{{id_respuesta}}"
+                               name="rtaCorrecta"
+                               value="{{id_respuesta}}"
+                               {{#esCorrecta}}checked{{/esCorrecta}}>
+                    </div>
+                    <hr class="my-2 border-dashed">
+                {{/respuestas}}
 
 
-<form action="/editor/editarPregunta" method="POST">
+                <button type="submit" id="submit" style="padding: 0.5em 1em; border-radius: 12px; background-color: #8D44B6; color: white; font-weight: bold; margin-top: 1rem;">
+                    Guardar Todos los Cambios
+                </button>
 
-    <input type="hidden" name="preguntaId" value="{{pregunta.preguntaId}}">
-
-    <label for="enunciado">Enunciado</label>
-    <input type="text" id="enunciado" name="enunciado" value="{{pregunta.enunciado}}">
-
-    <label for="categoria">Categoria</label>
-    <select id="categoria" name="categoria">
-        {{#categorias}}
-            <option value="{{nombre}}" {{#is_selected}}selected{{/is_selected}}>{{nombre}}</option>
-        {{/categorias}}
-    </select>
-
-    <hr>
-
-    <h3>Respuestas</h3>
-    {{#respuestas}}
-        <div>
-            <input type="hidden" name="respuestas[{{id_respuesta}}][id]" value="{{id_respuesta}}">
-
-            <label for="respuesta_{{id_respuesta}}">Respuesta:</label>
-            <input type="text" id="respuesta_{{id_respuesta}}"
-                   name="respuestas[{{id_respuesta}}][texto]"
-                   value="{{respuestaTexto}}">
-
-            <label for="radio_{{id_respuesta}}">Es correcta:</label>
-            <input type="radio"
-                   id="radio_{{id_respuesta}}"
-                   name="rtaCorrecta"
-                   value="{{id_respuesta}}"
-                   {{#esCorrecta}}checked{{/esCorrecta}}>
-
+            </form>
         </div>
-        <br>
-    {{/respuestas}}
-
-    <button type="submit">Guardar Todos los Cambios</button>
-</form>
+    </div>
+</main>

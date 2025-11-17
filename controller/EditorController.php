@@ -178,6 +178,7 @@ class EditorController
             $categoria['is_selected'] = ($categoria['categoriaId'] == $categoriaActualId);
             $categoriasProcesadas[] = $categoria;
         }
+
         $data = ["page" => "editarPregunta", "logout" => "/login/logout", "usuario" => $usuario,
             "pregunta" => $pregunta,"respuestas"=> $respuestas,"categorias" => $categoriasProcesadas];
 
@@ -191,6 +192,7 @@ class EditorController
             $data['mensaje_error'] = $_SESSION['mensaje_error'];
             unset($_SESSION['mensaje_error']);
         }
+
 
         $this->renderer->render("editarPregunta", $data);
     }
