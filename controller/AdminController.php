@@ -27,9 +27,10 @@ class AdminController
         $sexoJugadores = $this->model->getDatosSexoJugadores();
 
         $urlGraficoNivel = $this->model->crearImagenGraficoNivel($nivelJugadores);
+        $urlGraficoSexo = $this->model->crearImagenGraficoSexo($sexoJugadores);
 
         $data = ["page" => "graficos", "logout" => "/login/logout", "usuario" => $usuario ,"arrayNivel"=>$nivelJugadores
-            , "arraySexo"=>$sexoJugadores ,'urlGraficoNivel' => $urlGraficoNivel];
+            , "arraySexo"=>$sexoJugadores ,'urlGraficoNivel' => $urlGraficoNivel ,'urlGraficoSexo' => $urlGraficoSexo];
 
         $this->renderer->render("graficos", $data);
     }

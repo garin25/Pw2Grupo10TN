@@ -102,22 +102,9 @@ class AdminModel
         // --- ¡LA SOLUCIÓN! ---
         // Si la consulta no devuelve datos (o es null), no podemos dibujar.
         if (empty($datos)) {
-            // Creamos una imagen de "error" en su lugar
-            $graph = new Graph(500, 350); // Un lienzo en blanco
-            $graph->SetMargin(0,0,0,0); // Sin márgenes
-
-            // Añadimos un título que sirva como mensaje de error
-            $graph->title->Set("No hay datos para mostrar");
-            $graph->title->SetFont(FF_FONT2, FS_BOLD, 14);
-            $graph->title->SetMargin(150); // Centrarlo (aprox)
-
-            // Definimos la ruta y "dibujamos" el lienzo en blanco con el texto
-            $rutaAbsoluta = $_SERVER['DOCUMENT_ROOT'] . '/imagenes/temp/grafico_nivel.png';
-            $graph->Stroke($rutaAbsoluta);
-            return $rutaAbsoluta;
+          return $this->generarGraficoVacio("grafico_sexo_");
         }
-        // --- FIN DE LA SOLUCIÓN ---
-
+        $this->limpiarArchivosTemporales("grafico_sexo_");
 
         // 1. Preparar los datos (esto es el código que ya tenías)
         $data = [];
@@ -163,20 +150,9 @@ class AdminModel
 
     public function crearImagenGraficoSexo($datos) {
         if (empty($datos)) {
-            // Creamos una imagen de "error" en su lugar
-            $graph = new Graph(500, 350); // Un lienzo en blanco
-            $graph->SetMargin(0,0,0,0); // Sin márgenes
-
-            // Añadimos un título que sirva como mensaje de error
-            $graph->title->Set("No hay datos para mostrar");
-            $graph->title->SetFont(FF_FONT2, FS_BOLD, 14);
-            $graph->title->SetMargin(150); // Centrarlo (aprox)
-
-            // Definimos la ruta y "dibujamos" el lienzo en blanco con el texto
-            $rutaAbsoluta = $_SERVER['DOCUMENT_ROOT'] . '/imagenes/temp/grafico_nivel.png';
-            $graph->Stroke($rutaAbsoluta);
-            return $rutaAbsoluta;
+            return $this->generarGraficoVacio("grafico_nivel_");
         }
+        $this->limpiarArchivosTemporales("grafico_nivel_");
 
         $data = [];
         $labels = [];
@@ -309,4 +285,62 @@ class AdminModel
         return $pdfOutputString;
     }
 
+    /**
+     * Función auxiliar para borrar archivos viejos de una carpeta.
+     * * @param string $prefijoArchivo El inicio del nombre del archivo (ej: 'grafico_nivel_')
+     * @param int $segundosVida Tiempo en segundos antes de considerar el archivo "viejo" (default: 30s)
+     */
+    public function limpiarArchivosTemporales($prefijoArchivo, $segundosVida = 30) {
+
+        // 1. Definir la ruta base
+        $carpetaTemp = $_SERVER['DOCUMENT_ROOT'] . '/imagenes/temp/';
+
+        // 2. Crear el patrón de búsqueda (ej: .../grafico_nivel_*.png)
+        $patron = $carpetaTemp . $prefijoArchivo . '*.png';
+
+        // 3. Buscar archivos
+        $archivosEncontrados = glob($patron);
+
+        // 4. Iterar y borrar si son viejos
+        foreach ($archivosEncontrados as $archivo) {
+            if (is_file($archivo)) {
+                $edadArchivo = time() - filemtime($archivo);
+
+                if ($edadArchivo > $segundosVida) {
+                    @unlink($archivo); // Borrado silencioso
+                }
+            }
+        }
+    }
+
+    /**
+     * Genera una imagen con un mensaje de texto (usada cuando no hay datos).
+     * * @param string $prefijoArchivo El prefijo para el nombre (ej: 'grafico_nivel_')
+     * @param string $mensaje El texto a mostrar (default: "No hay datos")
+     * @return string La URL web de la imagen generada.
+     */
+    private function generarGraficoVacio($prefijoArchivo, $mensaje = "No hay datos para mostrar") {
+
+        // 1. Crear lienzo en blanco
+        $graph = new Graph(500, 350);
+        $graph->SetMargin(0,0,0,0);
+
+        // 2. Configurar el título (el mensaje)
+        $graph->title->Set($mensaje);
+        $graph->title->SetFont(FF_FONT2, FS_BOLD, 14);
+        $graph->title->SetMargin(150); // Ajustar según necesidad para centrar verticalmente
+
+        // 3. Generar nombre único (Vital para evitar caché)
+        $nombreArchivo = $prefijoArchivo . 'vacio_' . uniqid() . '.png';
+
+        // 4. Definir rutas
+        $rutaWeb = '/imagenes/temp/' . $nombreArchivo;
+        $rutaAbsoluta = $_SERVER['DOCUMENT_ROOT'] . $rutaWeb;
+
+        // 5. Guardar
+        $graph->Stroke($rutaAbsoluta);
+
+        // 6. Devolver la URL para la vista
+        return $rutaWeb;
+    }
 }
