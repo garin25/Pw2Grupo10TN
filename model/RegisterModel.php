@@ -107,13 +107,13 @@ class RegisterModel
             $mail->isHTML(true);
             $mail->Subject = '¡Activa tu cuenta!';
 
-            $enlace_activacion = "localhost/register/activacion";
-
             $mail->Body    = "<h1>¡Gracias por registrarte!</h1>
-                    <p>Para completar tu registro, Copia tu token y hacé clic en el siguiente enlace:</p>
-                    <p>Token: ".$token."</p>
-                    <a href='$enlace_activacion' style='padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none;'>Activar mi cuenta</a>";
-            $mail->AltBody = 'Para activar tu cuenta, copiá y pegá este enlace en tu navegador: ' . $enlace_activacion;
+                    <p>Para completar tu registro hacé clic en el siguiente botón:</p>
+                    <form action='/register/activacion' method='post'>
+                            <input type='hidden' name='token' value='" . $token . "'>
+                        <button type='submit' style='padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none;'>Activar mi cuenta</button>
+                    </form>";
+            $mail->AltBody = 'Para completar tu registro hacé clic en el siguiente botón:';
 
             $mail->send();
             echo '<h2>¡Registro casi completo!</h2>';
