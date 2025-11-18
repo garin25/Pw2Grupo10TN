@@ -2,11 +2,6 @@
 
 <link rel="stylesheet" href="../css/juego.css">
 <main class="w-full md:w-3/4 p-8" style="background-image: url(../imagenes/texture-lobby.jpg); background-size: cover;">
-    <section>
-        <div id="timer" class="oculto">
-            <p><span class="tiempo">00:</span><span id="segundos" class="tiempo"></span></p>
-        </div>
-    </section>
 
     <section id="contenedor-ruleta">
         <div class="ruleta-container">
@@ -26,7 +21,11 @@
         <button id="btn-girar" class="btn">Girar Ruleta</button>
     </section>
     <section id="contenedor-preguntas">
+        <div id="timer" class="oculto">
+            <p><span class="tiempo">00:</span><span id="segundos" class="tiempo"></span></p>
+        </div>
         <div id="preguntas-sup">
+
             <img id="preguntas-img" src="../imagenes/logo.jpg" alt="">
             <h2 id="preguntas-descripcion">Lorem, ipsum dolor sit amet consectetur adipisicing elit?</h2>
         </div>

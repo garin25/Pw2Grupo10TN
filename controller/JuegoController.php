@@ -175,12 +175,14 @@ class JuegoController
             $this->model->partidaFinalizada($puntosPartida, $usuarioId);
             $this->resetSesion();
         } else if($idRespuesta == $datos['respuestaId']) {
-            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta'];
+            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta correcta', 'respuestaIdCorrecta' => $_SESSION['id_respuesta']];
             $_SESSION['puntosPartida'] += 10;
             $_SESSION['tiempo'] = 0;
             $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], true, date("Y-m-d H:i:s", time()));
+            unset($_SESSION['preguntaId']);
+            unset($_SESSION['id_respuesta']);
         } else {
-            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida']];
+            $respuesta = ['ok' => true, 'verificacion' => 'Respuesta incorrecta','puntaje' => $_SESSION['puntosPartida'], 'respuestaIdCorrecta' => $_SESSION['id_respuesta']];
             //$_SESSION['preguntasVistas'] = [];
             $this->model->aumentarRespondidasMalEnPregunta($_SESSION["preguntaId"]);
             $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], false, date("Y-m-d H:i:s", time()));
