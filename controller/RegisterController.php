@@ -98,7 +98,7 @@ class RegisterController
         $token = bin2hex(random_bytes(32));
         $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad,$token);
 
-        header("Location: /register/activacion?token=" . $token);
+        header("Location: /register/activacion");
 
         exit();
     }
@@ -107,8 +107,12 @@ class RegisterController
             $this->redirectToLobby();
         }
 
-        $token = trim($_POST['token'] ?? '');
-       $exitoso = $this->model->activar($token);
+        $token = $_GET['token'] ?? null;
+        if(!$token) {
+            $this->redirectToLobby();
+        }
+
+        $exitoso = $this->model->activar($token);
 
         if ($exitoso) {
             header("Location: /register/resultadoActivacion?exito=1");
