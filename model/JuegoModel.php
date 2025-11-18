@@ -26,8 +26,8 @@ class JuegoModel
 
     public function traerIdsAEvitar($usuarioId){
 
-        $sql = "SELECT preguntaId FROM preguntas_a_evitar WHERE usuarioid = ?";
-        $tipos = "s";
+        $sql = "SELECT preguntaId FROM preguntas_a_evitar WHERE usuarioId = ?";
+        $tipos = "i";
         $params = array($usuarioId);
 
         // FIX: Validar que la consulta devuelva un resultado
@@ -48,7 +48,7 @@ class JuegoModel
 
     }
 
-    public function buscarPregunta($categoria, $dificultad, $idsVistos = []){
+    public function buscarPregunta($categoria, $dificultad, $idsVistos){
 
         // Usamos IF() de MySQL para evitar 100% la división por cero.
         $ratioSeguro = "IF(p.cantidadEnviada = 0, 0.5, (p.respondidasMal / p.cantidadEnviada))";
@@ -79,7 +79,7 @@ class JuegoModel
 
             // 3. Añadimos los IDs al array de parámetros
             foreach ($idsVistos as $id) {
-                $params[] = $id;
+                $params[] = $id['preguntaId'];
                 $tipos .= "i"; // 'i' por cada ID entero
             }
         }

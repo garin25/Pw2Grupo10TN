@@ -132,13 +132,26 @@ function respuestaCorrecta() {
         if (result.isConfirmed) {
             // Se presiona el botón 'Continuar'
             cambiarAContenedorRuleta();
+            restablecerRespuestasBoton();
         } else if (result.isDenied) {
             // Se presiona el botón 'Reportar'
             crearReporte();
             cambiarAContenedorRuleta();
+            restablecerRespuestasBoton();
         }
         // Si se cierra el modal sin hacer clic (result.dismiss), no ocurre nada
     });
+}
+
+function restablecerRespuestasBoton() {
+
+    for (let i = 0; i < botonesRespuestas.length; i++) {
+
+        botonesRespuestas[i].classList.remove('respuestaCorrectaAnimation');
+        botonesRespuestas[i].classList.remove('respuestaIncorrecta');
+
+    }
+
 }
 
 function respuestaIncorrecta() {
@@ -305,9 +318,14 @@ function tiempoAcabado(){
                     if (ok === true) {
                         if (data.verificacion === 'Respuesta correcta') {
                             // mensaje exito , siguiente pregunta
+                            document.getElementById(`${data.respuestaIdCorrecta}`).classList.add('respuestaCorrectaAnimation');
+
                             respuestaCorrecta();
-                        } else {
+
+                        } else if (data.verificacion === 'Respuesta incorrecta') {
                             //terminar partida , mensaje de fracaso , boton volver al home
+                            document.getElementById(`${data.respuestaIdCorrecta}`).classList.add('respuestaCorrectaAnimation');
+                            document.getElementById(`${respuestaId}`).classList.add('respuestaIncorrecta');
                             puntaje = data.puntaje
                             respuestaIncorrecta();
                         }

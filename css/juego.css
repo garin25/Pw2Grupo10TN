@@ -129,6 +129,7 @@ main {
 
 #preguntas-sup {
     padding: 1em;
+    position: relative;
     width: 100%;
     height: 70%;
     display: flex;
@@ -170,6 +171,56 @@ main {
     background-color: #7358bb;
 }
 
+.oculto{
+    display: none;
+}
+
+.respuestaCorrectaAnimation {
+    background-color: green;
+    animation-name: bounce;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+.respuestaIncorrecta {
+    background-color: rgba(220, 55, 65, 1);
+}
+
+#timer{
+    padding: 0.5em;
+    border-radius: 8px;
+    border: 2px solid black;
+    background-color: beige;
+    color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.tiempo{
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+@keyframes bounce {
+    25% {
+        scale: 110%;
+    }
+
+    50% {
+        scale: 100%;
+
+    }
+    75% {
+        scale: 110%;
+    }
+    100% {
+        scale: 100%;
+    }
+
+
+}
+
 @media(max-width: 768px) {
     #preguntas-img {
         height: 60%;
@@ -188,6 +239,8 @@ main {
     left: 62%;
     transform: translate(-50%, -50%);
 }
+
+
 
 @media(max-width: 768px){
     #contenedor-ruleta {
@@ -236,6 +289,7 @@ main {
         position: absolute;
         top: 57%;
         left: 50%;
+        position: relative;
         transform: translate(-50%, -50%);
     }
 
@@ -275,13 +329,15 @@ main {
         width: 50%;
     }
     #timer{
-        padding: 0.5em;
+        padding: 0.3em;
         border-radius: 8px;
-        border: 2px solid black;
+        border: 1px solid black;
         background-color: beige;
         color: black;
-        z-index: 10;
-        transform: translate(100%, 55%);
+    }
+
+    .tiempo{
+        font-size: 1.2em;
     }
 }
 
@@ -387,23 +443,5 @@ main {
     background-color: #ffcd08;
 }
 
-#timer{
-    padding: 0.5em;
-    border-radius: 8px;
-    border: 2px solid black;
-    background-color: beige;
-    color: black;
-    position: fixed;
-    top: 5em;
-    right: 7em;
-    z-index: 10;
-}
 
-.tiempo{
-    font-size: 1.2em;
-    font-weight: bolder;
-}
 
-.oculto{
-    display: none;
-}
