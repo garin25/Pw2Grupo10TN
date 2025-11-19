@@ -514,6 +514,115 @@ class EditorController
         header("Location: /editor/paginaCategorias");
         exit;
     }
+
+    public function sugerirPreguntaEditor(){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $usuarioId = $_SESSION['usuarioId'];
+        $usuario = $this->model->buscarDatosUsuario($usuarioId);
+
+        $preguntas = $this->model->obtenerPreguntasSugeridas();
+
+        if ($preguntas == null) {
+            $data = ["page" => "Preguntas sugeridas",
+                "logout" => "/login/logout",
+                "usuario" => $usuario,
+                "mensaje" => "No hay preguntas sugeridas",];
+        } else {
+            $data = ["page" => "Preguntas sugeridas",
+                "logout" => "/login/logout",
+                "usuario" => $usuario,
+                "preguntas" => $preguntas];
+        }
+
+
+
+        $this->renderer->render("sugerirPreguntaEditor", $data);
+
+    }
+
+    public function denegarPreguntaSugerida(){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $preguntaId = $_GET['preguntaId'];
+
+        if($preguntaId == null || $preguntaId == ""){
+            $respuesta = ['ok' => false, 'mensaje' => 'Pregunta no encontrada'];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $result = $this->model->eliminarPregunta($preguntaId);
+
+        if($result > 0){
+            $respuesta = ['ok' => true, 'mensaje' => "Pregunta denegada"];
+        } else {
+            $respuesta = ['ok' => false, 'mensaje' => "Error al denegar la pregunta"];
+        }
+
+        echo json_encode($respuesta);
+
+    }
+
+    public function permitirPreguntaSugerida(){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $preguntaId = $_GET['preguntaId'];
+
+        if($preguntaId == null || $preguntaId == ""){
+            $respuesta = ['ok' => false, 'mensaje' => 'Pregunta no encontrada'];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $result = $this->model->permitirPreguntaSugerida($preguntaId);
+
+        if($result > 0){
+            $respuesta = ['ok' => true, 'mensaje' => "Pregunta permitida"];
+        } else {
+            $respuesta = ['ok' => false, 'mensaje' => "Error al permitir la pregunta"];
+        }
+
+        echo json_encode($respuesta);
+
+    }
+
+    public function traerPreguntaSugerida(){
+
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 2) {
+            $this->redirectToIndex();
+        }
+
+        $preguntaId = $_GET['preguntaId'];
+        $pregunta = $this->model->buscarPregunta($preguntaId);
+
+        if ($pregunta == null) {
+            $respuesta = ['ok' => false, 'mensaje' => 'Pregunta no encontrada'];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $respuestas = $this->model->buscarRespuestas($preguntaId);
+
+        if ($respuestas == null) {
+            $respuesta = ['ok' => false, 'mensaje' => "No se encontraron respuestas"];
+            echo json_encode($respuesta);
+            return;
+        }
+
+        $categoria = $this->model->traerCategoriaPorId($pregunta[0]['categoriaId']);
+
+        $respuesta = ['ok' => true, 'pregunta' => $pregunta[0],  'respuestas' => $respuestas, 'categoria' => $categoria];
+        echo json_encode($respuesta);
+
+    }
+
     public function redirectToIndex()
     {
         header("Location: /");

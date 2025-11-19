@@ -297,4 +297,27 @@ ORDER BY
 
         return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
     }
+
+    public function obtenerPreguntasSugeridas()
+    {
+        $sql = "SELECT * FROM pregunta WHERE esSugerida = 1";
+
+        $result = $this->conexion->ejecutarConsultaSinParametros($sql);
+
+        if (is_array($result) && count($result) > 0) {
+            return $result;
+        }
+
+        return null;
+    }
+
+    public function permitirPreguntaSugerida($preguntaId){
+
+        $sql = "UPDATE pregunta SET esSugerida = 0 WHERE preguntaId = ?";
+        $tipos = "i";
+        $params = array($preguntaId);
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+    }
+
 }
