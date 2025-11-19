@@ -31,7 +31,7 @@ class RegisterModel
         $tipos = "sissssssiss";
         $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token, $img_qr_default);
 
-        $this->conexion->ejecutarConsulta($sql, $tipos, $params);
+        $this->conexion->ejecutarModificacion($sql, $tipos, $params);
 
 
         // --- Generación y guardado del QR ---
@@ -76,7 +76,7 @@ class RegisterModel
             $tipos_update = "ss"; //Para decir que los 2 valores son cadenas de texto
             $params_update = array($url_qr_publica, $nombre_usuario);
 
-            $this->conexion->ejecutarConsulta($sql_update, $tipos_update, $params_update);
+            $this->conexion->ejecutarModificacion($sql_update, $tipos_update, $params_update);
 
         } catch (\Exception $e) {
             error_log("Error al generar o guardar QR: " . $e->getMessage());
@@ -88,8 +88,6 @@ class RegisterModel
         $mail = new PHPMailer(true);
 
         try {
-            // ---- Configuración del servidor de correo (SMTP) ----
-            // ... Tu configuración de SMTP ...
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
@@ -99,28 +97,44 @@ class RegisterModel
             $mail->Port       = 465;
             $mail->CharSet    = 'UTF-8';
 
-            // ---- Remitente y Destinatario ----
             $mail->setFrom($this->config["email"], 'Preguntados');
             $mail->addAddress($email, $nombre_usuario);
 
-            // ---- Contenido del Email ----
             $mail->isHTML(true);
             $mail->Subject = '¡Activa tu cuenta!';
 
-            $mail->Body    = "<h1>¡Gracias por registrarte!</h1>
-                    <p>Para completar tu registro hacé clic en el siguiente botón:</p>
-                    <form action='/register/activacion' method='post'>
-                            <input type='hidden' name='token' value='" . $token . "'>
-                        <button type='submit' style='padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none;'>Activar mi cuenta</button>
-                    </form>";
-            $mail->AltBody = 'Para completar tu registro hacé clic en el siguiente botón:';
+            $enlace_activacion = $url_base . "/register/activar?token=" . $token;
+
+            $mail->Body = "
+            <div style='font-family: Arial, sans-serif; text-align: center;'>
+                <h1>¡Gracias por registrarte, $nombre_usuario!</h1>
+                <p>Para completar tu registro, haz clic en el siguiente botón:</p>
+                <br>
+                <a href='$enlace_activacion' style='
+                    display: inline-block;
+                    padding: 12px 24px;
+                    color: white;
+                    background-color: #8D44B6;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-weight: bold;'>
+                    Activar mi cuenta
+                </a>
+                <p style='margin-top: 20px; font-size: 12px; color: #666;'>
+                    Si el botón no funciona, copia y pega este enlace: <br>
+                    $enlace_activacion
+                </p>
+            </div>";
+
+            $mail->AltBody = "Para activar tu cuenta, visita el siguiente enlace: $enlace_activacion";
 
             $mail->send();
-            echo '<h2>¡Registro casi completo!</h2>';
-            echo '<p>Te hemos enviado un correo. Por favor, revisá tu bandeja de entrada para activar tu cuenta.</p>';
+
+            // Opcional: Redirigir a una vista de "Revisa tu correo"
+            // header('Location: /register/pendiente');
 
         } catch (Exception $e) {
-            echo "El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}";
+            error_log("Error Mailer: " . $mail->ErrorInfo);
         }
     }
     public function usuarioYaExiste($nombre_usuario, $email) {
