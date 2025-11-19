@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="/css/sugerirPreguntaEditor.css">
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6 flex-shrink-0">
+        <h3 class="text-2xl font-bold text-gray-800">Preguntas</h3>
+    </div>
+
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">Id</th>
+                <th scope="col" class="px-6 py-3">Enunciado</th>
+                <th scope="col" class="px-6 py-3">Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#preguntas}}
+                <tr id="{{preguntaId}}" class="border-b bg-green-50 hover:bg-green-100">
+
+                    <th scope="row" class="px-6 py-4 font-bold text-gray-900">{{preguntaId}}</th>
+                    <td class="px-6 py-4">{{enunciado}}</td>
+
+                    <td class="px-6 py-4">
+                        <button style="padding: 0.5em 1em; border-radius: 8px; background-color: #8D44B6; color: white; font-weight: bold" onclick="verCompleta({{preguntaId}})">Ver completa</button>
+                        <button style="margin-left: 0.5em; padding: 0.5em 1em; border-radius: 8px; background-color: rgba(220, 55, 65, 1); color: white; font-weight: bold" onclick="denegarPregunta({{preguntaId}})">Denegar</button>
+                        <button style="margin-left: 0.5em; padding: 0.5em 1em; border-radius: 8px; background-color: green; color: white; font-weight: bold" onclick="permitirPregunta({{preguntaId}})">Permitir</button>
+                    </td>
+
+                </tr>
+            {{/preguntas}}
+            </tbody>
+        </table>
+        {{#mensaje}}
+            <h5 class="text-2xl font-bold text-center text-gray-800">{{mensaje}}</h5>
+        {{/mensaje}}
+    </div>
+    <div id="modal" class="modal w-full h-full flex justify-center items-center oculto">
+        <div class="modal-contenedor bg-white shadow-2xl rounded-xl p-8 max-w-sm w-full text-center border-t-8" style="border-color: #8D44B6;">
+            <span id="cerrar" class="cerrar">X</span>
+
+            <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                <label for="enunciado">Enunciado:</label>
+                <textarea id="enunciado" name="enunciado" rows="auto" cols="auto" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;" disabled></textarea>
+            </div>
+
+            <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                <p>Categoria: <span id="categoria"></span>.</p>
+            </div>
+
+
+            <hr>
+
+            <div class="flex justify-center items-center w-full py-2 gap-2">
+
+                <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                    <label for="respuesta1">Respuesta 1:</label>
+                    <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta1" name="respuestas" style="background-color: #d3d3d3; outline: none;" disabled></textarea> <label for="rta1">Es correcta:</label>
+                    <input type="radio" id="rta1" name="rtaCorrecta" value="0" required disabled>
+                </div>
+
+                <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                    <label for="respuesta2">Respuesta 2:</label>
+                    <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta2" name="respuestas" style="background-color: #d3d3d3; outline: none;" disabled></textarea> <label for="rta2">Es correcta:</label>
+                    <input type="radio" id="rta2" name="rtaCorrecta" value="1" disabled required>
+                </div>
+
+            </div>
+
+            <div class="flex justify-center items-center w-full py-2 gap-2">
+
+                <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                    <label for="respuesta3">Respuesta 3:</label>
+                    <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta3" name="respuestas" style="background-color: #d3d3d3; outline: none;" disabled></textarea> <label for="rta3">Es correcta:</label>
+                    <input type="radio" id="rta3" name="rtaCorrecta" value="2" disabled required>
+                </div>
+
+                <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+                    <label for="respuesta4">Respuesta 4:</label>
+                    <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta4" name="respuestas" style="background-color: #d3d3d3; outline: none;" disabled></textarea> <label for="rta4">Es correcta:</label>
+                    <input type="radio" id="rta4" name="rtaCorrecta" value="3" disabled required>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</main>
+<script src="/js/sugerirPreguntaEditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

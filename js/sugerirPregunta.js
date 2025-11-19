@@ -65,13 +65,13 @@ submit.addEventListener("click", e => {
 })
 
 function vaciarForm(){
-    categoria.value = 3;
-    enunciado.innerHTML = "";
+    categoria.value = 1;
+    enunciado.value = "";
     respuestas.forEach(respuesta => {
-        respuesta.innerHTML = "";
+        respuesta.value = "";
     })
     rtaCorrecta.forEach(rta => {
-        rta.unchecked = true;
+        rta.checked = false;
     })
 }
 
