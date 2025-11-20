@@ -8,6 +8,7 @@ Options -Indexes
     RewriteEngine On
     RewriteBase /
     RewriteRule ^(imagenes)($|/) - [L,NC]
+    RewriteRule ^(sonidos)($|/) - [L,NC]
     RewriteRule ^(css)($|/) - [L,NC]
     RewriteRule ^(js)($|/) - [L,NC]
     RewriteCond %{REQUEST_FILENAME} !-f

@@ -27,6 +27,7 @@ let anguloAcumulado = 0;
 
 // funcion de giro de ruleta
 function girarRuleta() {
+    reproducirSonidoRuleta()
     ruleta.classList.remove('girando');
     btnGirar.disabled = true;
 
@@ -319,7 +320,7 @@ function tiempoAcabado(){
                         if (data.verificacion === 'Respuesta correcta') {
                             // mensaje exito , siguiente pregunta
                             document.getElementById(`${data.respuestaIdCorrecta}`).classList.add('respuestaCorrectaAnimation');
-
+                            reproducirSonidoAcerto();
                             respuestaCorrecta();
 
                         } else if (data.verificacion === 'Respuesta incorrecta') {
@@ -327,6 +328,7 @@ function tiempoAcabado(){
                             document.getElementById(`${data.respuestaIdCorrecta}`).classList.add('respuestaCorrectaAnimation');
                             document.getElementById(`${respuestaId}`).classList.add('respuestaIncorrecta');
                             puntaje = data.puntaje
+                            reproducirSonidoFallo();
                             respuestaIncorrecta();
                         }
                     }
@@ -612,4 +614,52 @@ function crearReporte(){
         }
     });
 }
+
+/*     Sonidos         */
+
+const acerto = new Audio('/sonidos/good.opus');
+
+
+function reproducirSonidoAcerto() {
+
+    acerto.currentTime = 0;
+    acerto.volume = 1;
+
+    acerto.play()
+        .catch(error => {
+
+            console.log('Error de reproducción:', error);
+        });
+}
+
+const fallo = new Audio('/sonidos/fail.opus');
+
+function reproducirSonidoFallo() {
+
+    fallo.currentTime = 0;
+    fallo.volume = 0.6;
+
+    fallo.play()
+        .catch(error => {
+
+            console.log('Error de reproducción:', error);
+        });
+}
+
+const ruletaSound = new Audio('/sonidos/ruleta.opus');
+
+
+function reproducirSonidoRuleta() {
+
+    ruletaSound.currentTime = 0;
+    acerto.volume = 1;
+
+    ruletaSound.play()
+        .catch(error => {
+
+            console.log('Error de reproducción:', error);
+        });
+}
+
+
 

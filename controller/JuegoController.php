@@ -95,7 +95,7 @@ class JuegoController
 
         // Recuperamos el array de IDs a evitar
         //$ids_a_evitar = isset($_SESSION['preguntasVistas']) ? $_SESSION['preguntasVistas'] : [];
-        $pregunta = $this->model->buscarPregunta($datos['categoria'],  $_SESSION['dificultad'], $ids_a_evitar);
+        $pregunta = $this->model->buscarPregunta($datos['categoria'],  $_SESSION['dificultad'], $ids_a_evitar, $_SESSION['usuarioId']);
 
 // Añadimos el ID nuevo al array de la sesión
         if ($pregunta != null) {
