@@ -17,7 +17,7 @@ class LobbyController
 
     public function lobby()
     {
-        if (!isset($_SESSION['usuarioId'])){
+        if (!isset($_SESSION['usuarioId']) || $_SESSION['id_rol'] != 1) {
             $this->redirectToIndex();
         }
         $usuarioId = $_SESSION["usuarioId"];

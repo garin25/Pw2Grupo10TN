@@ -363,7 +363,7 @@ function reintentarJuego() {
 }
 
 function volverAlLobby() {
-    window.location.href = '/lobby/lobby';
+    window.location.href = '/lobby';
 }
 
 botonVolver.addEventListener('click', reintentarJuego);
@@ -397,6 +397,7 @@ function timerVista(tiempo){
 }
 
 function finalizarPartida() {
+    reproducirSonidoFallo();
     clearInterval(temporizador);
     for (let i = 0; i < botonesRespuestas.length; i++) {
         botonesRespuestas[i].disabled = true;
