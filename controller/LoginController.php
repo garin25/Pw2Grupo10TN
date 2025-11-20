@@ -19,7 +19,19 @@ class LoginController
     public function loginForm()
     {
         if (isset($_SESSION['usuarioId'])){
-            $this->redirectToLobby();
+
+            if($_SESSION['id_rol'] == 1){
+                $this->redirectToLobby();
+            }
+
+            if($_SESSION['id_rol'] == 2){
+                $this->redirectToEditarPregunta();
+            }
+
+            if($_SESSION['id_rol'] == 3){
+                $this->redirectToEditarUsuario();
+            }
+
         }
 
         $data = ["page" => "Iniciar Sesión", "registro" => "/register"];
@@ -133,6 +145,18 @@ class LoginController
     public function redirectToLobby()
     {
         header("Location: /lobby");
+        exit;
+    }
+
+    public function redirectToEditarUsuario()
+    {
+        header("Location: /editor/paginaUsuarios");
+        exit;
+    }
+
+    public function redirectToEditarPregunta()
+    {
+        header("Location: /editor/abmPregunta");
         exit;
     }
 

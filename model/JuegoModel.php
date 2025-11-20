@@ -35,7 +35,7 @@ class JuegoModel
         if (is_array($resultado) && count($resultado) > 0) {
             return $resultado;
         }
-        return [];
+        return null;
 
     }
 
@@ -48,7 +48,7 @@ class JuegoModel
 
     }
 
-    public function buscarPregunta($categoria, $dificultad, $idsVistos){
+    public function buscarPregunta($categoria, $dificultad, $idsVistos, $usuarioId){
 
         // Usamos IF() de MySQL para evitar 100% la división por cero.
         $ratioSeguro = "IF(p.cantidadEnviada = 0, 0.5, (p.respondidasMal / p.cantidadEnviada))";
@@ -70,7 +70,7 @@ class JuegoModel
         $clausulaExclusion = "";
 
         // Si el array $idsVistos no está vacío, creamos la cláusula NOT IN
-        if (!empty($idsVistos)) {
+        if ($idsVistos != null) {
             // 1. Crea un string de placeholders: "?,?,?"
             $placeholders = implode(',', array_fill(0, count($idsVistos), '?'));
 
@@ -120,13 +120,37 @@ class JuegoModel
             return $resultadoFallback[0];
         }
 
+        // Se borra los registros de preguntas a evitar id de dicha categoria ya que las respondio todas.
+
+        $sqlDeleteIdVistos = "DELETE pe FROM preguntas_a_evitar pe
+                                JOIN pregunta p ON pe.preguntaId = p.preguntaId
+                                JOIN categoria c ON c.categoriaId = p.categoriaId
+                                WHERE c.nombre = ?
+                                AND pe.usuarioId = ?";
+        $tiposDeleteIdVistos = "si";
+        $paramsDeleteIdVistos = array($categoria, $usuarioId);
+
+        $this->conexion->ejecutarModificacion($sqlDeleteIdVistos, $tiposDeleteIdVistos, $paramsDeleteIdVistos);
 
 
+        // INTENTO 3: Buscar con dificultad específica y exclusión con los id que ya fueron borrados
+        $sql3 = "SELECT * FROM pregunta p 
+            JOIN categoria c ON c.categoriaId = p.categoriaId
+            WHERE c.nombre = ? 
+            $condicionDificultad
+            $clausulaExclusion
+            AND esSugerida = 0
+            AND esReportada = 0
+            ORDER BY RAND()
+            LIMIT 1";
 
-        // si ya no hay disponible preguntas se podria agregar intento 3 en donde de haria un truncate
-        // en la tabla preguntas_a_evitar donde la categoria sea igual a la categoria que se busca.
+        // Nota: $tipos y $params ya están listos
+        $resultado = $this->conexion->ejecutarConsulta($sql3, $tipos, $params);
 
-        // 5. Si ya no hay más preguntas, devolvemos null
+        if (is_array($resultado) && count($resultado) > 0) {
+            return $resultado[0];
+        }
+
         return null;
     }
 

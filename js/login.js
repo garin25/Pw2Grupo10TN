@@ -96,7 +96,19 @@ function addClickSubmitForm(usuarioId) {
                     const ok = data.ok;
                     console.log(data);
                     if (ok == true) {
-                        window.location.href = "/lobby";
+
+                        if (data.usuario.id_rol == 1){
+                            window.location.href = "/lobby";
+                        }
+
+                        if (data.usuario.id_rol == 2){
+                            window.location.href = "/editor/abmPregunta";
+                        }
+
+                        if (data.usuario.id_rol == 3){
+                            window.location.href = "/editor/paginaUsuarios";
+                        }
+
                     }
                     if (ok == false) {
                         Swal.fire({
