@@ -59,8 +59,9 @@ class RegisterController
         $this->renderer->render("resultadoActivacion", $data);
     }
 
-    public function procesarRegistro(){
-        if (isset($_SESSION['usuarioId'])){
+    public function procesarRegistro()
+    {
+        if (isset($_SESSION['usuarioId'])) {
             $this->redirectToLobby();
         }
 
@@ -75,6 +76,16 @@ class RegisterController
         $ciudad = trim($_POST['ciudad'] ?? '');
         $latitud = $_POST['latitud'] ?? null;
         $longitud = $_POST['longitud'] ?? null;
+
+        $foto = $_FILES['foto'] ?? null;
+
+        $urlFoto = $this->subirFoto($foto);
+
+        if($urlFoto===null){
+            $data['error'] = "Ocurrio un error al subir la foto de perfil";
+        }
+
+
 
         $data = []; // Array para acumular errores
 
@@ -99,7 +110,7 @@ class RegisterController
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
         // Genera un token criptográficamente seguro de 64 caracteres
         $token = bin2hex(random_bytes(32));
-        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad,$token,$latitud,$longitud);
+        $this->model->crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad,$token,$latitud,$longitud,$urlFoto);
 
         header("Location: /register/activacion");
 
@@ -131,4 +142,52 @@ class RegisterController
         exit;
     }
 
+    public function subirFoto($foto) {
+        // 1. Verificar si llegó el archivo
+        if (!isset($foto) || $foto['error'] != UPLOAD_ERR_OK) {
+            // Manejo de errores (vacío, o error de subida)
+            // $_SESSION['error'] = "Error al subir imagen";
+            return null;
+        }
+
+
+        // 2. Definir la carpeta de destino usando DOCUMENT_ROOT
+        // $_SERVER['DOCUMENT_ROOT'] te lleva a C:/xampp/htdocs (o la raíz de tu host)
+        // Si tu proyecto está en una subcarpeta, asegúrate de incluirla o que la ruta sea correcta.
+
+        // RUTA FÍSICA (Para que PHP guarde el archivo)
+        // Ejemplo: C:/xampp/htdocs/mi_proyecto/imagenes/
+        $carpetaDestino = $_SERVER['DOCUMENT_ROOT'] . '/imagenes/';
+
+        // 3. Crear la carpeta si no existe (y darle permisos)
+        if (!is_dir($carpetaDestino)) {
+            mkdir($carpetaDestino, 0777, true);
+        }
+
+        // 4. Generar un nombre ÚNICO para la imagen
+        // Esto es vital. Si dos usuarios suben "perfil.jpg", uno borrará al otro.
+        // Usamos el tiempo + un numero aleatorio + la extensión original.
+        $extension = pathinfo($foto['name'], PATHINFO_EXTENSION);
+        $nombreArchivo = 'perfil_' . uniqid() . '.' . $extension;
+
+        // 5. Ruta completa final para guardar
+        $rutaFisicaCompleta = $carpetaDestino . $nombreArchivo;
+
+        // 6. Mover el archivo
+        $subido = move_uploaded_file($foto['tmp_name'], $rutaFisicaCompleta);
+
+        if ($subido) {
+            // 7. ¡ÉXITO! Ahora guardamos la RUTA WEB en la base de datos
+            // NO guardes "C:/xampp...", guarda lo que el navegador necesita ver.
+
+            $rutaParaBaseDeDatos = 'imagenes/' . $nombreArchivo;
+
+            return $rutaParaBaseDeDatos;
+
+        } else {
+            // Fallo al mover (permisos, ruta incorrecta, etc.)
+            // echo "Error al guardar en: " . $rutaFisicaCompleta;
+            return null;
+        }
+    }
 }
