@@ -6,10 +6,41 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputLng = document.getElementById('longitud');
     const mapPopup = document.getElementById('map-popup');
     const closeMapButton = document.getElementById('close-map');
+    const form = document.getElementById("contenedor-form-registro");
+    const password = document.getElementById("password");
+    const password2 = document.getElementById("password2");
+
 
     let map = null;
     let marker = null;
 
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+
+        console.log("🚀 MODO LOCAL DETECTADO: Auto-completando formulario...");
+
+        const inputPais = document.getElementById('pais');
+        const inputCiudad = document.getElementById('ciudad');
+        // Si tienes inputs ocultos para coordenadas, búscalos también
+        const inputLat = document.getElementById('latitud');
+        const inputLng = document.getElementById('longitud');
+
+        if (inputPais && inputCiudad) {
+            // 1. LLENAR VALORES (Lo que se envía al PHP)
+            inputPais.value = "Argentina";
+            inputCiudad.value = "Buenos Aires";
+
+            // 2. LLENAR COORDENADAS FIJAS (Importante para que no falle la BBDD)
+            // Ponemos las coordenadas del Obelisco por ejemplo
+            if (inputLat) inputLat.value = "-34.6037";
+            if (inputLng) inputLng.value = "-58.3816";
+
+            // 3. ESTILO VISUAL (Para que sepas que es automático)
+            const estiloAlerta = "background-color: #fff9c4; border: 2px solid orange; font-weight: bold;";
+            inputPais.style.cssText = estiloAlerta;
+            inputCiudad.style.cssText = estiloAlerta;
+
+        }
+    }
     function openMapPopup() {
         mapPopup.classList.add('visible');
 
@@ -80,36 +111,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+    form.addEventListener("submit", (e)=>{
 
-    // DETECTAR LOCALHOST
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        if(password.value !== password2.value){
 
-        console.log("🚀 MODO LOCAL DETECTADO: Auto-completando formulario...");
+            e.preventDefault();
 
-        const inputPais = document.getElementById('pais');
-        const inputCiudad = document.getElementById('ciudad');
-        // Si tienes inputs ocultos para coordenadas, búscalos también
-         const inputLat = document.getElementById('latitud');
-         const inputLng = document.getElementById('longitud');
-
-        if (inputPais && inputCiudad) {
-            // 1. LLENAR VALORES (Lo que se envía al PHP)
-            inputPais.value = "Argentina";
-            inputCiudad.value = "Buenos Aires";
-
-            // 2. LLENAR COORDENADAS FIJAS (Importante para que no falle la BBDD)
-            // Ponemos las coordenadas del Obelisco por ejemplo
-            if (inputLat) inputLat.value = "-34.6037";
-            if (inputLng) inputLng.value = "-58.3816";
-
-            // 3. ESTILO VISUAL (Para que sepas que es automático)
-            const estiloAlerta = "background-color: #fff9c4; border: 2px solid orange; font-weight: bold;";
-            inputPais.style.cssText = estiloAlerta;
-            inputCiudad.style.cssText = estiloAlerta;
-
+                Swal.fire({
+                    title: "Error",
+                    text: "¡Las contraseñas no coinciden!",
+                    icon: "error",
+                    draggable: false,
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    password2.focus();
+                });
         }
-    }
+    });
 });

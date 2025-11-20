@@ -76,6 +76,7 @@ class RegisterController
         $ciudad = trim($_POST['ciudad'] ?? '');
         $latitud = $_POST['latitud'] ?? null;
         $longitud = $_POST['longitud'] ?? null;
+        $password2 = $_POST['password2'] ?? '';
 
         $foto = $_FILES['foto'] ?? null;
 
@@ -84,6 +85,9 @@ class RegisterController
         if($urlFoto===null){
             $data['error'] = "Ocurrio un error al subir la foto de perfil";
         }
+        if($password!==$password2){
+            $data['error'] = "Las contraseñas no coinciden";
+        }
 
 
 
@@ -91,7 +95,7 @@ class RegisterController
 
         // --- Validación de datos ---
         if (empty($nombreCompleto) || empty($email) || empty($password) || empty($nombre_usuario) || empty($sexo)
-            || empty($anio) || empty($pais) || empty($ciudad)|| empty($latitud) || empty($longitud)) {
+            || empty($anio) || empty($pais) || empty($ciudad)|| empty($latitud) || empty($longitud || empty($password2))) {
             $data['error'] = "Todos los campos son obligatorios.";
         } elseif (strlen($password) < 8) {
             $data['error'] = "La contraseña debe tener al menos 8 caracteres.";
