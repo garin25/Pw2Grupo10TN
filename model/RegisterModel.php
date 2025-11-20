@@ -18,18 +18,18 @@ class RegisterModel
         $this->config = parse_ini_file("config/config.ini");
     }
 
-    public function crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad, $token)
+    public function crearUsuario($nombreCompleto, $email, $passwordHash, $nombre_usuario, $sexo, $anio, $pais, $ciudad, $token,$latitud,$longitud)
     {
         // 1. INSERTAR EL USUARIO INICIALMENTE
-        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, id_rol, token, img_qr) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO usuario (nombre_completo, anio_nacimiento, sexo, pais, ciudad, email, password, nombre_usuario, id_rol, token, img_qr,latitud, longitud) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
         // Columna 'img_qr' se inicializa vacía o con un valor por defecto (ej: '') en el INSERT.
         // Opcionalmente, puedes quitar img_qr de aquí y solo hacer el UPDATE después del QR.
         $img_qr_default = ''; // Valor por defecto o NULL si la columna lo permite
 
-        $tipos = "sissssssiss";
-        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token, $img_qr_default);
+        $tipos = "sissssssissss";
+        $params = array($nombreCompleto, $anio, $sexo, $pais, $ciudad, $email, $passwordHash, $nombre_usuario, 1, $token, $img_qr_default, $latitud, $longitud);
 
         $this->conexion->ejecutarModificacion($sql, $tipos, $params);
 
