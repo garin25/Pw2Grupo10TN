@@ -6,6 +6,13 @@
     font-size: 16px;
 }
 
+html, body {
+    /* Oculta las barras de desplazamiento */
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
 main {
     background-image: url(../imagenes/texture-lobby.jpg);
     background-size: cover;
@@ -17,24 +24,28 @@ main {
 
 #contenedor-ruleta {
     width: 45vw;
-    height: 90vh;
+    max-width: 600px;             /* no crecer más que 700px */
+    min-width: 500px;             /* no ser más pequeño que 350px */
+    height: auto;                 /* ajusta automáticamente */
+    padding: 2em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    padding: 2em;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
+/* Para la ruleta */
 .ruleta-container {
-    position: relative;
-    width: 600px;
-    height: 600px;
-    margin-bottom: 2em;
+    width: 90%;                  /* ocupa el 90% del padre para responsividad */
+    aspect-ratio: 1;             /* mantiene proporción cuadrada */
+    max-width: 600px;            /* no crecer más que 600px (desktop) */
+    min-width: 300px;            /* no achicar más que 300px (puedes ajustar) */
+    margin-bottom: 1.5em;
 }
 
 .ruleta {
@@ -43,8 +54,9 @@ main {
     border-radius: 50%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     border: 8px solid #333;
-
 }
+
+
 
 .sectores-texto {
     position: absolute;
@@ -57,35 +69,44 @@ main {
 
 .imagen-sector {
     position: absolute;
-    width: 86px;
-    height: 86px;
-    top: 50%;
+    width: 14%;
+    height: auto;
+    top: 45%;
     left: 50%;
     transform-origin: 0% 0%;
     transform: rotate(var(--rotation))
-    translateY(-165px)
+    translateY(-240%)
     translateX(-50%);
     border-radius: 50%;
     padding: 5px;
     box-shadow: 0 0 2px rgba(0.7, 0.7, 0.7, 0.7);
 }
 
+
 .puntero {
     position: absolute;
-    top: -20px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-    border-bottom: 25px solid #333; /* Color del puntero */
+    border-bottom: 25px solid #333;
     z-index: 10;
 }
 
 
 .ruleta.girando {
     transition: transform 5s cubic-bezier(0.1, 0.7, 0.4, 1);
+}
+
+.ruleta.girando .imagen-sector {
+    /* APLICAR CAMBIOS DE TAMAÑO Y POSICIÓN */
+    top: 50% !important;
+    width: 18% !important;
+    /* Para que el cambio de tamaño sea suave */
+    transition: width 0.5s ease, top 0.5s ease;
 }
 
 .ruleta.girando .imagen-sector {
@@ -110,6 +131,7 @@ main {
     color: white;
     font-weight: bold;
     cursor: pointer;
+    z-index: 6;
 }
 
 .btn:hover {
@@ -150,7 +172,9 @@ main {
 }
 
 #preguntas-inf {
-    padding: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
     width: 100%;
     height: 30%;
     display: grid;
@@ -220,17 +244,6 @@ main {
 
 
 }
-
-@media(max-width: 768px) {
-    #preguntas-img {
-        height: 60%;
-    }
-
-    #preguntas-descripcion {
-        font-size: 0.9em;
-    }
-}
-
 #contenedor-ruleta,
 #contenedor-preguntas,
 #contenedor-partidaPerdida {
@@ -242,43 +255,64 @@ main {
 
 
 
-@media(max-width: 768px){
-    #contenedor-ruleta {
-        width: 90vw;
-        height: 70vh;
-        padding: 1em;
-        right:10%;
-
-    }
-    .ruleta-container {
-        width: 300px;
-        height: 400px;
-        right: 13%;
-        top: 10%;
-    }
-    #btn-girar {
-        position: relative;
-        font-size: 1em;
-        right: 13%;
-        top: 10%;
-    }
-    .imagen-sector {
-        transform: rotate(var(--rotation)) translateY(-125px) translateX(-50%);
-        width: 60px;
-        height: 60px;
-        padding: 5px;
-        box-shadow: 0 0 2px rgba(0.7, 0.7, 0.7, 0.7);
-    }
-
-    #contenedor-partidaPerdida{
-        width: 80vw;
-        height: 80vh;
-        padding: 1em;
+@media(max-width: 768px) {
+    /* --- RE-CENTRADO MÓVIL (Ajuste por header superior) --- */
+    #contenedor-ruleta,
+    #contenedor-preguntas,
+    #contenedor-partidaPerdida {
         position: absolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
-        max-width: 800px;
+    }
+
+    #contenedor-ruleta {
+        width: 90vw;
+        max-width: 650px;             /* no crecer más que 700px */
+        min-width: 550px;
+        padding: 1em;
+        height: auto;
+        top: 57%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .ruleta-container {
+        width: 60%;
+        aspect-ratio: 1;
+        margin-bottom: 1em;
+        max-width: 600px;            /* no crecer más que 600px (desktop) */
+        min-width: 300px;
+    }
+
+    #btn-girar {
+        position: relative;
+        font-size: 1em;
+    }
+
+
+    .imagen-sector {
+        transform: rotate(var(--rotation))
+        translateY(-200%)
+        translateX(-50%);
+        position: absolute;
+        top: 43%;
+        width: 12%;
+        height: auto;
+        padding: 5px;
+        box-shadow: 0 0 2px rgba(0.7, 0.7, 0.7, 0.7);
+    }
+
+    .ruleta.girando .imagen-sector {
+        width: 22% !important;
+        transition: width 0.5s ease;
+    }
+
+    /* --- CONTENEDORES MÓVILES --- */
+    #contenedor-partidaPerdida{
+        width: 80vw;
+        height: 80vh;
+        padding: 1em;
+        max-width: none;
         min-height: 400px;
     }
 
@@ -286,28 +320,16 @@ main {
         width: 90vw;
         height: 80vh;
         padding: 1em;
-        position: absolute;
-        top: 57%;
-        left: 50%;
-        position: relative;
-        transform: translate(-50%, -50%);
     }
 
+    /* --- Preguntas internas --- */
     #preguntas-img {
-        height: 100%;
-        margin-top: 1em;
+        height: 60%;
         overflow: hidden;
     }
 
     #preguntas-descripcion {
         font-size: 0.9em;
-    }
-
-    html, body {
-        overflow-x: hidden;
-        overflow-y: hidden; /* si querés eliminar también el scroll vertical */
-        width: 100%;
-        height: 100%;
     }
 
     #contenedor-partidaPerdida .btn{
@@ -339,6 +361,11 @@ main {
     .tiempo{
         font-size: 1.2em;
     }
+
+    .puntero {
+        top: 0px;
+    }
+
 }
 
 
