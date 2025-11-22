@@ -199,7 +199,7 @@ class JuegoController
             $this->redirectToIndex();
         }
 
-        $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado', 'puntaje' => $_SESSION['puntosPartida']];
+        $respuesta = ['ok' => true, 'verificacion' => 'Tiempo acabado', 'puntaje' => $_SESSION['puntosPartida'], 'respuestaIdCorrecta' => $_SESSION['id_respuesta']];
         $this->model->aumentarRespondidasMalEnPregunta($_SESSION["preguntaId"]);
         $this->model->agregarRespuestaAlHistorial($_SESSION["preguntaId"], $_SESSION['usuarioId'], false, date("Y-m-d H:i:s", time()));
         $this->model->partidaFinalizada($_SESSION['puntosPartida'], $_SESSION['usuarioId']);
