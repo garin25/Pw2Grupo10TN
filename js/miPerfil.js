@@ -28,38 +28,53 @@ function abrirModal() {
     modal.classList.remove("oculto");
 }
 
-function editarPerfil(usuarioId){
+function editarPerfil(){
 
-    postData('/miPerfil/editarPerfil',
-        {
-            nombreUsuario: nombreUsuario.value,
-            fotoPerfil: fotoPerfil.value
-        })
-        .then(data => {
-            console.log(data);
+    if(nombreUsuario.value != nombreOriginal.innerHTML || imagenBlob.src != imgOriginal.src){
 
-            if (data.ok){
-                enviadoCorrectamente(data.msj)
-                vaciarForm();
-            }
+        const formData = new FormData();
+        formData.append("fotoPerfil", fotoPerfil.files[0], fotoPerfil.files[0].name);
+        formData.append("nombreUsuario", nombreUsuario.value);
 
-            if (data.error == "form"){
-                completarTodosLosDatos(data.msj);
-            }
+        postData('/miPerfil/editarPerfil',
+            formData)
+            .then(data => {
+                console.log(data);
 
-            if (data.error == "error"){
-                noSeHaEnviado(data.msj)
-            }
+                if (data.ok){
+                    enviadoCorrectamente(data.msj)
+                    vaciarForm(data.urlFoto);
+                }
 
-        });
+                if (data.error == "form"){
+                    completarTodosLosDatos(data.msj);
+                }
+
+                if (data.error == "error"){
+                    noSeHaEnviado(data.msj)
+                }
+
+            });
+
+    } else  {
+        modal.classList.add("oculto");
+        URL.revokeObjectURL(objectURL)
+        nombreUsuario.value = nombreOriginal.innerHTML;
+        imagenBlob.src = imgOriginal.src;
+    }
+
+
 
 }
 
-function vaciarForm(){
+function vaciarForm(urlFoto){
+    if (urlFoto){
+        imgOriginal.src = `/${urlFoto}`;
+    }
     modal.classList.add("oculto");
     URL.revokeObjectURL(objectURL)
-    nombreUsuario.value = nombreOriginal.innerHTML;
-    imagenBlob.src = imgOriginal.src;
+    nombreOriginal.innerHTML = nombreUsuario.value;
+
 }
 
 
@@ -71,12 +86,9 @@ async function postData(url = '', data = {}) {
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify(data)
+        body: data
     });
     return response.json();
 }
@@ -122,7 +134,6 @@ fotoPerfil.addEventListener('change', function(event) {
         const imageFile = input.files[0];
 
         objectURL = URL.createObjectURL(imageFile);
-        console.log("URL de Objeto temporal: ", objectURL);
 
         imagenBlob.src = objectURL;
 

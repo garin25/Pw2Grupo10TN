@@ -43,4 +43,24 @@ class MiPerfilModel
             'total_respuestas_correctas' => $totalRespuestasCorrectas,
         ];
     }
+
+    public function actualizarDatosUsuario($usuarioId, $nombreUsuario, $urlFoto){
+
+        $sql = "UPDATE usuario SET nombre_usuario = ?, foto_perfil = ? WHERE usuarioid = ?";
+        $tipos = "ssi";
+        $params = [$nombreUsuario, $urlFoto, $usuarioId];
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+
+    }
+
+    public function actualizarNombreUsuario($usuarioId, $nombreUsuario){
+
+        $sql = "UPDATE usuario SET nombre_usuario = ? WHERE usuarioid = ?";
+        $tipos = "si";
+        $params = [$nombreUsuario, $usuarioId];
+
+        return $this->conexion->ejecutarModificacion($sql, $tipos, $params);
+
+    }
 }
