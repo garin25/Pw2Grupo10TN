@@ -1,20 +1,19 @@
+<link rel="stylesheet" href="/css/miPerfil.css">
 <div class="bg-white shadow-2xl rounded-xl p-6 border-t-8" style="border-top-width: 8px; border-style: solid; border-color: #8D44B6;">
 
     <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
 
         <div class="relative flex-shrink-0">
-            <img src="/{{usuario.foto_perfil}}" alt="Foto de Perfil" class="h-32 w-32 object-cover rounded-full border-4 ring-2 shadow-lg" style="border-color: #8D44B6;">
+            <img id="img-original" src="/{{usuario.foto_perfil}}" alt="Foto de Perfil" class="h-32 w-32 object-cover rounded-full border-4 ring-2 shadow-lg" style="border-color: #8D44B6;">
             <span class="absolute bottom-0 right-0 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-xl" style="background-color: #F8DE41;">
                 Nivel 15 </span>
         </div>
         <div class="text-center md:text-left">
-            <h1 class="text-3xl font-extrabold text-gray-900 mb-1">
-                {{usuario.nombre_usuario}}
-            </h1>
+            <h1 id="nombre-original" class="text-3xl font-extrabold text-gray-900 mb-1">{{usuario.nombre_usuario}}</h1>
             <p class="text-lg font-medium mb-3" style="color: #8D44B6;">
                 Maestro de Trivia
             </p>
-
+            <button type="submit" id="submit" style="padding: 0.5em 1em; border-radius: 12px; background-color: #8D44B6; color: white; font-weight: bold" onclick="abrirModal()">Editar</button>
         </div>
         {{#url_qr}}
             <div class="mt-4 p-2 bg-white rounded-lg shadow-lg border">
@@ -80,6 +79,32 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+</div>
+
+<div id="modal" class="modal w-full h-full flex justify-center items-center oculto">
+    <div class="modal-contenedor bg-white shadow-2xl rounded-xl p-8 max-w-sm w-full text-center border-t-8" style="border-color: #8D44B6;">
+        <span id="cerrar" class="cerrar">X</span>
+
+        <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+            <label for="foto-perfil" style="border-radius: 50%; width: 9em"><img id="imagen-blob" class="border-4 ring-2 shadow-lg" style=" border-radius: 50%; border-color: #8D44B6; " src="/{{usuario.foto_perfil}}" alt="foto-perfil"></label>
+            <input type="file" accept="jpg, png" id="foto-perfil" name="foto-perfil" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;" hidden>
+        </div>
+
+        <div class="flex flex-col justify-center items-center w-full py-2 gap-2">
+            <label for="nombreUsuario">Nombre Usuario:</label>
+            <input id="nombreUsuario" name="nombreUsuario" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;" value="{{usuario.nombre_usuario}}">
+        </div>
+
+        <button type="submit" id="submit" style="padding: 0.5em 1em; border-radius: 12px; background-color: #8D44B6; color: white; font-weight: bold" onclick="editarPerfil({{usuario.usuarioId}})">Editar</button>
+
+
+    </div>
 </div>
 
 <script src="/js/perfil.js"></script>
+<script src="/js/miPerfil.js"></script>

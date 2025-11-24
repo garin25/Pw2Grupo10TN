@@ -30,6 +30,14 @@ class MiPerfilController
         $this->renderer->render("miPerfil", $data);
     }
 
+    public function editarPerfil() {
+        if (!isset($_SESSION['usuarioId'])){
+            $this->redirectToIndex();
+        }
+
+
+    }
+
     public function redirectToIndex()
     {
         header("Location: /");

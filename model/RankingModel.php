@@ -25,6 +25,8 @@ class RankingModel
         $sql = "SELECT u.nombre_usuario, u.foto_perfil, MAX(p.puntos) AS puntos FROM usuario u 
                 JOIN partida p ON u.usuarioId = p.usuarioid 
                 WHERE p.puntos > 0
+                AND p.fecha > DATE_SUB(NOW(), INTERVAL 7 DAY)
+                AND p.fecha <= NOW()
                 GROUP BY u.nombre_usuario
                 ORDER BY puntos DESC
                 LIMIT ?";
