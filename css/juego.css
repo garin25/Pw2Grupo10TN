@@ -6,6 +6,7 @@
     font-size: 16px;
 }
 
+
 html, body {
     overflow: hidden !important;
     width: 100%;
@@ -261,39 +262,75 @@ main {
 
 
 @media(max-width: 768px) {
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Esto evita que la pantalla se mueva */
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        /* Tu fondo original */
+        background-image: url(../imagenes/texture-lobby.jpg);
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        width: 100vw;
+        position: relative; /* Necesario para que el absolute de los hijos funcione */
+    }
+
     /* --- RE-CENTRADO MÓVIL (Ajuste por header superior) --- */
-    #contenedor-ruleta,
-    #contenedor-preguntas,
-    #contenedor-partidaPerdida {
+
+    #contenedor-preguntas {
         position: absolute;
-        top: 55%;
+        top: 45%; /* Antes era 50% o 55%. Al bajar el %, sube el elemento. */
         left: 50%;
         transform: translate(-50%, -50%);
+
+        width: 95vw;
+        max-height: 85vh; /* Seguridad para que no se salga */
+        height: auto;
+
+        /* Ajuste de padding interno */
+        padding: 0.5em;
+        gap: 0; /* Quitamos espacio entre la parte sup e inf */
     }
 
     #contenedor-ruleta {
-        width: 90vw;
-        max-width: 650px;             /* no crecer más que 700px */
-        min-width: 550px;
-        padding: 1em;
+        position: absolute;
+        top: 50%;       /* Exactamente al medio vertical */
+        left: 50%;      /* Exactamente al medio horizontal */
+        transform: translate(-50%, -50%); /* Compensa su propio tamaño */
+
+        width: 100vw;   /* Que ocupe todo el ancho de la pantalla */
         height: auto;
-        top: 57%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        padding: 0;     /* Quitamos padding que pueda empujar */
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        /* Asegura que no se desborde */
+        box-sizing: border-box;
     }
+    /* Ajuste de la ruleta interna */
     .ruleta-container {
-        width: 60%;
+        width: 85%;      /* Un poco menos del ancho total para dejar aire */
+        max-width: 350px; /* Que no sea gigante */
         aspect-ratio: 1;
-        margin-bottom: 1em;
-        max-width: 600px;            /* no crecer más que 600px (desktop) */
-        min-width: 300px;
+        margin: 0 auto 20px auto; /* Centrado horizontal y margen abajo */
     }
 
+    /* El botón también centrado */
     #btn-girar {
-        position: relative;
-        font-size: 1em;
+        margin-top: 10px;
+        position: relative; /* Reset de posición si tenía */
+        left: auto;
+        top: auto;
+        transform: none;
     }
-
 
     .imagen-sector {
         transform: rotate(var(--rotation))
@@ -314,6 +351,10 @@ main {
 
     /* --- CONTENEDORES MÓVILES --- */
     #contenedor-partidaPerdida{
+        position: absolute;
+        top: 45%;       /* Exactamente al medio vertical */
+        left: 50%;      /* Exactamente al medio horizontal */
+        transform: translate(-50%, -50%); /* Compensa su propio tamaño */
         width: 80vw;
         height: 80vh;
         padding: 1em;
@@ -329,12 +370,39 @@ main {
 
     /* --- Preguntas internas --- */
     #preguntas-img {
-        height: 60%;
-        overflow: hidden;
+        max-height: 80px; /* Limitamos la altura (antes era 120px o más) */
+        width: auto;
+        margin-bottom: 5px; /* Menos margen abajo */
     }
 
     #preguntas-descripcion {
-        font-size: 0.9em;
+        font-size: 0.95em; /* Fuente un pelín más chica */
+        margin: 0;
+        line-height: 1.2;  /* Líneas más pegadas */
+        max-height: 80px;  /* Si es muy largo, que scrollee el texto, no la pantalla */
+        overflow-y: auto;
+    }
+    #preguntas-sup {
+        flex: 0 0 auto; /* Que ocupe solo lo necesario */
+        padding: 5px;   /* Menos relleno */
+        min-height: auto;
+    }
+    #preguntas-inf {
+        padding: 5px;
+        gap: 8px; /* Menos espacio entre botones */
+        margin-top: 5px;
+    }
+
+    #preguntas-inf .btn {
+        padding: 8px;      /* Botones menos "gordos" */
+        font-size: 0.85em; /* Letra de respuesta un poco más chica para que entren textos largos */
+        min-height: 40px;  /* Altura mínima reducida */
+
+        /* Esto ayuda si el texto es muy largo: */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.1;
     }
 
     #contenedor-partidaPerdida .btn{
@@ -375,6 +443,26 @@ main {
         width: 90% !important;
         height: 90% !important;
         font-size: 0.9em;
+    }
+    /* Ajustes para SweetAlert2 en Móvil */
+    div:where(.swal2-popup) {
+        font-size: 0.8rem !important;
+        width: 85% !important;
+        padding: 1em !important;
+    }
+
+    /* ESTA ES LA SOLUCIÓN DE LA ANIMACIÓN */
+    div:where(.swal2-icon) {
+        /* En lugar de width/height fijos, usamos escala */
+        transform: scale(0.6); /* Achica al 60% del tamaño original */
+        margin-top: 0.5em !important;
+        margin-bottom: 0.5em !important;
+    }
+
+    /* Ajustamos el título para que no quede muy pegado al icono achicado */
+    div:where(.swal2-title) {
+        font-size: 1.3em !important;
+        margin-top: 0 !important;
     }
 }
 
