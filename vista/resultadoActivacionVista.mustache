@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado Activación</title>
+
+    <link rel="stylesheet" href="/css/activacion.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<main>
+    <div id="contenedor-resultado" class="w-full h-1/3 flex flex-col justify-center items-center p-4 space-y-4">
+        <div id="img">
+            <div class="w-1/6 md:w-1/5 flex mx-auto rounded-md overflow-hidden">
+                <img src="/imagenes/logo.jpg" alt="Logo del juego" class="w-full h-full object-cover">
+            </div>
+        </div>
+        {{#activacionExitosa}}
+        <p class="text-lg md:text-3xl font-semibold">¡Cuenta activada con éxito!</p>
+        <p class="text-center">Ya podés iniciar sesión con tus credenciales.</p>
+        <a class="text-blue-500" href="/">Ir Al Login</a>
+        {{/activacionExitosa}}
+        {{#activacionFallida}}
+        <p class="text-lg md:text-3xl font-semibold">Error de activación</p>
+        <p class="text-center">El enlace no es válido o ya ha sido utilizado.</p>
+            <a class="text-blue-500" href="/register/activacion">Volver</a>
+        {{/activacionFallida}}
+    </div>
+</main>

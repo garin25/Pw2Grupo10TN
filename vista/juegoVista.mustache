@@ -1,0 +1,51 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="../css/juego.css">
+<main class="w-full h-full md:w-3/4 p-8" style="background-image: url(../imagenes/texture-lobby.jpg); background-size: cover;">
+
+    <section id="contenedor-ruleta">
+        <div class="ruleta-container">
+            <div class="ruleta" style="background: conic-gradient({{gradientCSS}});">
+                <div class="sectores-texto">
+                    {{#categorias}}
+                        <img class="imagen-sector"
+                             src="{{ruta_imagen}}"
+                             alt="Categoría {{nombre}}"
+                             data-nombre-categoria="{{nombre}}"
+                             data-ruta-imagen="{{ruta_imagen}}"  style="--rotation: {{grados}}deg;">
+                    {{/categorias}}
+                </div>
+            </div>
+            <div class="puntero"></div>
+        </div>
+        <button id="btn-girar" class="btn">Girar Ruleta</button>
+    </section>
+    <section id="contenedor-preguntas">
+        <div id="timer" class="oculto">
+            <p><span class="tiempo">00:</span><span id="segundos" class="tiempo"></span></p>
+        </div>
+        <div id="preguntas-sup">
+            <img id="preguntas-img" src="../imagenes/logo.jpg" alt="">
+            <h2 id="preguntas-descripcion">Lorem, ipsum dolor sit amet consectetur adipisicing elit?</h2>
+        </div>
+        <div id="preguntas-inf">
+            <button id="a" class="btn">Opción A</button>
+            <button id="b" class="btn">Opción B</button>
+            <button id="c" class="btn">Opción C</button>
+            <button id="d" class="btn">Opción D</button>
+        </div>
+    </section>
+    <section id="contenedor-partidaPerdida">
+        <div class="partidaFinalizada">
+            <img id="preguntas-img" src="../imagenes/gameover.jpg" alt="" >
+            <p>Partida Finalizada</p>
+        </div>
+        <p id="puntaje">Puntaje Obtenido: </p>
+        <div id="botones">
+            <button id="volver" class="btn">Reintentar</button>
+            <button id="inicio" class="btn">Ir a inicio</button>
+        </div>
+    </section>
+</main>
+
+<script src="/js/partida.js"></script>

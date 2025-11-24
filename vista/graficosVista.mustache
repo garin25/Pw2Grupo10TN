@@ -1,0 +1,117 @@
+<main class="flex-grow p-4 md:p-8 overflow-y-auto bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-8">
+
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">Panel de Estadísticas</h1>
+            <p class="text-gray-500 mt-2">Visualiza el rendimiento y demografía de los jugadores</p>
+        </div>
+
+        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+            <div class="p-6 border-b border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    Distribución por Nivel
+                </h2>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="flex justify-center bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <img src="{{urlGraficoNivel}}" class="max-h-80 w-auto object-contain mix-blend-multiply" alt="Gráfico de Nivel">
+                </div>
+
+                <div class="overflow-hidden rounded-lg border border-gray-200">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 font-bold">Nivel</th>
+                            <th scope="col" class="px-6 py-3 font-bold text-right">Cantidad</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        {{#arrayNivel}}
+                            <tr class="bg-white hover:bg-purple-50 transition-colors duration-150">
+                                <td class="px-6 py-4 font-medium text-gray-900">{{nivel}}</td>
+                                <td class="px-6 py-4 text-right">{{cantidad_jugadores}}</td>
+                            </tr>
+                        {{/arrayNivel}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+            <div class="p-6 border-b border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    Distribución por Sexo
+                </h2>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="flex justify-center bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <img src="{{urlGraficoSexo}}" class="max-h-80 w-auto object-contain mix-blend-multiply" alt="Gráfico de Sexo">
+                </div>
+
+                <div class="overflow-hidden rounded-lg border border-gray-200">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 font-bold">Sexo</th>
+                            <th scope="col" class="px-6 py-3 font-bold text-right">Cantidad</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                        {{#arraySexo}}
+                            <tr class="bg-white hover:bg-purple-50 transition-colors duration-150">
+                                <td class="px-6 py-4 font-medium text-gray-900">{{sexo}}</td>
+                                <td class="px-6 py-4 text-right">{{cantidad_jugadores}}</td>
+                            </tr>
+                        {{/arraySexo}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800">Descargar Reportes PDF</h2>
+            <p class="text-gray-500 mb-6">Genera y descarga documentos detallados para imprimir o archivar.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                <a href="/admin/descargarReporteNivel" target="_blank" class="group relative block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-purple-400">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                            <img src="/imagenes/trophy.png" class="w-8 h-8" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-700">Reporte por Nivel</h3>
+                            <p class="text-sm text-gray-500 mt-1">Estadísticas completas de dificultad.</p>
+                        </div>
+                        <div class="ml-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300 group-hover:text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/admin/descargarReporteSexo" target="_blank" class="group relative block p-6 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-purple-400">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                            <img src="/imagenes/people.png" class="w-8 h-8" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-700">Reporte por Sexo</h3>
+                            <p class="text-sm text-gray-500 mt-1">Datos demográficos de usuarios.</p>
+                        </div>
+                        <div class="ml-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-300 group-hover:text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</main>

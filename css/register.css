@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+main {
+    background-image: url(../imagenes/texture-lobby.jpg);
+    background-size: cover;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#contenedor-registro {
+    background-color: #FDF6E3;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15),
+    0px 6px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+#registro-sup {
+    padding: 1em;
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#registro-img {
+    height: 70%;
+    border-radius: 12px;
+    margin-bottom: 1em;
+}
+
+#registro-descripcion {
+    font-weight: bold;
+    font-size: 2.2em;
+}
+
+#registro-inf {
+    padding-right: 1em;
+    padding-left: 1em;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.input-registro {
+    border: 0;
+    border-radius: 12px;
+    background-color: #8773be3d;
+    padding: 1em;
+    outline: none;
+}
+
+.btn {
+    border-radius: 12px;
+    border: none;
+    background-color: #8773be;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 1em;
+}
+
+.btn:hover {
+    background-color: #7358bb;
+}
+
+.mt-3 {
+    text-align: center;
+    display: block;
+    margin-top: 1em;
+    color: #8773be;
+}
+
+.error-mensaje {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#map-popup {
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0s 0.3s;
+}
+
+#map-popup.visible {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+    transform: translateY(-7%);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+
+#map {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border-radius: 16px;
+    border: 2px solid #d6c5a8;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <title>{{page}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+<link rel="stylesheet" href="css/login.css">
+
+<main>
+        <section id="contenedor-login">
+            <button id="volver" class="boton oculto">Volver</button>
+            <div id="login-sup">
+                <img id="login-img" src="imagenes/logo.jpg" alt="">
+                <h2 id="login-descripcion">Iniciar sesión</h2>
+            </div>
+            <div id="login-inf">
+
+                <div id="contenedor-form">
+                    <label id="label-email" class="label" for="email">Ingrese su email:</label>
+                    <input id="email" class="email" placeholder="example@algo.com" name="email" type="text">
+                </div>
+
+                <button id="submit" class="boton">Verificar</button>
+
+                <a href="{{registro}}" class="reg">¿No tienes una cuenta? Regístrate</a>
+
+            </div>
+        </section>
+</main>
+<script type="module" src="../js/login.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.min.css
+" rel="stylesheet">
+</body>
+</html>

@@ -1,0 +1,79 @@
+<main class="w-full md:w-3/4 p-6 flex-grow h-screen overflow-auto" style="background-image: url(../imagenes/texture-lobby.jpg); background-size: cover;">
+
+    <div class="w-full flex justify-center pt-12">
+
+        <div class="bg-white shadow-2xl rounded-xl p-6 max-w-sm w-full text-center border-t-8" style="border-color: #8D44B6;">
+
+            <a href="/editor" class="block text-left text-blue-600 hover:underline mb-4 font-semibold">Volver</a>
+
+            {{#mensaje_exito}}
+                <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 1rem;">
+                    {{mensaje_exito}}
+                </div>
+            {{/mensaje_exito}}
+            {{#mensaje_error}}
+                <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 1rem;">
+                    {{mensaje_error}}
+                </div>
+            {{/mensaje_error}}
+
+            <form action="/editor/crearPregunta" method="POST">
+
+                <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                    <label for="enunciado">Enunciado:</label>
+                    <textarea id="enunciado" name="enunciado" rows="3" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;"></textarea>
+                </div>
+
+                <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria" class="w-full p-2 rounded-xl" style="background-color: #d3d3d3; outline: none;">
+                        {{#categorias}}
+                            <option value="{{nombre}}">{{nombre}}</option>
+                        {{/categorias}}
+                    </select>
+                </div>
+
+                <hr class="my-2">
+
+                <div class="flex justify-center items-center w-full py-1 gap-2">
+
+                    <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                        <label for="respuesta1">Respuesta 1:</label>
+                        <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta1" name="respuestas[]" rows="2" style="background-color: #d3d3d3; outline: none;"></textarea>
+                        <label for="rta1">Es correcta:</label>
+                        <input type="radio" id="rta1" name="rtaCorrecta" value="0" required>
+                    </div>
+
+                    <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                        <label for="respuesta2">Respuesta 2:</label>
+                        <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta2" name="respuestas[]" rows="2" style="background-color: #d3d3d3; outline: none;"></textarea>
+                        <label for="rta2">Es correcta:</label>
+                        <input type="radio" id="rta2" name="rtaCorrecta" value="1">
+                    </div>
+
+                </div>
+
+                <div class="flex justify-center items-center w-full py-1 gap-2">
+
+                    <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                        <label for="respuesta3">Respuesta 3:</label>
+                        <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta3" name="respuestas[]" rows="2" style="background-color: #d3d3d3; outline: none;"></textarea>
+                        <label for="rta3">Es correcta:</label>
+                        <input type="radio" id="rta3" name="rtaCorrecta" value="2">
+                    </div>
+
+                    <div class="flex flex-col justify-center items-center w-full py-1 gap-1">
+                        <label for="respuesta4">Respuesta 4:</label>
+                        <textarea class="w-full p-2 rounded-xl" type="text" id="respuesta4" name="respuestas[]" rows="2" style="background-color: #d3d3d3; outline: none;"></textarea>
+                        <label for="rta4">Es correcta:</label>
+                        <input type="radio" id="rta4" name="rtaCorrecta" value="3">
+                    </div>
+
+                </div>
+
+                <button type="submit" id="submit" style="padding: 0.5em 1em; border-radius: 12px; background-color: #8D44B6; color: white; font-weight: bold; margin-top: 1rem;">Crear</button>
+
+            </form>
+        </div>
+    </div>
+</main>

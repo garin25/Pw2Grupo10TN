@@ -1,0 +1,90 @@
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+
+    <a href="/editor/paginaReportes" class="inline-flex items-center text-blue-600 hover:underline font-semibold mb-6 transition-colors">
+        Volver a Reportes
+    </a>
+
+    {{#mensaje_exito}}
+        <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg border border-green-400" role="alert">
+            {{mensaje_exito}}
+        </div>
+    {{/mensaje_exito}}
+    {{#mensaje_error}}
+        <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg border border-red-400" role="alert">
+            {{mensaje_error}}
+        </div>
+    {{/mensaje_error}}
+
+    <div class="flex justify-between items-center mb-8 flex-shrink-0">
+        <h3 class="text-3xl font-bold text-gray-800">Detalle del Reporte y Pregunta</h3>
+    </div>
+
+    <div class="bg-white shadow-xl rounded-lg p-6 mb-8 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-3 text-gray-700 border-b pb-2">Pregunta</h2>
+        <p class="text-lg font-medium text-gray-900 mb-6">{{enunciado}}</p>
+
+        <h3 class="text-lg font-semibold mb-3 text-gray-700 border-b pb-2">Opciones de Respuesta:</h3>
+
+        <div class="space-y-3">
+            {{#respuestas}}
+                <div class="p-3 rounded-md border
+                     {{#esCorrecta}}bg-green-50 border-green-300{{/esCorrecta}}
+                    {{^esCorrecta}}bg-gray-50 border-gray-200{{/esCorrecta}}
+                     flex items-center justify-between text-sm">
+
+                    <span class="font-bold w-1/12 text-center text-gray-600">{{id_respuesta}}</span>
+                    <span class="flex-grow mx-4 text-gray-800">{{respuestaTexto}}</span>
+
+                    <span class="font-medium px-2 py-1 rounded-full text-xs
+                        {{#esCorrecta}}bg-green-500 text-white{{/esCorrecta}}
+                        {{^esCorrecta}}bg-red-200 text-red-700{{/esCorrecta}}">
+                        {{#esCorrecta}}CORRECTA{{/esCorrecta}}
+                        {{^esCorrecta}}INCORRECTA{{/esCorrecta}}
+                    </span>
+                </div>
+            {{/respuestas}}
+        </div>
+
+        <div class="mt-6 flex justify-end">
+            <a href="/editor/paginaEditarPregunta?preguntaId={{preguntaId}}" class="flex items-center justify-center py-2 px-4 border border-transparent
+            text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors">
+            Modificar Pregunta
+            </a>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Reportes de Usuarios</h3>
+        <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">Usuario</th>
+                <th scope="col" class="px-6 py-3">Motivo</th>
+                <th scope="col" class="px-6 py-3">Denegar</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#reportes}}
+                <tr class="border-b bg-green-50 hover:bg-green-100">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <a  href="/perfil/{{nombre_usuario}}"><img class="w-10 h-10 rounded-full object-cover mr-3" src="/{{foto_perfil}}" alt="Foto de Juan"></a>
+                            <a  href="/perfil/{{nombre_usuario}}"><span style="font-weight: bold">{{nombre_usuario}}</span></a>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">{{descripcion}}</td>
+                    <td class="px-6 py-4">
+                        <form action="/editor/denegarReporte" method="POST">
+                            <input type="hidden" value="{{reportesId}}" name="reportesId">
+                            <input type="hidden" value="{{preguntaId}}" name="preguntaId">
+                            <button type="submit" class="text-red-600 hover:text-red-800">
+                                Denegar
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            {{/reportes}}
+            </tbody>
+        </table>
+    </div>
+    </div>
+</main>

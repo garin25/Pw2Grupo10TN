@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Mapa Aislada</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body class="bg-gray-200">
+
+<div id="map-popup" class="fixed inset-0 bg-black/60 z-50 flex justify-center items-center">
+    <div class="bg-white p-5 rounded-xl shadow-2xl w-11/12 max-w-4xl h-[80vh] relative flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-bold text-xl">Prueba de Mapa</h3>
+            <span class="text-gray-500 text-3xl font-bold">&times;</span>
+        </div>
+        <div id="map" class="w-full rounded-lg flex-1"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let map = L.map('map').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 10);
+    });
+</script>
+
+</body>
+</html>

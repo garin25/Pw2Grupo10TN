@@ -1,0 +1,33 @@
+<main class="w-full md:w-3/4 p-4 md:p-8 flex flex-col flex-1 overflow-y-auto">
+    <div class="flex justify-between items-center mb-6 flex-shrink-0">
+        <h3 class="text-2xl font-bold text-gray-800">Reportes</h3>
+    </div>
+
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 sticky top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">Pregunta</th>
+                <th scope="col" class="px-6 py-3">Categoria</th>
+                <th scope="col" class="px-6 py-3">Reportes</th>
+                <th scope="col" class="px-6 py-3">Detalle Reportes</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#reportes}}
+                <tr class="border-b bg-green-50 hover:bg-green-100">
+
+                    <td class="px-6 py-4">{{enunciado}}</td>
+                    <td class="px-6 py-4">{{categoria}}</td>
+                    <td class="px-6 py-4">{{cantidadReportes}}</td>
+                    <td class="px-6 py-4">
+                        <a href="/editor/detalleReporte?preguntaId={{preguntaId}}" class="text-blue-600 hover:underline font-semibold">Modificar</a>
+                    </td>
+
+                </tr>
+            {{/reportes}}
+            </tbody>
+        </table>
+    </div>
+
+</main>

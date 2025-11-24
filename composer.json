@@ -1,0 +1,9 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^7.0",
+      "mustache/mustache": "v3.0.0",
+      "ext-json": "*",
+      "endroid/qr-code": "^4.8",
+        "dompdf/dompdf": "^3.1"
+    }
+}
