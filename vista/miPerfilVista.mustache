@@ -5,8 +5,7 @@
         <div class="relative flex-shrink-0">
             <img src="/{{usuario.foto_perfil}}" alt="Foto de Perfil" class="h-32 w-32 object-cover rounded-full border-4 ring-2 shadow-lg" style="border-color: #8D44B6;">
             <span class="absolute bottom-0 right-0 text-gray-900 text-xs font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-xl" style="background-color: #F8DE41;">
-                Nivel 15
-            </span>
+                Nivel 15 </span>
         </div>
         <div class="text-center md:text-left">
             <h1 class="text-3xl font-extrabold text-gray-900 mb-1">
@@ -45,6 +44,15 @@
     </div>
 
     <div class="mt-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Ubicación</h2>
+        <div id="mapa-perfil"
+             class="w-full h-64 rounded-xl shadow-lg border border-gray-200 z-0"
+             data-lat="{{usuario.latitud}}"
+             data-lng="{{usuario.longitud}}">
+        </div>
+    </div>
+
+    <div class="mt-8">
         <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Logros</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -73,3 +81,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/perfil.js"></script>
