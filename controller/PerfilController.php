@@ -21,16 +21,24 @@ class PerfilController
         if (!isset($_SESSION['usuarioId'])){
             $this->redirectToIndex();
         }
-        $usuarioId = $_SESSION['usuarioId'];
+
+        $usuarioLogueadoId = $_SESSION['usuarioId'];
 
         $usuarioNombre = $_GET['usuario'];
-        $usuario = $this->model->buscarDatosUsuarioPorId($usuarioId);
+
+        $usuario = $this->model->buscarDatosUsuarioPorId($usuarioLogueadoId);
+
         $usuarioConsultado = $this->model->buscarDatosUsuario($usuarioNombre);
 
         if($usuarioConsultado != null){
+
+            $usuarioConsultadoId = $usuarioConsultado['usuarioId'];
+
+            $estadisticas = $this->model->obtenerEstadisticasDeJuego($usuarioConsultadoId);
+
             $url_qr_publica = $usuarioConsultado['img_qr'] ?? '';
 
-            $data = ["page" => "Perfil de " . $usuarioNombre, "logout" => "/login/logout", "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado, "url_qr" => $url_qr_publica];
+            $data = ["page" => "Perfil de " . $usuarioNombre, "logout" => "/login/logout", "usuario" => $usuario, "usuarioConsultado" => $usuarioConsultado,"url_qr" => $url_qr_publica, "estadisticas" => $estadisticas];
             $this->renderer->render("perfil", $data);
         } else {
             $this->redirectToIndex();

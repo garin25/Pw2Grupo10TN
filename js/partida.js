@@ -418,7 +418,6 @@ function finalizarPartida() {
                 if (ok === true) {
 
                     puntaje = data.puntaje;
-                    document.getElementById(`${data.respuestaIdCorrecta}`).classList.add('respuestaCorrectaAnimation');
 
                     tiempoAcabado();
 

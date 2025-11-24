@@ -24,9 +24,9 @@ class MiPerfilController
         $usuarioId = $_SESSION["usuarioId"];
 
         $usuario = $this->model->buscarDatosUsuario($usuarioId);
-
+        $estadisticas = $this->model->obtenerEstadisticasDeJuego($usuarioId);
         $url_qr_publica = $usuario['img_qr'] ?? '';
-        $data = ["page" => "Mi perfil",  "logout" => "/login/logout", "usuario" => $usuario, "url_qr" => $url_qr_publica];
+        $data = ["page" => "Mi perfil", "logout" => "/login/logout", "usuario" => $usuario, "url_qr" => $url_qr_publica, "estadisticas" => $estadisticas];
         $this->renderer->render("miPerfil", $data);
     }
 

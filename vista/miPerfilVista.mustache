@@ -16,14 +16,6 @@
                 Maestro de Trivia
             </p>
 
-            <div class="flex justify-center md:justify-start space-x-3">
-                <button class="flex items-center text-white font-semibold py-1.5 px-3 rounded-lg shadow-md transition duration-150 hover:bg-[#723696]" style="background-color: #8D44B6;">
-                    <i class="bi bi-chat-dots-fill mr-2"></i> Mensaje
-                </button>
-                <button class="flex items-center text-gray-800 font-semibold py-1.5 px-3 rounded-lg shadow-md hover:bg-[#E5C73C] transition duration-150" style="background-color: #F8DE41;">
-                    <i class="bi bi-pencil-fill mr-2"></i> Editar perfil
-                </button>
-            </div>
         </div>
         {{#url_qr}}
             <div class="mt-4 p-2 bg-white rounded-lg shadow-lg border">
@@ -35,17 +27,20 @@
     <hr class="my-6 border-gray-200">
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+
         <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
-            <p class="text-3xl md:text-4xl font-extrabold text-white">12.5K</p>
-            <p class="text-sm font-medium text-white opacity-90">Puntos Totales</p>
+            <p class="text-3xl md:text-4xl font-extrabold text-white">{{estadisticas.puntuacion_maxima}}</p>
+            <p class="text-sm font-medium text-white opacity-90">Puntuación máxima</p>
         </div>
+
         <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
-            <p class="text-3xl md:text-4xl font-extrabold text-white">85</p>
-            <p class="text-sm font-medium text-white opacity-90">Partidas Ganadas</p>
+            <p class="text-3xl md:text-4xl font-extrabold text-white">{{estadisticas.total_partidas_jugadas}}</p>
+            <p class="text-sm font-medium text-white opacity-90">Partidas Jugadas</p>
         </div>
+
         <div class="p-4 rounded-xl shadow-inner flex flex-col items-center justify-center h-28 md:h-32" style="background-color: #8D44B6;">
-            <p class="text-3xl md:text-4xl font-extrabold text-white">3</p>
-            <p class="text-sm font-medium text-white opacity-90">Logros Desbloqueados</p>
+            <p class="text-3xl md:text-4xl font-extrabold text-white">{{estadisticas.total_respuestas_correctas}}</p>
+            <p class="text-sm font-medium text-white opacity-90">Respuestas Correctas</p>
         </div>
     </div>
 
