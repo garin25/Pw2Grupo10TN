@@ -337,8 +337,8 @@ main {
         translateY(-200%)
         translateX(-50%);
         position: absolute;
-        top: 43%;
-        width: 12%;
+        top: 40%;
+        width: 14%;
         height: auto;
         padding: 5px;
         box-shadow: 0 0 2px rgba(0.7, 0.7, 0.7, 0.7);
@@ -370,17 +370,18 @@ main {
 
     /* --- Preguntas internas --- */
     #preguntas-img {
-        max-height: 80px; /* Limitamos la altura (antes era 120px o más) */
+        max-height: 120px; /* Limitamos la altura (antes era 120px o más) */
         width: auto;
-        margin-bottom: 5px; /* Menos margen abajo */
+        position: relative;
+        top: -65px;
+        margin-bottom: 10px; /* Menos margen abajo */
     }
 
     #preguntas-descripcion {
         font-size: 0.95em; /* Fuente un pelín más chica */
         margin: 0;
         line-height: 1.2;  /* Líneas más pegadas */
-        max-height: 80px;  /* Si es muy largo, que scrollee el texto, no la pantalla */
-        overflow-y: auto;
+        max-height: 90px;  /* Si es muy largo, que scrollee el texto, no la pantalla */
     }
     #preguntas-sup {
         flex: 0 0 auto; /* Que ocupe solo lo necesario */
@@ -436,7 +437,7 @@ main {
     }
 
     .puntero {
-        top: 0px;
+        top: -20px;
     }
 
     .popup {
