@@ -28,7 +28,7 @@ class RankingModel
                 AND p.fecha > DATE_SUB(NOW(), INTERVAL 7 DAY)
                 AND p.fecha <= NOW()
                 GROUP BY u.nombre_usuario
-                ORDER BY puntos DESC
+                ORDER BY puntos DESC, nombre_usuario
                 LIMIT ?";
         $tipos = "i";
         $params = array(10);
