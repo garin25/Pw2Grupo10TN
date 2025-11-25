@@ -202,7 +202,7 @@ ORDER BY
 
     public  function traerPreguntasyCantidadDeReportes()
     {
-        $sql = "SELECT p.preguntaId, p.enunciado, c.nombre as categoria , count(r.preguntaId) as cantidadReportes FROM pregunta p JOIN categoria c ON c.categoriaId = p.categoriaId JOIN reportes r ON r.preguntaId = p.preguntaId WHERE p.preguntaId = r.preguntaId GROUP BY p.preguntaId ORDER BY c.categoriaId ASC";
+        $sql = "SELECT p.preguntaId, p.enunciado, c.nombre as categoria , count(r.preguntaId) as cantidadReportes FROM pregunta p JOIN categoria c ON c.categoriaId = p.categoriaId JOIN reportes r ON r.preguntaId = p.preguntaId GROUP BY p.preguntaId HAVING COUNT(r.preguntaId) >= 5 ORDER BY c.categoriaId ASC";
         return $this->conexion->ejecutarConsultaSinParametros($sql);
     }
    /* public  function traerReportes()
