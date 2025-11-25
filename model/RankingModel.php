@@ -22,12 +22,12 @@ class RankingModel
 
     public function buscarRanking(){
 
-        $sql = "SELECT u.nombre_usuario, u.foto_perfil, MAX(p.puntos) AS puntos FROM usuario u 
+        $sql = "SELECT u.usuarioId, u.nombre_usuario, u.foto_perfil, MAX(p.puntos) AS puntos FROM usuario u 
                 JOIN partida p ON u.usuarioId = p.usuarioid 
                 WHERE p.puntos > 0
                 AND p.fecha > DATE_SUB(NOW(), INTERVAL 7 DAY)
-                AND p.fecha <= NOW()
-                GROUP BY u.nombre_usuario
+                AND p.fecha <= DATE_ADD(DATE(NOW()), INTERVAL 1 DAY)
+                GROUP BY u.usuarioId, u.nombre_usuario, u.foto_perfil
                 ORDER BY puntos DESC, nombre_usuario
                 LIMIT ?";
         $tipos = "i";
