@@ -1,4 +1,7 @@
+const registroImg = document.getElementById('registro-img');
+const foto = document.getElementById('foto');
 document.addEventListener('DOMContentLoaded', function() {
+
 
     const paisInput = document.getElementById('pais');
     const ciudadInput = document.getElementById('ciudad');
@@ -130,4 +133,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
     });
+});
+
+foto.addEventListener('change', function(event) {
+    const input = event.target;
+    let objectURL = '';
+    if (input.files && input.files.length > 0) {
+
+        URL.revokeObjectURL(objectURL)
+
+        const imageFile = input.files[0];
+
+        objectURL = URL.createObjectURL(imageFile);
+
+        registroImg.src = objectURL;
+
+
+    }
 });
