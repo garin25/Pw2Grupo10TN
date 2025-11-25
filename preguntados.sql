@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2025 a las 16:47:16
+-- Tiempo de generación: 25-11-2025 a las 18:45:00
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,12 +39,13 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`categoriaId`, `nombre`, `color`, `ruta_imagen`) VALUES
-    (1, 'Deporte', '#FF3B30', '/imagenes/deporte.png'),
-    (2, 'Historia', '#FFCC00', '/imagenes/historia.png'),
-    (3, 'Ciencias Naturales', '#34C759', '/imagenes/cienciasNaturales.png'),
-    (4, 'Geografía', '#007AFF', '/imagenes/geografia.png'),
-    (5, 'Programación', '#FF9500', '/imagenes/programacion.png'),
-    (6, 'Matemática', '#AF52DE', '/imagenes/matematica.png');
+(1, 'Deporte', '#FF3B30', '/imagenes/deporte.png'),
+(2, 'Historia', '#FFCC00', '/imagenes/historia.png'),
+(3, 'Ciencias Naturales', '#34C759', '/imagenes/cienciasNaturales.png'),
+(4, 'Geografía', '#007AFF', '/imagenes/geografia.png'),
+(5, 'Programación', '#FF9500', '/imagenes/programacion.png'),
+(6, 'Matemática', '#AF52DE', '/imagenes/matematica.png');
+
 -- --------------------------------------------------------
 
 --
@@ -89,7 +90,109 @@ INSERT INTO `historial_respuestas` (`id_historial`, `usuarioId`, `preguntaId`, `
 (23, 4, 18, 1, '2025-11-07 18:44:13'),
 (24, 4, 36, 0, '2025-11-07 18:44:26'),
 (25, 4, 2, 0, '2025-11-07 18:46:44'),
-(26, 4, 138, 0, '2025-11-07 18:55:26');
+(26, 4, 138, 0, '2025-11-07 18:55:26'),
+(27, 1, 112, 0, '2025-11-19 00:58:01'),
+(28, 1, 79, 1, '2025-11-19 00:58:15'),
+(29, 1, 79, 1, '2025-11-19 00:58:27'),
+(30, 1, 68, 0, '2025-11-19 00:58:41'),
+(31, 1, 93, 1, '2025-11-19 00:58:56'),
+(32, 1, 84, 0, '2025-11-19 00:59:22'),
+(33, 1, 78, 1, '2025-11-19 00:59:36'),
+(34, 1, 84, 0, '2025-11-19 00:59:49'),
+(35, 1, 83, 1, '2025-11-19 01:05:36'),
+(36, 1, 111, 1, '2025-11-19 01:06:06'),
+(37, 1, 70, 0, '2025-11-19 01:06:51'),
+(38, 1, 153, 0, '2025-11-19 01:07:51'),
+(39, 1, 92, 0, '2025-11-19 01:12:37'),
+(40, 1, 83, 0, '2025-11-19 01:14:06'),
+(41, 1, 77, 1, '2025-11-19 01:15:23'),
+(42, 1, 84, 0, '2025-11-19 01:15:44'),
+(43, 1, 76, 1, '2025-11-19 01:21:35'),
+(44, 1, 115, 0, '2025-11-19 01:21:49'),
+(45, 1, 98, 1, '2025-11-19 01:22:10'),
+(46, 1, 94, 1, '2025-11-19 01:22:24'),
+(47, 1, 77, 0, '2025-11-19 01:22:39'),
+(48, 1, 28, 0, '2025-11-19 01:23:29'),
+(49, 1, 64, 0, '2025-11-19 01:23:44'),
+(50, 1, 78, 1, '2025-11-19 01:23:59'),
+(51, 1, 82, 1, '2025-11-19 01:30:20'),
+(52, 1, 86, 1, '2025-11-19 01:30:52'),
+(53, 1, 66, 0, '2025-11-19 01:31:03'),
+(54, 1, 74, 0, '2025-11-19 01:33:32'),
+(55, 1, 24, 0, '2025-11-19 01:35:31'),
+(56, 1, 28, 0, '2025-11-19 01:37:33'),
+(57, 1, 123, 0, '2025-11-19 01:38:14'),
+(58, 1, 88, 0, '2025-11-19 01:39:49'),
+(59, 1, 91, 1, '2025-11-19 01:40:36'),
+(60, 1, 123, 0, '2025-11-19 01:41:01'),
+(61, 1, 159, 0, '2025-11-19 01:41:38'),
+(62, 1, 78, 0, '2025-11-19 01:42:26'),
+(63, 1, 141, 0, '2025-11-19 01:42:46'),
+(64, 1, 70, 0, '2025-11-19 01:44:06'),
+(65, 1, 114, 0, '2025-11-19 01:44:25'),
+(66, 1, 129, 0, '2025-11-19 01:45:27'),
+(67, 1, 153, 0, '2025-11-19 01:46:47'),
+(68, 1, 96, 0, '2025-11-19 01:47:23'),
+(69, 1, 91, 1, '2025-11-19 01:47:42'),
+(70, 1, 98, 1, '2025-11-19 01:48:08'),
+(71, 1, 78, 1, '2025-11-19 01:48:35'),
+(72, 1, 67, 0, '2025-11-19 01:49:03'),
+(73, 1, 66, 1, '2025-11-19 01:53:07'),
+(74, 1, 88, 1, '2025-11-19 01:53:17'),
+(75, 1, 123, 0, '2025-11-19 01:53:27'),
+(76, 1, 65, 1, '2025-11-19 01:53:43'),
+(77, 1, 97, 0, '2025-11-19 01:53:53'),
+(78, 1, 82, 1, '2025-11-19 01:54:06'),
+(79, 1, 21, 0, '2025-11-19 01:54:32'),
+(80, 1, 100, 0, '2025-11-19 01:56:44'),
+(81, 1, 167, 0, '2025-11-19 01:56:58'),
+(82, 1, 73, 1, '2025-11-19 01:57:14'),
+(83, 1, 121, 1, '2025-11-19 01:57:26'),
+(84, 1, 109, 1, '2025-11-19 01:57:37'),
+(85, 1, 119, 0, '2025-11-19 01:57:53'),
+(86, 1, 42, 1, '2025-11-19 01:58:11'),
+(87, 1, 80, 1, '2025-11-19 01:58:22'),
+(88, 1, 161, 0, '2025-11-19 01:58:34'),
+(89, 1, 104, 1, '2025-11-19 01:58:46'),
+(90, 1, 87, 1, '2025-11-19 01:58:55'),
+(91, 1, 101, 0, '2025-11-19 01:59:07'),
+(92, 1, 44, 0, '2025-11-21 01:41:29'),
+(93, 1, 160, 0, '2025-11-21 01:47:51'),
+(94, 1, 166, 0, '2025-11-21 01:49:31'),
+(95, 1, 136, 0, '2025-11-21 01:49:49'),
+(96, 1, 89, 1, '2025-11-21 01:50:03'),
+(97, 1, 27, 1, '2025-11-21 01:50:44'),
+(98, 1, 38, 0, '2025-11-21 01:50:57'),
+(99, 1, 46, 1, '2025-11-21 01:51:16'),
+(100, 1, 71, 1, '2025-11-21 01:51:37'),
+(101, 1, 16, 1, '2025-11-21 01:51:53'),
+(102, 1, 125, 1, '2025-11-21 01:52:19'),
+(103, 1, 145, 0, '2025-11-21 01:52:37'),
+(104, 1, 47, 1, '2025-11-21 01:57:20'),
+(105, 1, 165, 1, '2025-11-21 01:57:32'),
+(106, 1, 164, 0, '2025-11-21 01:57:44'),
+(107, 1, 11, 1, '2025-11-21 02:28:54'),
+(108, 1, 71, 1, '2025-11-21 02:29:08'),
+(109, 1, 29, 0, '2025-11-21 02:29:34'),
+(110, 1, 8, 0, '2025-11-21 02:36:11'),
+(111, 1, 31, 0, '2025-11-21 02:36:22'),
+(112, 1, 5, 1, '2025-11-21 02:36:36'),
+(113, 1, 23, 1, '2025-11-21 02:36:47'),
+(114, 1, 133, 1, '2025-11-21 02:37:00'),
+(115, 1, 156, 0, '2025-11-21 02:37:18'),
+(116, 1, 155, 0, '2025-11-21 02:44:53'),
+(117, 1, 53, 1, '2025-11-21 03:01:19'),
+(118, 1, 3, 1, '2025-11-21 03:01:32'),
+(119, 1, 85, 0, '2025-11-21 03:03:37'),
+(120, 1, 9, 0, '2025-11-21 03:04:24'),
+(121, 1, 25, 0, '2025-11-21 03:05:35'),
+(122, 1, 32, 0, '2025-11-22 00:43:45'),
+(123, 1, 117, 0, '2025-11-22 00:44:18'),
+(124, 1, 162, 0, '2025-11-22 00:45:01'),
+(125, 1, 151, 1, '2025-11-22 00:48:07'),
+(126, 1, 7, 0, '2025-11-22 00:48:33'),
+(127, 1, 129, 0, '2025-11-22 00:50:06'),
+(128, 1, 139, 0, '2025-11-22 00:51:04');
 
 -- --------------------------------------------------------
 
@@ -178,7 +281,66 @@ INSERT INTO `partida` (`id_partida`, `usuarioId`, `puntos`, `fecha`) VALUES
 (67, 4, 0, '2025-11-07 18:41:45'),
 (68, 4, 10, '2025-11-07 18:44:26'),
 (69, 4, 0, '2025-11-07 18:46:44'),
-(70, 4, 0, '2025-11-07 18:55:26');
+(70, 4, 0, '2025-11-07 18:55:26'),
+(71, 1, 10, '2025-11-19 00:58:01'),
+(72, 1, 20, '2025-11-19 00:58:41'),
+(73, 1, 10, '2025-11-19 00:59:22'),
+(74, 1, 10, '2025-11-19 00:59:49'),
+(75, 1, 20, '2025-11-19 01:06:52'),
+(76, 1, 0, '2025-11-19 01:07:51'),
+(77, 1, 0, '2025-11-19 01:12:38'),
+(78, 1, 0, '2025-11-19 01:14:06'),
+(79, 1, 10, '2025-11-19 01:15:44'),
+(80, 1, 10, '2025-11-19 01:21:49'),
+(81, 1, 20, '2025-11-19 01:22:39'),
+(82, 1, 0, '2025-11-19 01:23:29'),
+(83, 1, 0, '2025-11-19 01:23:44'),
+(84, 1, 30, '2025-11-19 01:31:03'),
+(85, 1, 0, '2025-11-19 01:33:32'),
+(86, 1, 0, '2025-11-19 01:35:31'),
+(87, 1, 0, '2025-11-19 01:37:34'),
+(88, 1, 0, '2025-11-19 01:38:14'),
+(89, 1, 0, '2025-11-19 01:39:49'),
+(90, 1, 10, '2025-11-19 01:41:01'),
+(91, 1, 0, '2025-11-19 01:41:38'),
+(92, 1, 0, '2025-11-19 01:42:26'),
+(93, 1, 0, '2025-11-19 01:42:46'),
+(94, 1, 0, '2025-11-19 01:44:06'),
+(95, 1, 0, '2025-11-19 01:44:25'),
+(96, 1, 0, '2025-11-19 01:45:27'),
+(97, 1, 0, '2025-11-19 01:46:47'),
+(98, 1, 0, '2025-11-19 01:47:23'),
+(99, 1, 30, '2025-11-19 01:49:03'),
+(100, 1, 20, '2025-11-19 01:53:27'),
+(101, 1, 10, '2025-11-19 01:53:53'),
+(102, 1, 10, '2025-11-19 01:54:32'),
+(103, 1, 0, '2025-11-19 01:56:44'),
+(104, 1, 0, '2025-11-19 01:56:58'),
+(105, 1, 30, '2025-11-19 01:57:53'),
+(106, 1, 20, '2025-11-19 01:58:34'),
+(107, 1, 20, '2025-11-19 01:59:07'),
+(108, 1, 0, '2025-11-21 01:41:29'),
+(109, 1, 0, '2025-11-21 01:47:51'),
+(110, 1, 0, '2025-11-21 01:49:31'),
+(111, 1, 0, '2025-11-21 01:49:49'),
+(112, 1, 20, '2025-11-21 01:50:57'),
+(113, 1, 40, '2025-11-21 01:52:37'),
+(114, 1, 20, '2025-11-21 01:57:44'),
+(115, 1, 20, '2025-11-21 02:29:34'),
+(116, 1, 0, '2025-11-21 02:36:11'),
+(117, 1, 0, '2025-11-21 02:36:22'),
+(118, 1, 30, '2025-11-21 02:37:18'),
+(119, 1, 0, '2025-11-21 02:44:53'),
+(120, 1, 20, '2025-11-21 03:01:55'),
+(121, 1, 0, '2025-11-21 03:03:37'),
+(122, 1, 0, '2025-11-21 03:04:24'),
+(123, 1, 0, '2025-11-21 03:05:35'),
+(124, 1, 0, '2025-11-22 00:43:45'),
+(125, 1, 0, '2025-11-22 00:44:18'),
+(126, 1, 0, '2025-11-22 00:45:01'),
+(127, 1, 10, '2025-11-22 00:48:33'),
+(128, 1, 0, '2025-11-22 00:50:06'),
+(129, 1, 0, '2025-11-22 00:51:04');
 
 -- --------------------------------------------------------
 
@@ -204,57 +366,57 @@ CREATE TABLE `pregunta` (
 INSERT INTO `pregunta` (`preguntaId`, `categoriaId`, `enunciado`, `puntaje`, `respondidasMal`, `cantidadEnviada`, `esReportada`, `esSugerida`) VALUES
 (1, 1, '¿Cuántos jugadores tiene un equipo de fútbol en el campo durante un partido?', 10, 1, 2, 0, 0),
 (2, 1, '¿Qué país ganó la primera Copa del Mundo de fútbol en 1930?', 10, 2, 3, 0, 0),
-(3, 1, '¿En qué deporte se considera a Michael Jordan como el mejor de todos los tiempos?', 10, 1, 3, 0, 0),
+(3, 1, '¿En qué deporte se considera a Michael Jordan como el mejor de todos los tiempos?', 10, 1, 4, 0, 0),
 (4, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de Verano?', 10, 2, 3, 0, 0),
-(5, 1, '¿Cómo se llama el trofeo que se entrega al ganador de la Copa Libertadores?', 10, 1, 2, 0, 0),
+(5, 1, '¿Cómo se llama el trofeo que se entrega al ganador de la Copa Libertadores?', 10, 1, 3, 0, 0),
 (6, 1, '¿En qué país se inventó el voleibol?', 10, 2, 3, 0, 0),
-(7, 1, '¿Qué tenista tiene el récord de más títulos de Grand Slam en la categoría masculina?', 10, 1, 2, 0, 0),
-(8, 1, '¿En qué año se celebraron los primeros Juegos Olímpicos modernos en Atenas?', 10, 1, 2, 0, 0),
-(9, 1, '¿Qué es un \"hat-trick\" perfecto en el fútbol?', 10, 1, 2, 0, 0),
+(7, 1, '¿Qué tenista tiene el récord de más títulos de Grand Slam en la categoría masculina?', 10, 2, 3, 0, 0),
+(8, 1, '¿En qué año se celebraron los primeros Juegos Olímpicos modernos en Atenas?', 10, 2, 3, 0, 0),
+(9, 1, '¿Qué es un \"hat-trick\" perfecto en el fútbol?', 10, 2, 3, 0, 0),
 (10, 1, '¿Quién fue el primer piloto en ganar 7 campeonatos mundiales de Fórmula 1?', 10, 1, 2, 0, 0),
-(11, 2, '¿Quién fue el primer hombre en pisar la Luna en 1969?', 10, 1, 2, 0, 0),
+(11, 2, '¿Quién fue el primer hombre en pisar la Luna en 1969?', 10, 1, 3, 0, 0),
 (12, 2, '¿En qué año comenzó la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
 (13, 2, '¿Qué civilización antigua construyó las pirámides de Giza?', 10, 2, 4, 0, 0),
 (14, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
 (15, 2, '¿En qué ciudad fue asesinado el archiduque Francisco Fernando, evento que desencadenó la Primera Guerra Mundial?', 10, 1, 2, 0, 0),
-(16, 2, '¿Qué civilización precolombina construyó la ciudad de Machu Picchu?', 10, 1, 2, 0, 0),
+(16, 2, '¿Qué civilización precolombina construyó la ciudad de Machu Picchu?', 10, 1, 3, 0, 0),
 (17, 2, '¿Quién fue la última reina de Egipto?', 10, 1, 2, 0, 0),
 (18, 2, '¿Cómo se llamó la operación militar del desembarco de Normandía durante la Segunda Guerra Mundial?', 10, 1, 3, 0, 0),
 (19, 2, '¿Quién fue el líder de la facción bolchevique durante la Revolución Rusa?', 10, 1, 2, 0, 0),
 (20, 2, '¿Qué imperio fue derrotado en la Batalla de Waterloo en 1815?', 10, 1, 2, 0, 0),
-(21, 3, '¿Cuál es el símbolo químico del agua?', 10, 1, 2, 0, 0),
+(21, 3, '¿Cuál es el símbolo químico del agua?', 10, 2, 3, 0, 0),
 (22, 3, '¿Qué planeta de nuestro sistema solar es conocido como el \"Planeta Rojo\"?', 10, 1, 2, 0, 0),
-(23, 3, '¿Qué gas es esencial para la respiración de los seres humanos?', 10, 1, 2, 0, 0),
-(24, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 1, 2, 0, 0),
-(25, 3, '¿Cómo se llama el proceso por el cual las plantas producen su propio alimento usando la luz solar?', 10, 1, 2, 0, 0),
+(23, 3, '¿Qué gas es esencial para la respiración de los seres humanos?', 10, 1, 3, 0, 0),
+(24, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 2, 3, 0, 0),
+(25, 3, '¿Cómo se llama el proceso por el cual las plantas producen su propio alimento usando la luz solar?', 10, 2, 3, 0, 0),
 (26, 3, '¿Cuántos corazones tiene un pulpo?', 10, 2, 3, 0, 0),
-(27, 3, '¿Cuál es el animal terrestre más grande del mundo?', 10, 1, 2, 0, 0),
-(28, 3, '¿Cuál es la velocidad aproximada de la luz en el vacío?', 10, 1, 2, 0, 0),
-(29, 3, '¿Qué orgánulo es conocido como la \"central energética\" de la célula?', 10, 1, 2, 0, 0),
+(27, 3, '¿Cuál es el animal terrestre más grande del mundo?', 10, 1, 3, 0, 0),
+(28, 3, '¿Cuál es la velocidad aproximada de la luz en el vacío?', 10, 3, 4, 0, 0),
+(29, 3, '¿Qué orgánulo es conocido como la \"central energética\" de la célula?', 10, 2, 3, 0, 0),
 (30, 3, '¿Qué científico propuso la teoría de la relatividad general?', 10, 2, 3, 0, 0),
-(31, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 3, 0, 0),
-(32, 4, '¿En qué continente se encuentra Argentina?', 10, 1, 2, 0, 0),
+(31, 4, '¿Cuál es el río más largo del mundo?', 10, 2, 4, 0, 0),
+(32, 4, '¿En qué continente se encuentra Argentina?', 10, 2, 3, 0, 0),
 (33, 4, '¿Cuál es la capital de Italia?', 10, 1, 2, 0, 0),
 (34, 4, '¿Cuál es el desierto cálido más grande del mundo?', 10, 2, 3, 0, 0),
 (35, 4, '¿Qué país tiene la mayor cantidad de islas en el mundo?', 10, 1, 2, 0, 0),
 (36, 4, '¿En qué país se encuentra el Monte Everest, la montaña más alta del mundo?', 10, 2, 3, 0, 0),
 (37, 4, '¿Cuál es el lago más profundo del mundo, ubicado en Siberia?', 10, 1, 2, 0, 0),
-(38, 4, '¿Cuál es la capital de Australia?', 10, 1, 2, 0, 0),
+(38, 4, '¿Cuál es la capital de Australia?', 10, 2, 3, 0, 0),
 (39, 4, '¿Qué es la Fosa de las Marianas?', 10, 1, 2, 0, 0),
 (40, 4, '¿Qué dos países comparten la isla de La Española en el Caribe?', 10, 3, 4, 0, 0),
 (41, 5, '¿Qué significa la sigla HTML en desarrollo web?', 10, 1, 2, 0, 0),
-(42, 5, '¿Cuál de estos es un lenguaje de programación orientado a objetos: HTML, CSS o Java?', 10, 1, 2, 0, 0),
+(42, 5, '¿Cuál de estos es un lenguaje de programación orientado a objetos: HTML, CSS o Java?', 10, 1, 3, 0, 0),
 (43, 5, '¿Qué símbolo se usa para comentarios de una sola línea en lenguajes como Java, C# y JavaScript?', 10, 1, 2, 0, 0),
-(44, 5, '¿Qué es una variable en programación?', 10, 1, 2, 0, 0),
+(44, 5, '¿Qué es una variable en programación?', 10, 2, 3, 0, 0),
 (45, 5, '¿Para qué se utiliza comúnmente el comando \"git clone\"?', 10, 1, 2, 0, 0),
-(46, 5, '¿Qué significa API?', 10, 1, 2, 0, 0),
-(47, 5, '¿En qué paradigma de programación los objetos son la principal abstracción?', 10, 1, 2, 0, 0),
+(46, 5, '¿Qué significa API?', 10, 1, 3, 0, 0),
+(47, 5, '¿En qué paradigma de programación los objetos son la principal abstracción?', 10, 1, 3, 0, 0),
 (48, 5, '¿Qué es la recursividad en el contexto de la programación?', 10, 1, 2, 0, 0),
 (49, 5, '¿Cuál es la diferencia principal entre \"==\" y \"===\" en JavaScript?', 10, 1, 2, 0, 0),
 (50, 5, '¿Qué patrón de diseño utiliza una interfaz para crear familias de objetos relacionados sin especificar sus clases concretas?', 10, 1, 2, 0, 0),
 (51, 6, '¿Cuánto es 9 multiplicado por 7?', 10, 1, 2, 0, 0),
 (52, 6, '¿Cómo se llama un polígono que tiene 5 lados?', 10, 1, 2, 0, 0),
-(53, 6, 'Si tienes 30 manzanas y te comes la mitad, ¿cuántas te quedan?', 10, 1, 2, 0, 0),
+(53, 6, 'Si tienes 30 manzanas y te comes la mitad, ¿cuántas te quedan?', 10, 1, 3, 0, 0),
 (54, 6, '¿Cuál es el valor del número Pi ($pi$) redondeado a dos decimales?', 10, 1, 3, 0, 0),
 (55, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 1, 2, 0, 0),
 (56, 6, '¿Cuánto suman los ángulos internos de cualquier triángulo?', 10, 1, 2, 0, 0),
@@ -265,117 +427,118 @@ INSERT INTO `pregunta` (`preguntaId`, `categoriaId`, `enunciado`, `puntaje`, `re
 (61, 1, '¿En qué deporte se utiliza el término \"ace\"?', 10, 5, 20, 0, 0),
 (62, 2, '¿Quién fue el primer emperador romano?', 10, 2, 15, 0, 0),
 (63, 3, '¿Cuál es la fórmula química del agua?', 10, 10, 30, 0, 0),
-(64, 4, '¿Cuál es el río más largo del mundo?', 10, 1, 12, 0, 0),
-(65, 5, '¿Qué significa el acrónimo SQL?', 10, 8, 25, 0, 0),
-(66, 6, '¿Cuántos lados tiene un hexágono?', 10, 3, 18, 0, 0),
-(67, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de verano?', 10, 7, 22, 0, 0),
-(68, 2, '¿En qué año cayó el Muro de Berlín?', 10, 4, 17, 0, 0),
+(64, 4, '¿Cuál es el río más largo del mundo?', 10, 2, 13, 0, 0),
+(65, 5, '¿Qué significa el acrónimo SQL?', 10, 8, 26, 0, 0),
+(66, 6, '¿Cuántos lados tiene un hexágono?', 10, 4, 20, 0, 0),
+(67, 1, '¿Cada cuántos años se celebran los Juegos Olímpicos de verano?', 10, 8, 23, 0, 0),
+(68, 2, '¿En qué año cayó el Muro de Berlín?', 10, 5, 18, 0, 0),
 (69, 3, '¿Qué gas es el más abundante en la atmósfera terrestre?', 10, 15, 40, 0, 0),
-(70, 4, '¿Cuál es la capital de Australia?', 10, 6, 21, 0, 0),
-(71, 5, '¿Qué lenguaje de programación se utiliza principalmente para el desarrollo web frontend?', 10, 12, 35, 0, 0),
+(70, 4, '¿Cuál es la capital de Australia?', 10, 8, 23, 0, 0),
+(71, 5, '¿Qué lenguaje de programación se utiliza principalmente para el desarrollo web frontend?', 10, 12, 37, 0, 0),
 (72, 6, '¿Cuál es el valor de $\\pi$ (pi) aproximado a dos decimales?', 10, 9, 28, 0, 0),
-(73, 1, '¿Qué país ha ganado más Copas Mundiales de la FIFA?', 10, 1, 14, 0, 0),
-(74, 2, '¿Qué civilización construyó las pirámides de Giza?', 10, 5, 19, 0, 0),
+(73, 1, '¿Qué país ha ganado más Copas Mundiales de la FIFA?', 10, 1, 15, 0, 0),
+(74, 2, '¿Qué civilización construyó las pirámides de Giza?', 10, 6, 20, 0, 0),
 (75, 3, '¿Cuál es el hueso más largo del cuerpo humano?', 10, 11, 32, 0, 0),
-(76, 4, '¿Dónde se encuentra el desierto del Sahara?', 10, 2, 16, 0, 0),
-(77, 5, '¿Qué estructura de datos funciona con el principio LIFO?', 10, 7, 23, 0, 0),
-(78, 6, '¿Cómo se llama el lado más largo de un triángulo rectángulo?', 10, 4, 20, 0, 0),
-(79, 1, '¿Quién es considerado el mejor jugador de baloncesto de todos los tiempos?', 10, 8, 26, 0, 0),
-(80, 2, '¿Quién escribió \"Don Quijote de la Mancha\"?', 10, 3, 15, 0, 0),
+(76, 4, '¿Dónde se encuentra el desierto del Sahara?', 10, 2, 17, 0, 0),
+(77, 5, '¿Qué estructura de datos funciona con el principio LIFO?', 10, 8, 25, 0, 0),
+(78, 6, '¿Cómo se llama el lado más largo de un triángulo rectángulo?', 10, 5, 24, 0, 0),
+(79, 1, '¿Quién es considerado el mejor jugador de baloncesto de todos los tiempos?', 10, 8, 28, 0, 0),
+(80, 2, '¿Quién escribió \"Don Quijote de la Mancha\"?', 10, 3, 16, 0, 0),
 (81, 3, '¿Qué planeta es conocido como el \"Planeta Rojo\"?', 10, 14, 38, 0, 0),
-(82, 4, '¿Cuál es el país más pequeño del mundo por área?', 10, 6, 25, 0, 0),
-(83, 5, '¿Qué es un \"commit\" en Git?', 10, 10, 31, 0, 0),
-(84, 6, '¿Cuál es el resultado de $5 \\times (3 + 2)$?', 10, 5, 21, 0, 0),
-(85, 1, '¿Cuál es la distancia de un maratón en kilómetros?', 10, 10, 28, 0, 0),
-(86, 2, '¿Quién fue la primera mujer en ganar un Premio Nobel?', 10, 2, 13, 0, 0),
-(87, 3, '¿Qué órgano produce la bilis?', 10, 13, 36, 0, 0),
-(88, 4, '¿Qué océano es el más grande?', 10, 7, 24, 0, 0),
-(89, 5, '¿Qué es un \"bug\" en programación?', 10, 11, 33, 0, 0),
+(82, 4, '¿Cuál es el país más pequeño del mundo por área?', 10, 6, 27, 0, 0),
+(83, 5, '¿Qué es un \"commit\" en Git?', 10, 11, 33, 0, 0),
+(84, 6, '¿Cuál es el resultado de $5 \\times (3 + 2)$?', 10, 8, 25, 0, 0),
+(85, 1, '¿Cuál es la distancia de un maratón en kilómetros?', 10, 11, 29, 0, 0),
+(86, 2, '¿Quién fue la primera mujer en ganar un Premio Nobel?', 10, 2, 14, 0, 0),
+(87, 3, '¿Qué órgano produce la bilis?', 10, 13, 37, 0, 0),
+(88, 4, '¿Qué océano es el más grande?', 10, 8, 26, 0, 0),
+(89, 5, '¿Qué es un \"bug\" en programación?', 10, 11, 34, 0, 0),
 (90, 6, '¿Qué tipo de número es 7/3 (fracción)?', 10, 6, 22, 0, 0),
-(91, 1, '¿Qué equipo de fútbol tiene más Ligas de Campeones de la UEFA?', 10, 4, 18, 0, 0),
-(92, 2, '¿En qué siglo comenzó la Revolución Francesa?', 10, 1, 10, 0, 0),
-(93, 3, '¿Qué capa de la Tierra protege de los rayos UV?', 10, 16, 42, 0, 0),
-(94, 4, '¿Cuál es la montaña más alta del mundo?', 10, 8, 29, 0, 0),
+(91, 1, '¿Qué equipo de fútbol tiene más Ligas de Campeones de la UEFA?', 10, 4, 21, 0, 0),
+(92, 2, '¿En qué siglo comenzó la Revolución Francesa?', 10, 2, 11, 0, 0),
+(93, 3, '¿Qué capa de la Tierra protege de los rayos UV?', 10, 16, 43, 0, 0),
+(94, 4, '¿Cuál es la montaña más alta del mundo?', 10, 8, 30, 0, 0),
 (95, 5, '¿Qué es un bucle \"for\"?', 10, 13, 37, 0, 0),
-(96, 6, '¿Qué es un número primo?', 10, 7, 25, 0, 0),
-(97, 1, '¿Cuántos jugadores hay en un equipo de béisbol en el campo?', 10, 3, 17, 0, 0),
-(98, 2, '¿Quién fue presidente de EEUU durante la Segunda Guerra Mundial?', 10, 5, 20, 0, 0),
+(96, 6, '¿Qué es un número primo?', 10, 8, 26, 0, 0),
+(97, 1, '¿Cuántos jugadores hay en un equipo de béisbol en el campo?', 10, 4, 18, 0, 0),
+(98, 2, '¿Quién fue presidente de EEUU durante la Segunda Guerra Mundial?', 10, 5, 22, 0, 0),
 (99, 3, '¿Cuál es la unidad básica de la herencia?', 10, 18, 45, 0, 0),
-(100, 4, '¿Cuál es la capital de Canadá?', 10, 9, 30, 0, 0),
-(101, 5, '¿Qué lenguaje se utiliza para estilizar páginas web?', 10, 14, 39, 0, 0),
+(100, 4, '¿Cuál es la capital de Canadá?', 10, 10, 31, 0, 0),
+(101, 5, '¿Qué lenguaje se utiliza para estilizar páginas web?', 10, 15, 40, 0, 0),
 (102, 6, '¿Cuál es el valor de $4!$ (factorial de 4)?', 10, 8, 27, 0, 0),
 (103, 1, '¿Quién inventó el fútbol?', 10, 6, 21, 0, 0),
-(104, 2, '¿En qué año llegó el hombre a la Luna?', 10, 2, 11, 0, 0),
+(104, 2, '¿En qué año llegó el hombre a la Luna?', 10, 2, 12, 0, 0),
 (105, 3, '¿Qué animal realiza la fotosíntesis?', 10, 19, 49, 0, 0),
 (106, 4, '¿Qué estrecho separa Asia de América del Norte?', 10, 10, 32, 0, 0),
 (107, 5, '¿Qué significa HTML?', 10, 15, 41, 0, 0),
 (108, 6, '¿Qué es el módulo de un número complejo?', 10, 9, 29, 0, 0),
-(109, 1, '¿Qué es un \"hat-trick\" en fútbol?', 10, 7, 24, 0, 0),
+(109, 1, '¿Qué es un \"hat-trick\" en fútbol?', 10, 7, 25, 0, 0),
 (110, 2, '¿Qué famosa batalla tuvo lugar en 1066?', 10, 3, 16, 0, 0),
-(111, 3, '¿Qué tipo de células son las neuronas?', 10, 20, 50, 0, 0),
-(112, 4, '¿Cuál es el volcán más activo del mundo?', 10, 11, 34, 0, 0),
+(111, 3, '¿Qué tipo de células son las neuronas?', 10, 20, 51, 0, 0),
+(112, 4, '¿Cuál es el volcán más activo del mundo?', 10, 12, 35, 0, 0),
 (113, 5, '¿Qué es una API?', 10, 16, 43, 0, 0),
-(114, 6, '¿Qué figura geométrica tiene cuatro lados iguales y cuatro ángulos rectos?', 10, 10, 31, 0, 0),
-(115, 1, '¿Cuál es el nombre del trofeo de la Copa Mundial de la FIFA?', 10, 8, 26, 0, 0),
+(114, 6, '¿Qué figura geométrica tiene cuatro lados iguales y cuatro ángulos rectos?', 10, 11, 32, 0, 0),
+(115, 1, '¿Cuál es el nombre del trofeo de la Copa Mundial de la FIFA?', 10, 9, 27, 0, 0),
 (116, 2, '¿Cuál fue la capital del Imperio Azteca?', 10, 4, 19, 0, 0),
-(117, 3, '¿Qué científico postuló la Teoría de la Relatividad?', 10, 22, 55, 0, 0),
+(117, 3, '¿Qué científico postuló la Teoría de la Relatividad?', 10, 23, 56, 0, 0),
 (118, 4, '¿En qué continente se encuentra el Monte Kilimanjaro?', 10, 12, 36, 0, 0),
-(119, 5, '¿Qué significa JSON?', 10, 17, 45, 0, 0),
+(119, 5, '¿Qué significa JSON?', 10, 18, 46, 0, 0),
 (120, 6, '¿Cuál es la raíz cuadrada de 144?', 10, 11, 33, 0, 0),
-(121, 1, '¿Quién es el máximo goleador en la historia del Real Madrid?', 10, 9, 28, 0, 0),
+(121, 1, '¿Quién es el máximo goleador en la historia del Real Madrid?', 10, 9, 29, 0, 0),
 (122, 2, '¿Qué evento marca el inicio de la Edad Media?', 10, 5, 20, 0, 0),
-(123, 3, '¿Qué es un catalizador en una reacción química?', 10, 24, 60, 0, 0),
+(123, 3, '¿Qué es un catalizador en una reacción química?', 10, 27, 63, 0, 0),
 (124, 4, '¿Cuál es el lago más grande de África?', 10, 13, 38, 0, 0),
-(125, 5, '¿Cuál es la función principal de un compilador?', 10, 18, 47, 0, 0),
+(125, 5, '¿Cuál es la función principal de un compilador?', 10, 18, 48, 0, 0),
 (126, 6, '¿Cuál es el área de un círculo con radio 5?', 10, 12, 35, 0, 0),
 (127, 1, '¿Qué deporte se juega en Wimbledon?', 10, 11, 31, 0, 0),
 (128, 2, '¿Quién fue Cleopatra?', 10, 6, 22, 0, 0),
-(129, 3, '¿Cómo se llama la energía que usa el Sol?', 10, 26, 65, 0, 0),
+(129, 3, '¿Cómo se llama la energía que usa el Sol?', 10, 28, 67, 0, 0),
 (130, 4, '¿Qué país es el único que limita con Portugal?', 10, 14, 40, 0, 0),
 (131, 5, '¿Qué es un algoritmo de búsqueda binaria?', 10, 19, 49, 0, 0),
 (132, 6, '¿Qué es la pendiente de una recta?', 10, 14, 38, 0, 0),
-(133, 1, '¿Qué selección ganó el primer Mundial de fútbol?', 10, 12, 33, 0, 0),
+(133, 1, '¿Qué selección ganó el primer Mundial de fútbol?', 10, 12, 34, 0, 0),
 (134, 2, '¿Qué tratado puso fin a la Primera Guerra Mundial?', 10, 7, 23, 0, 0),
 (135, 3, '¿Qué parte de la planta realiza la transpiración?', 10, 28, 70, 0, 0),
-(136, 4, '¿Cuál es la diferencia horaria estándar de UTC?', 10, 15, 42, 0, 0),
+(136, 4, '¿Cuál es la diferencia horaria estándar de UTC?', 10, 16, 43, 0, 0),
 (137, 5, '¿Qué es una variable de entorno?', 10, 20, 51, 0, 0),
 (138, 6, '¿Qué es un vector en matemáticas?', 10, 15, 40, 0, 0),
-(139, 1, '¿De qué color es la tarjeta que expulsa a un jugador en fútbol?', 10, 12, 34, 0, 0),
+(139, 1, '¿De qué color es la tarjeta que expulsa a un jugador en fútbol?', 10, 13, 35, 0, 0),
 (140, 2, '¿Quién fue el líder de la India que promovió la no violencia?', 10, 8, 25, 0, 0),
-(141, 3, '¿Qué elemento tiene el símbolo O en la tabla periódica?', 10, 30, 75, 0, 0),
+(141, 3, '¿Qué elemento tiene el símbolo O en la tabla periódica?', 10, 31, 76, 0, 0),
 (142, 4, '¿En qué ciudad se encuentra el Big Ben?', 10, 16, 44, 0, 0),
 (143, 5, '¿Qué lenguaje se usa para el análisis de datos y la IA?', 10, 21, 53, 0, 0),
 (144, 6, '¿Qué es la desviación estándar?', 10, 15, 41, 0, 0),
-(145, 1, '¿En qué año se fundó el Comité Olímpico Internacional (COI)?', 10, 13, 36, 0, 0),
+(145, 1, '¿En qué año se fundó el Comité Olímpico Internacional (COI)?', 10, 14, 37, 0, 0),
 (146, 2, '¿Qué dinastia construyó la Gran Muralla China?', 10, 9, 27, 0, 0),
 (147, 3, '¿Cuál es la función del ADN?', 10, 32, 80, 0, 0),
 (148, 4, '¿Cuál es la isla más grande del mundo?', 10, 17, 46, 0, 0),
 (149, 5, '¿Qué significa CRUD en bases de datos?', 10, 22, 55, 0, 0),
 (150, 6, '¿Cuál es el perímetro de un cuadrado de lado 4?', 10, 16, 43, 0, 0),
-(151, 1, '¿Qué tenista es conocido como el \"Rey de la Arcilla\"?', 10, 14, 38, 0, 0),
+(151, 1, '¿Qué tenista es conocido como el \"Rey de la Arcilla\"?', 10, 14, 39, 0, 0),
 (152, 2, '¿Qué evento desencadenó la Primera Guerra Mundial?', 10, 10, 29, 0, 0),
-(153, 3, '¿Qué parte del ojo controla la cantidad de luz que entra?', 10, 35, 86, 0, 0),
+(153, 3, '¿Qué parte del ojo controla la cantidad de luz que entra?', 10, 37, 88, 0, 0),
 (154, 4, '¿Qué cordillera atraviesa Chile y Argentina?', 10, 18, 48, 0, 0),
-(155, 5, '¿Qué es un framework web?', 10, 23, 57, 0, 0),
-(156, 6, '¿Cuál es el valor de $e$ (número de Euler) aproximado?', 10, 18, 46, 0, 0),
+(155, 5, '¿Qué es un framework web?', 10, 24, 58, 0, 0),
+(156, 6, '¿Cuál es el valor de $e$ (número de Euler) aproximado?', 10, 19, 47, 0, 0),
 (157, 1, '¿Cuántos puntos vale un tiro libre en baloncesto?', 10, 15, 40, 0, 0),
 (158, 2, '¿Quién fue el líder del nazismo en Alemania?', 10, 11, 32, 0, 0),
-(159, 3, '¿Qué es un ecosistema?', 10, 36, 90, 0, 0),
-(160, 4, '¿Cuál es el punto más bajo de la Tierra?', 10, 19, 50, 0, 0),
-(161, 5, '¿Qué es la recursividad?', 10, 24, 59, 0, 0),
-(162, 6, '¿Qué es una matriz identidad?', 10, 18, 47, 0, 0),
+(159, 3, '¿Qué es un ecosistema?', 10, 37, 91, 0, 0),
+(160, 4, '¿Cuál es el punto más bajo de la Tierra?', 10, 20, 51, 0, 0),
+(161, 5, '¿Qué es la recursividad?', 10, 25, 60, 0, 0),
+(162, 6, '¿Qué es una matriz identidad?', 10, 19, 48, 0, 0),
 (163, 1, '¿De qué nacionalidad es el piloto de F1 Lewis Hamilton?', 10, 16, 42, 0, 0),
-(164, 2, '¿En qué batalla fue derrotado Napoleón?', 10, 12, 33, 0, 0),
-(165, 3, '¿Qué científicos descubrieron la estructura de doble hélice del ADN?', 10, 38, 95, 0, 0),
-(166, 4, '¿Qué ciudad es conocida como la \"Ciudad Eterna\"?', 10, 20, 52, 0, 0),
-(167, 5, '¿Qué es un ORM?', 10, 25, 61, 0, 0),
+(164, 2, '¿En qué batalla fue derrotado Napoleón?', 10, 13, 34, 0, 0),
+(165, 3, '¿Qué científicos descubrieron la estructura de doble hélice del ADN?', 10, 38, 96, 0, 0),
+(166, 4, '¿Qué ciudad es conocida como la \"Ciudad Eterna\"?', 10, 21, 53, 0, 0),
+(167, 5, '¿Qué es un ORM?', 10, 26, 62, 0, 0),
 (168, 6, '¿Qué es una función inyectiva?', 10, 19, 49, 0, 0),
 (169, 1, '¿Qué es un birdie en golf?', 10, 17, 44, 0, 0),
 (170, 2, '¿Qué civilización es famosa por la invención del papel y la pólvora?', 10, 14, 36, 0, 0),
 (171, 3, '¿Cómo se llama la ciencia que estudia los terremotos?', 10, 40, 100, 0, 0),
 (172, 4, '¿Qué monumento es la principal atracción de París?', 10, 21, 54, 0, 0),
 (173, 5, '¿Qué es un sistema operativo?', 10, 26, 63, 0, 0),
-(174, 6, '¿Qué estudia la trigonometría?', 10, 20, 51, 0, 0);
+(174, 6, '¿Qué estudia la trigonometría?', 10, 20, 51, 0, 0),
+(180, 6, '¿Cuánto es 2 + 2?', 10, 1, 2, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -394,32 +557,28 @@ CREATE TABLE `preguntas_a_evitar` (
 --
 
 INSERT INTO `preguntas_a_evitar` (`preguntas_a_evitar_id`, `preguntaId`, `usuarioId`) VALUES
-(1, 40, 4),
-(2, 85, 4),
-(3, 13, 4),
-(4, 31, 4),
-(5, 3, 4),
-(6, 6, 4),
-(7, 13, 4),
-(8, 40, 4),
-(9, 105, 4),
-(10, 54, 4),
-(11, 127, 4),
-(12, 30, 4),
-(13, 170, 4),
-(14, 156, 4),
-(15, 57, 4),
-(16, 132, 4),
-(17, 133, 4),
-(18, 158, 4),
-(19, 4, 4),
-(20, 153, 4),
-(21, 26, 4),
-(22, 34, 4),
-(23, 18, 4),
-(24, 36, 4),
-(25, 2, 4),
-(26, 138, 4);
+(109, 71, 1),
+(110, 29, 1),
+(111, 8, 1),
+(112, 31, 1),
+(113, 5, 1),
+(114, 23, 1),
+(115, 133, 1),
+(116, 156, 1),
+(117, 155, 1),
+(118, 53, 1),
+(119, 3, 1),
+(120, 84, 1),
+(121, 85, 1),
+(122, 9, 1),
+(123, 25, 1),
+(124, 32, 1),
+(125, 117, 1),
+(126, 162, 1),
+(127, 151, 1),
+(128, 7, 1),
+(129, 129, 1),
+(130, 139, 1);
 
 -- --------------------------------------------------------
 
@@ -433,6 +592,28 @@ CREATE TABLE `reportes` (
   `preguntaId` int(11) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reportes`
+--
+
+INSERT INTO `reportes` (`reportesId`, `usuarioId`, `preguntaId`, `descripcion`) VALUES
+(5, 1, 1, 'Reporte 1'),
+(6, 1, 20, 'Reporte 4'),
+(7, 1, 20, 'Reporte 5'),
+(8, 1, 20, 'Reporte 6'),
+(9, 1, 40, 'Reporte 7'),
+(10, 1, 40, 'Reporte 8'),
+(11, 1, 40, 'Reporte 9'),
+(12, 1, 60, 'Reporte 10'),
+(13, 1, 4, 'Reporte 11'),
+(14, 1, 5, 'Reporte 12'),
+(15, 1, 21, 'Reporte 13'),
+(16, 1, 25, 'Reporte 14'),
+(17, 1, 42, 'Reporte 15'),
+(18, 1, 44, 'Reporte 16'),
+(19, 1, 47, 'Reporte 17'),
+(20, 1, 64, 'Reporte 18');
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1328,11 @@ INSERT INTO `respuesta` (`id_respuesta`, `preguntaId`, `respuestaTexto`, `esCorr
 (1149, 174, 'Las relaciones entre los ángulos y los lados de los triángulos', 1),
 (1150, 174, 'El estudio del infinito', 0),
 (1151, 174, 'El estudio de las curvas', 0),
-(1152, 174, 'La probabilidad de eventos', 0);
+(1152, 174, 'La probabilidad de eventos', 0),
+(1173, 180, '1', 0),
+(1174, 180, '2', 0),
+(1175, 180, '3', 0),
+(1176, 180, '4', 1);
 
 -- --------------------------------------------------------
 
@@ -1200,10 +1385,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuarioId`, `nombre_completo`, `anio_nacimiento`, `sexo`, `pais`, `ciudad`, `latitud`, `longitud`, `email`, `password`, `nombre_usuario`, `foto_perfil`, `cuenta_verificada`, `id_rol`, `fecha_registro`, `token`, `img_qr`) VALUES
-(1, 'Ana Martinez', 1998, 'Femenino', 'Argentina', 'La Plata', NULL, NULL, 'ana.martinez@email.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Ana', 'imagenes/fotoPerfil.jpg', 1, 1, '2025-10-20 14:14:12', '', '/imagenes/qr_Ana.png'),
-(2, 'Carlos Rodriguez', 1985, 'Masculino', 'Argentina', 'San Justo', NULL, NULL, 'carlos.editor@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Carlos', 'imagenes/fotoPerfil.jpg', 1, 2, '2025-10-20 14:14:12', '', '/imagenes/qr_Carlos.png'),
-(3, 'Sofia Lopez', 1990, 'Prefiero no cargarlo', 'Argentina', 'Ramos Mejía', NULL, NULL, 'sofia.admin@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Sofia', 'imagenes/fotoPerfil.jpg', 1, 3, '2025-10-20 14:14:12', '', '/imagenes/qr_Sofia.png'),
-(4, 'Admin', 1997, 'Masculino', 'Argentina', 'Buenos Aires', NULL, NULL, 'admin@example.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Admin97', 'imagenes/fotoPerfil.jpg', 1, 3, '2025-10-20 14:19:41', '', '/imagenes/qr_Admin97.png');
+(1, 'Ana Martinez', 1998, 'Femenino', 'Argentina', 'La Plata', -34.61225134, -58.56562658, 'ana.martinez@email.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Ana', 'imagenes/perfil_6924c3ed767af.png', 1, 1, '2025-10-20 14:14:12', '', '/imagenes/qr_Ana.png'),
+(2, 'Carlos Rodriguez', 1985, 'Masculino', 'Argentina', 'San Justo', -34.61225134, -58.56562658, 'carlos.editor@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Carlos', 'imagenes/fotoPerfil.jpg', 1, 2, '2025-10-20 14:14:12', '', '/imagenes/qr_Carlos.png'),
+(3, 'Sofia Lopez', 1990, 'Prefiero no cargarlo', 'Argentina', 'Ramos Mejía', -34.61225134, -58.56562658, 'sofia.admin@juego.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Sofia', 'imagenes/fotoPerfil.jpg', 1, 3, '2025-10-20 14:14:12', '', '/imagenes/qr_Sofia.png'),
+(4, 'Admin', 1997, 'Masculino', 'Argentina', 'Buenos Aires', -34.61225134, -58.56562658, 'admin@example.com', '$2y$10$PYeUBw4VFBtg6IbaRplDD.EmUTDFklzZiyGa.2Gx.ULSTEapPK0oK', 'Admin97', 'imagenes/fotoPerfil.jpg', 1, 3, '2025-10-20 14:19:41', '', '/imagenes/qr_Admin97.png');
 
 --
 -- Índices para tablas volcadas
@@ -1291,37 +1476,37 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `historial_respuestas`
 --
 ALTER TABLE `historial_respuestas`
-  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT de la tabla `partida`
 --
 ALTER TABLE `partida`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `preguntaId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
+  MODIFY `preguntaId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_a_evitar`
 --
 ALTER TABLE `preguntas_a_evitar`
-  MODIFY `preguntas_a_evitar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `preguntas_a_evitar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `reportesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `reportesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1153;
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1201;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1383,27 +1568,6 @@ ALTER TABLE `respuesta`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`);
-
-
-
-INSERT INTO reportes(usuarioId, preguntaId, descripcion)
-VALUES
-    (1, 1, 'Reporte 1'),  -- Modificado (era Reporte 3)
-    (1, 20, 'Reporte 4'),
-    (1, 20, 'Reporte 5'),
-    (1, 20, 'Reporte 6'),
-    (1, 40, 'Reporte 7'),
-    (1, 40, 'Reporte 8'),
-    (1, 40, 'Reporte 9'),
-    (1, 60, 'Reporte 10'),
-    (1, 4, 'Reporte 11'), -- Aquí empiezan los del segundo script
-    (1, 5, 'Reporte 12'),
-    (1, 21, 'Reporte 13'),
-    (1, 25, 'Reporte 14'),
-    (1, 42, 'Reporte 15'),
-    (1, 44, 'Reporte 16'),
-    (1, 47, 'Reporte 17'),
-    (1, 64, 'Reporte 18');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
